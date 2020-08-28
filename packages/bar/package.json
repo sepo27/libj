@@ -16,6 +16,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "@libj/foo": "^0.0.5"
+  },
   "type": "module",
   "gitHead": "a41d75b50d16ea1fb52591194a53a512070b19dc"
 }
