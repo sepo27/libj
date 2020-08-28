@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Foo package (dummy)",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
-  "homepage": "https://github.com/sepo27/libj/foo/#readme",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
   "license": "ISC",
   "main": "foo.js",
   "directories": {
