@@ -1,11 +1,11 @@
 {
-  "name": "@libj/foo",
-  "version": "0.0.2",
-  "description": "Foo package (dummy)",
+  "name": "@libj/bar",
+  "version": "0.0.0",
+  "description": "Bar dummy",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
-  "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
   "license": "ISC",
-  "main": "src/foo.js",
+  "main": "src/bar.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sepo27/libj.git"
