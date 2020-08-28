@@ -1,6 +1,6 @@
 {
   "name": "@libj/bar",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Bar dummy",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
