@@ -5,7 +5,7 @@
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
   "license": "ISC",
-  "main": "src/foo.js",
+  "main": "src/foo.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sepo27/libj.git"
@@ -13,6 +13,5 @@
   "bugs": {
     "url": "https://github.com/sepo27/libj/issues"
   },
-  "type": "module",
   "gitHead": "a41d75b50d16ea1fb52591194a53a512070b19dc"
 }

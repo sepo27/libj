@@ -1,11 +1,14 @@
 {
   "name": "@libj/bar",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Bar dummy",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
   "license": "ISC",
-  "main": "src/bar.js",
+  "scripts": {
+    "prepare": "tsc --project ./tsconfig.json && ../../scripts/repackThePackage.js bar"
+  },
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sepo27/libj.git"
@@ -16,9 +19,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "gitHead": "a41d75b50d16ea1fb52591194a53a512070b19dc",
   "dependencies": {
-    "@libj/foo": "^0.0.5"
-  },
-  "type": "module",
-  "gitHead": "a41d75b50d16ea1fb52591194a53a512070b19dc"
+    "@libj/foo": "0.0.5"
+  }
 }
