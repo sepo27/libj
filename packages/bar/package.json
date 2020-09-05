@@ -22,5 +22,8 @@
   "gitHead": "a41d75b50d16ea1fb52591194a53a512070b19dc",
   "dependencies": {
     "@libj/foo": "^0.0.6"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
   }
 }
