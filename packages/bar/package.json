@@ -6,6 +6,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
   "license": "ISC",
   "scripts": {
+    "prepublishOnly": "../../scripts/prepublishOnly.js",
     "prepare": "tsc --project ./tsconfig.json && ../../scripts/repackThePackage.js bar"
   },
   "main": "dist/index.js",
