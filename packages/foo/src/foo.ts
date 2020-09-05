@@ -1,1 +1,1 @@
-export const foo = () => 'foo updated';
+export const foo = () => 'BRAND NEW FOO !';
