@@ -1,11 +1,8 @@
 #!/bin/bash
 
 if [ -n "$(git status --porcelain)" ]; then
-  echo "there are changes";
+  echo "[prepublishOnly] info: Commiting prepublish changes"
+  git commit -a -m "Prepublish changes"
 else
-  echo "no changes";
+  echo "[prepublishOnly] info: Nothing to commit for prepublish";
 fi
-
-#echo "[prepublishOnl] info: Commiting changes"
-
-#git commit -a -m "Commiting after repack"
