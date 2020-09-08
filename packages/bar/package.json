@@ -20,8 +20,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0b1dc4c619314cc32ef78749847f4c3c041464c5",
+  "gitHead": "2f8b7ed6bfc7da5e7f6e1aa680a0f23ad4c7719c",
   "dependencies": {
-    "@libj/foo": "^0.0.15"
+    "@libj/foo": "0.0.15"
   }
 }
