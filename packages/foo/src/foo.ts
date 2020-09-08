@@ -1,1 +1,1 @@
-export const foo = () => 'O, foo.';
+export const foo = () => 'The, foo.';
