@@ -6,8 +6,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
   "license": "ISC",
   "scripts": {
-    "prepare": "tsc --project ./tsconfig.json && ../../scripts/repackThePackage.js foo",
-    "prepublishOnly": "../../scripts/prepublishOnly.sh"
+    "prepare": "tsc --project ./tsconfig.json && ../../scripts/repackThePackage.js foo"
   },
   "main": "dist/index.js",
   "repository": {
