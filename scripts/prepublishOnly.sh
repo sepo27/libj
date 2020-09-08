@@ -2,4 +2,4 @@
 
 echo "[prepublishOnl] info: Commiting changes"
 
-git commit -a --amend --no-edit
+git commit -a -m "Commiting after repack"
