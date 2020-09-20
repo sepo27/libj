@@ -1,0 +1,38 @@
+{
+  "extends": "airbnb-base",
+
+  "rules": {
+    "max-len": ["error", { "code": 120, "ignoreComments": true }],
+    "strict": "off",
+    "one-var": "off",
+    "no-restricted-globals": "warn",
+    "lines-between-class-members": "off",
+    "object-curly-newline": ["error", { "consistent": true, "minProperties": 0 }],
+    "implicit-arrow-linebreak": "off",
+    "one-var-declaration-per-line": "off",
+    "spaced-comment": "off",
+    "class-methods-use-this": "off",
+    "newline-per-chained-call": "off",
+    "prefer-destructuring": "off",
+    "no-plusplus": "off",
+
+    "import/prefer-default-export": "off",
+    "import/extensions": "off"
+  },
+
+  "parser": "@typescript-eslint/parser",
+
+  "env": {
+    "jest/globals": true
+  },
+
+  "plugins": ["@typescript-eslint", "jest"],
+
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}
