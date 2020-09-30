@@ -12,7 +12,7 @@ if [ "$disable" ]; then
 fi
 
 diff() {
-  git diff-index --name-only HEAD
+  git diff-index --name-only HEAD --diff-filter ACMRTUXB
 }
 
 grepTypes() {
@@ -68,11 +68,11 @@ fi
 
 if grepTypes "ts|tsx";
 then
-  packages=`diff | grep -Eo "packages/\w+" | xargs -I % echo "%/src/.*\\.spec\\.ts" | tr '\n' ' '`
+  packages=`diff | grep -Po "(?<=packages\/)(\w+)" | tr '\n' '|' | sed 's/|$//'`
 
   infom "Testing packages..."
 
-  ./node_modules/.bin/jest -c ./jest.config.js $packages || exit 1
+  ./node_modules/.bin/jest -c ./jest.config.js packages/**/src -t "$packages" -b 1 || exit 1
 
   println "Done."
 fi
