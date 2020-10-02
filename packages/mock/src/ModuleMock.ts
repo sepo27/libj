@@ -4,11 +4,11 @@ import * as sinonLib from 'sinon';
 
 /*** Main ***/
 
-export function ModuleMock(ref: string): any {
+export function ModuleMock(ref: string, sinonInstance?: sinonLib.SinonSandbox): any {
   /*** Constructor ***/
 
   const
-    sinon = sinonLib.createSandbox(),
+    sinon = sinonInstance || sinonLib.createSandbox(),
     module = require(ref), // eslint-disable-line import/no-dynamic-require, global-require
     cache = new Cache(); // eslint-disable-line no-use-before-define
 

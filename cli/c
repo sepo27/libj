@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+### Lib ###
+
+print() {
+  printf "$1" "${@:2}"
+}
+
+println() {
+  print "$1\n" "${@:2}"
+}
+
+msg() {
+  print "[cli] $1: $2" "${@:3}"
+}
+
+infom() {
+  msg "info" "${@:1}"
+}
+
+info() {
+  infom "$1\n" "${@:2}"
+}
+
+function build() {
+    infom "Building cli ..."
+    ./node_modules/.bin/tsc -p ./cli/tsconfig.json
+    println "Done."
+}
+
+### Main ###
+
+if [ ! -d "./cli/dist" ]; then
+  build
+fi
+
+node ./cli/dist/cli/src/index "$@"
