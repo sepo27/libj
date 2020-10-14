@@ -1,7 +1,6 @@
 import { program as cli } from 'commander';
-import { execCommand } from '../../packages/cli/src/execCommand';
+import { bundlePackageCommand } from './commands/bundlePackage/bundlePackageCommand';
 
-const command = execCommand('foo', 'echo', ['Happy World']);
-cli.addCommand(command);
+cli.addCommand(bundlePackageCommand);
 
 cli.parse(process.argv);

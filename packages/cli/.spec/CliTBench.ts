@@ -1,26 +1,34 @@
 import * as sinonLib from 'sinon';
 import { Command } from 'commander';
-import { ModuleMock } from '../../mock/src/ModuleMock';
+import { ModuleMock } from '../../tbench/src/ModuleMock';
+import * as ExecFileSyncModule from '../../node/src/execFileSync';
+import { CliPath } from '../../../cli/src/CliPath';
 
 export class CliTBench {
-  public sinon: sinonLib.SinonSandbox;
+  public readonly sinon: sinonLib.SinonSandbox;
 
-  public mock;
-  public action;
+  public readonly mock;
+  public readonly action;
 
   constructor() {
     this.sinon = sinonLib.createSandbox();
+
     this.mock = {
       childProcess: ModuleMock('child_process', this.sinon),
+      execFileSync: ModuleMock(ExecFileSyncModule, this.sinon).execFileSync,
+      fs: ModuleMock('fs-extra', this.sinon),
+      glob: ModuleMock('glob', this.sinon),
+      CliPath: ModuleMock(CliPath, this.sinon),
     };
+
     this.action = {
-      run(command: Command, args: string[]) {
+      run(command: Command, args: string[] = []) {
         const cli = new Command();
         cli.addCommand(command);
-        cli.parse([null, null, ...args]);
+        cli.parse([null, null, command.name(), ...args]);
       },
     };
   }
-  
-  restore() { this.sinon.restore(); }
+
+  reset() { this.sinon.restore(); }
 }

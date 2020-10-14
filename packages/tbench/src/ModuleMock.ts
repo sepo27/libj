@@ -1,16 +1,23 @@
 import * as sinonLib from 'sinon';
+import { ModuleMockT } from './types';
 
 // TODO: proper return type ?
 
 /*** Main ***/
 
-export function ModuleMock(ref: string, sinonInstance?: sinonLib.SinonSandbox): any {
+type Module = string | Object;
+
+export function ModuleMock<R extends ModuleMockT>(
+  module: Module,
+  sinon: sinonLib.SinonSandbox = sinonLib.createSandbox(),
+): R {
   /*** Constructor ***/
 
-  const
-    sinon = sinonInstance || sinonLib.createSandbox(),
-    module = require(ref), // eslint-disable-line import/no-dynamic-require, global-require
-    cache = new Cache(); // eslint-disable-line no-use-before-define
+  if (typeof module === 'string') {
+    module = require(module); // eslint-disable-line no-param-reassign, import/no-dynamic-require, global-require
+  }
+
+  const cache = new Cache();
 
   /*** Public ***/
 
@@ -28,9 +35,10 @@ export function ModuleMock(ref: string, sinonInstance?: sinonLib.SinonSandbox): 
         return cache.get(prop);
       }
 
+      // @ts-ignore: TODO
       return cache.set(prop, sinon.stub(module, prop));
     },
-  });
+  }) as any;
 }
 
 /*** Lib ***/

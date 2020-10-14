@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+### Header ###
+
+# (i) Hint: use -r option as FIRST ARGUMENT to rebuild cli.
+
 ### Lib ###
 
 print() {
@@ -23,15 +27,21 @@ info() {
 }
 
 function build() {
-    infom "Building cli ..."
+    infom "Building cli..."
     ./node_modules/.bin/tsc -p ./cli/tsconfig.json
-    println "Done."
+    println "done"
 }
 
 ### Main ###
 
-if [ ! -d "./cli/dist" ]; then
+args=($@)
+
+if [[ "${args[0]}" == "-r" ]] || [[ ! -d "./cli/dist" ]]; then
   build
+
+  if [[ "${args[0]}" == "-r" ]]; then
+    args=(${@:2})
+  fi
 fi
 
-node ./cli/dist/cli/src/index "$@"
+node ./cli/dist/cli/src/index "${args[@]}"

@@ -9,7 +9,7 @@ describe('debugableCommand', () => {
   });
 
   afterEach(() => {
-    bench.restore();
+    bench.reset();
   });
 
   it('errors to console by default', () => {
@@ -18,7 +18,7 @@ describe('debugableCommand', () => {
       processExitSpy = bench.sinon.stub(process, 'exit');
 
     const command = debuggableCommand('foo', () => { throw new Error('Oops, error'); });
-    bench.action.run(command, ['foo']);
+    bench.action.run(command);
 
     expect(errorSpy.calledWith('Error: Oops, error')).toBeTruthy();
     expect(processExitSpy.calledWith(1)).toBeTruthy();
@@ -27,7 +27,7 @@ describe('debugableCommand', () => {
   it('errors out with -d option', () => {
     const command = debuggableCommand('bar', () => { throw new Error('Test error'); });
 
-    expect(() => bench.action.run(command, ['bar', '-d']))
+    expect(() => bench.action.run(command, ['-d']))
       .toThrowError(new Error('Test error'));
   });
 
@@ -36,7 +36,7 @@ describe('debugableCommand', () => {
       actionSpy = bench.sinon.spy(),
       command = debuggableCommand('baz', actionSpy).arguments('<a> <b>');
 
-    bench.action.run(command, ['baz', 'a', 'b']);
+    bench.action.run(command, ['a', 'b']);
 
     expect(actionSpy.calledOnce).toBeTruthy();
 
@@ -50,7 +50,7 @@ describe('debugableCommand', () => {
       command = debuggableCommand('baz', cli => actionSpy(cli.opts().foo))
         .option('--foo <val>', 'Foo option');
 
-    bench.action.run(command, ['baz', '--foo', 'my foo']);
+    bench.action.run(command, ['--foo', 'my foo']);
 
     expect(actionSpy.calledOnce).toBeTruthy();
     expect(actionSpy.getCall(0).firstArg).toEqual('my foo');
@@ -65,7 +65,7 @@ describe('debugableCommand', () => {
         resolve();
       }));
 
-    bench.action.run(command, ['foxy']);
+    bench.action.run(command);
 
     expect(actionSpy.calledOnce).toBeTruthy();
     expect(actionSpy.getCall(0).firstArg).toEqual('Async foo');

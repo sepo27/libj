@@ -16,6 +16,8 @@
     "prefer-destructuring": "off",
     "no-plusplus": "off",
     "arrow-parens": "off",
+    "no-use-before-define": "warn",
+    "no-return-assign": "warn",
 
     "import/prefer-default-export": "off",
     "import/extensions": "off",
