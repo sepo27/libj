@@ -1,6 +1,6 @@
 {
   "name": "@libj/bar",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Bar dummy",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
@@ -22,6 +22,6 @@
   },
   "gitHead": "dd49636e71c9b8f90eb12b864335ebf124a11773",
   "dependencies": {
-    "@libj/foo": "^0.0.21"
+    "@libj/foo": "^0.0.22"
   }
 }
