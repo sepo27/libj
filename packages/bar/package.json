@@ -9,7 +9,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
   "license": "ISC",
   "scripts": {
-    "prepare": "../../cli/c -r pkg:bundle bar"
+    "prepare": "cd ../../ && cli/c -r pkg:bundle bar"
   },
   "main": "dist/index.js",
   "repository": {
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "126e8abb1fadcfb4528bf32e2d92a4059a2179ec"
+  "gitHead": "acf2e92853c1a72c88967cfbbb45e252ca598f96"
 }
