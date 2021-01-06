@@ -28,7 +28,7 @@ info() {
 
 function build() {
     infom "Building cli..."
-    ./node_modules/.bin/tsc -p ./cli/tsconfig.json
+    npx tsc -p ./cli/tsconfig.json
     println "done"
 }
 
