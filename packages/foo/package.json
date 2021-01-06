@@ -6,7 +6,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
   "license": "ISC",
   "scripts": {
-    "prepare": "cli/c -r pkg:bundle foo"
+    "prepare": "../../cli/c -r pkg:bundle foo"
   },
   "main": "dist/index.js",
   "repository": {
@@ -16,5 +16,5 @@
   "bugs": {
     "url": "https://github.com/sepo27/libj/issues"
   },
-  "gitHead": "7a033c07ec1a7bd6a0e0b81a3d626ede51543604"
+  "gitHead": "fa07cc519dc72bb327a69b584e0d44466f36153e"
 }
