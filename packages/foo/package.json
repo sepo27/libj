@@ -1,6 +1,6 @@
 {
   "name": "@libj/foo",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Foo package (dummy)",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
