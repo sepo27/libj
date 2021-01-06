@@ -6,8 +6,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
   "license": "ISC",
   "scripts": {
-    "prepare": "tsc --project ./tsconfig.json && ../../scripts/repackThePackage.js foo",
-    "prepublishOnly": "../../scripts/prepublishOnly.sh"
+    "prepare": "cli/c -r pkg:bundle foo"
   },
   "main": "dist/index.js",
   "repository": {
@@ -17,5 +16,5 @@
   "bugs": {
     "url": "https://github.com/sepo27/libj/issues"
   },
-  "gitHead": "dd49636e71c9b8f90eb12b864335ebf124a11773"
+  "gitHead": "7a033c07ec1a7bd6a0e0b81a3d626ede51543604"
 }
