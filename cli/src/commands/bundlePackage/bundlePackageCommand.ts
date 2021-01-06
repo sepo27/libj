@@ -10,7 +10,7 @@ const action = (packageName) => {
   logger.info('Bundling package: %s', packageName);
 
   logger.infoProgress('Compiling...done', () => {
-    execFileSync('./node_modules/.bin/tsc', ['-p', P.package(packageName, 'tsconfig.json')]);
+    execFileSync('npx', ['tsc', '-p', P.package(packageName, 'tsconfig.json')]);
   });
 
   const bundlePackage = new BundlePackage(packageName);

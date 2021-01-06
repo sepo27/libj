@@ -25,8 +25,8 @@ describe('bundlePackageCommand()', () => {
 
     expect(bench.mock.execFileSync.calledOnce).toBeTruthy();
     expect(bench.mock.execFileSync.getCall(0).args).toEqual([
-      './node_modules/.bin/tsc',
-      ['-p', CliPath.package(packageName, 'tsconfig.json')],
+      'npx',
+      ['tsc', '-p', CliPath.package(packageName, 'tsconfig.json')],
     ]);
   });
 
