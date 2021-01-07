@@ -27,10 +27,6 @@ export class BundleModule {
     );
   }
 
-  get ownExternalDependencies(): BundleDependency[] {
-    return this.dependencies.filter(d => !d.isNpm && d.isExternal);
-  }
-
   public replaceDependency(d: BundleDependency) {
     this.content = this.content.replace(d.importPath, d.npmPath);
   }
