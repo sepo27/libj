@@ -4,9 +4,12 @@ import { debuggableCommand } from '../../../../packages/cli/src/debuggableComman
 import { cliLogger } from '../../cliLogger';
 import { BundlePackage } from './BundlePackage';
 
+export const bundlePackageCommand = debuggableCommand('pkg:bundle', action)
+  .arguments('<name>');
+
 const logger = cliLogger();
 
-const action = (packageName) => {
+function action(packageName) {
   logger.info('Bundling package: %s', packageName);
 
   logger.infoProgress('Compiling...done', () => {
@@ -42,7 +45,4 @@ const action = (packageName) => {
   });
 
   logger.info('Complete.');
-};
-
-export const bundlePackageCommand = debuggableCommand('pkg:bundle', action)
-  .arguments('<name>');
+}
