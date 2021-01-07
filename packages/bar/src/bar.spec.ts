@@ -1,5 +1,7 @@
+import { bar } from './bar';
+
 describe('bar()', () => {
   it('test', () => {
-    expect(true).toBe(true);
+    expect(bar()).toBe(true);
   });
 });
