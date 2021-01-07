@@ -43,6 +43,5 @@ export class BundleModule {
 
   private file: string;
   private content: string;
-
   private $dependencies: BundleDependency[];
 }
