@@ -9,7 +9,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
   "license": "ISC",
   "scripts": {
-    "prepare": "cd ../../ && cli/c -r pkg:bundle bar"
+    "prepare": "cd ../../ && cli/c pkg:bundle bar"
   },
   "main": "dist/index.js",
   "repository": {
