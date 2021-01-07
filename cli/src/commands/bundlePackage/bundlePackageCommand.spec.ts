@@ -330,4 +330,6 @@ describe('bundlePackageCommand()', () => {
   });
 
   // TODO: usecase: no longer have external / npm dependencies => remove from packageJson
+
+  xit('handles common code', () => {});
 });
