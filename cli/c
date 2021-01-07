@@ -36,8 +36,12 @@ function build() {
 
 args=($@)
 
-if [[ "${args[0]}" == "-r" ]] || [[ ! -d "./cli/dist" ]]; then
+if [[ "${args[0]}" == "build" ]] || [[ "${args[0]}" == "-r" ]] || [[ ! -d "./cli/dist" ]]; then
   build
+
+  if [[ "${args[0]}" == "build" ]]; then
+      exit 0
+  fi
 
   if [[ "${args[0]}" == "-r" ]]; then
     args=(${@:2})
