@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { CliTBench } from '../../../../packages/cli/.spec/CliTBench';
 import { bundlePackageCommand } from './bundlePackageCommand';
 import { CliPath } from '../../CliPath';
@@ -9,7 +8,6 @@ describe('bundlePackageCommand()', () => {
 
   beforeEach(() => {
     bench = new BundlePackageCommandTBench();
-    bench.mock.CliPath.root.callsFake((...args) => path.join('/', ...args));
   });
 
   afterEach(() => {

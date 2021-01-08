@@ -3,6 +3,8 @@ import { CliPath as P } from '../../CliPath';
 import { debuggableCommand } from '../../../../packages/cli/src/debuggableCommand';
 import { cliLogger } from '../../cliLogger';
 import { BundlePackage } from './BundlePackage';
+import { NpmBundleDependency } from './dependency/NpmBundleDependency';
+import { LibBundleDependency } from './dependency/LibBundleDependency';
 
 export const bundlePackageCommand = debuggableCommand('pkg:bundle', action)
   .arguments('<name>');
@@ -28,13 +30,13 @@ function action(packageName) {
 
     bundlePackage.distModules.forEach(m => {
       m.dependencies.forEach(d => {
-        if (d.isNpm || d.isExternal) {
+        if (d instanceof NpmBundleDependency || d instanceof LibBundleDependency) {
           usedDependencies[d.npmPath] = true;
         }
 
-        if (!d.isNpm && d.isExternal) {
-          m.replaceDependency(d);
-          bundlePackage.packageJson.addDependency(d);
+        if (d instanceof LibBundleDependency && d.isExternal) {
+          m.replaceLibDependency(d);
+          bundlePackage.addLibDependency(d);
         }
       });
     });

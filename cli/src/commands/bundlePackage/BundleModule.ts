@@ -1,5 +1,7 @@
 import * as fs from 'fs-extra';
-import { BundleDependency } from './BundleDependency';
+import { BundleDependencyInterface } from './dependency/BundleDependencyInterface';
+import { makeBundleDependency } from './dependency/makeBundleDependency';
+import { LibBundleDependency } from './dependency/LibBundleDependency';
 
 const IMPORT_PATTERN = /require\((['"])(.*?)\1\)/g;
 
@@ -11,7 +13,7 @@ export class BundleModule {
 
   /*** Public ***/
 
-  get dependencies() {
+  get dependencies(): BundleDependencyInterface[] {
     if (this.$dependencies) { return this.$dependencies; }
 
     // TODO: refactor into matchAll()
@@ -22,12 +24,12 @@ export class BundleModule {
       )
       .map(m => m[2]);
 
-    return ( // eslint-disable-line no-return-assign
-      this.$dependencies = imports.map((importPath: string) => new BundleDependency(this.file, importPath))
+    return (
+      this.$dependencies = imports.map(importPath => makeBundleDependency(this.file, importPath))
     );
   }
 
-  public replaceDependency(d: BundleDependency) {
+  public replaceLibDependency(d: LibBundleDependency) {
     this.content = this.content.replace(d.importPath, d.npmPath);
   }
 
@@ -39,5 +41,5 @@ export class BundleModule {
 
   private file: string;
   private content: string;
-  private $dependencies: BundleDependency[];
+  private $dependencies: BundleDependencyInterface[];
 }

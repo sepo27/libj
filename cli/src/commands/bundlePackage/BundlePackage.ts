@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import { CliPath } from '../../CliPath';
 import { BundleModule } from './BundleModule';
 import { BundlePackageJson } from './BundlePackageJson';
+import { LibBundleDependency } from './dependency/LibBundleDependency';
 
 export class BundlePackage {
   constructor(private name: string) {
@@ -19,6 +20,10 @@ export class BundlePackage {
 
   public get distIsFlat(): boolean {
     return !fs.existsSync(CliPath.packageDist(this.name, this.name));
+  }
+
+  public addLibDependency(d: LibBundleDependency) {
+    this.packageJson.addDependency(d.npmPath, d.packageJson.version);
   }
 
   public flush() {
