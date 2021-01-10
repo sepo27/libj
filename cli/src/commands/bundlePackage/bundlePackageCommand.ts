@@ -5,6 +5,7 @@ import { cliLogger } from '../../cliLogger';
 import { BundlePackage } from './BundlePackage';
 import { NpmBundleDependency } from './dependency/NpmBundleDependency';
 import { LibBundleDependency } from './dependency/LibBundleDependency';
+import { CommonBundleDependency } from './dependency/CommonBundleDependency';
 
 export const bundlePackageCommand = debuggableCommand('pkg:bundle', action)
   .arguments('<name>');
@@ -37,6 +38,10 @@ function action(packageName) {
         if (d instanceof LibBundleDependency && d.isExternal) {
           m.replaceLibDependency(d);
           bundlePackage.addLibDependency(d);
+        }
+
+        if (d instanceof CommonBundleDependency) {
+          m.replaceCommonDependency(d);
         }
       });
     });

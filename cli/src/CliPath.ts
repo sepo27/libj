@@ -22,7 +22,9 @@ export const CliPath = {
   packageDist(name, ...parts) { return this.package(name, this.Part.DIST, ...parts); },
   packageDistSrc(name, ...parts) { return this.packageDist(name, name, this.Part.SRC, ...parts); },
   packageDistTmp(name, ...parts) { return this.packageDist(name, this.Part.TMP, ...parts); },
-  packageDistTmpIgnore(name) { return this.packageDist(name, `!(${this.Part.TMP})`); },
+  packageDistIgnore(name) {
+    return this.packageDist(name, `!(${this.Part.TMP}|${this.Part.COMMON})`);
+  },
   packageDistPackages(name, ...parts) { return this.packageDist(name, this.Part.PACKAGES, ...parts); },
   packageDistPackagesSrc(name, ...parts) {
     return this.packageDist(name, this.Part.PACKAGES, name, this.Part.SRC, ...parts);

@@ -7,8 +7,14 @@ import { LibBundleDependency } from './dependency/LibBundleDependency';
 
 export class BundlePackage {
   constructor(private name: string) {
-    const distFiles = glob.sync(CliPath.packageDistSrc(name, '**/*.js'));
+    const
+      hasCommon = fs.existsSync(CliPath.packageDist(name, CliPath.Part.COMMON)),
+      distFilesPat = hasCommon
+        ? CliPath.packageDistPackagesSrc(name, '**/*.js')
+        : CliPath.packageDistSrc(name, '**/*.js'),
+      distFiles = glob.sync(distFilesPat);
 
+    this.hasCommon = hasCommon;
     this.distModules = distFiles.map(f => new BundleModule(f));
     this.packageJson = new BundlePackageJson(name);
   }
@@ -19,7 +25,11 @@ export class BundlePackage {
   public readonly packageJson: BundlePackageJson;
 
   public get distIsFlat(): boolean {
-    return !fs.existsSync(CliPath.packageDist(this.name, this.name));
+    const checkPath = this.hasCommon
+      ? CliPath.packageDistPackages(this.name)
+      : CliPath.packageDist(this.name, this.name);
+
+    return !fs.existsSync(checkPath);
   }
 
   public addLibDependency(d: LibBundleDependency) {
@@ -38,14 +48,16 @@ export class BundlePackage {
 
   /*** Private ***/
 
+  private hasCommon: boolean;
+
   private flattenDist() {
     const tmpPath = CliPath.packageDistTmp(this.name);
 
     // Copy dist modules to temp
-    fs.copySync(CliPath.packageDistSrc(this.name), tmpPath);
+    fs.copySync(this.distPlantedPath(this.name, CliPath.Part.SRC), tmpPath);
 
     // Drop nested structure
-    const oldPaths = glob.sync(CliPath.packageDistTmpIgnore(this.name));
+    const oldPaths = glob.sync(CliPath.packageDistIgnore(this.name));
     oldPaths.forEach(p => {
       fs.removeSync(p);
     });
@@ -53,5 +65,11 @@ export class BundlePackage {
     // Unpack from temp
     fs.copySync(tmpPath, CliPath.packageDist(this.name));
     fs.removeSync(tmpPath);
+  }
+
+  private distPlantedPath(...parts) {
+    return this.hasCommon
+      ? CliPath.packageDistPackages(this.name, ...parts)
+      : CliPath.packageDist(this.name, ...parts);
   }
 }

@@ -7,6 +7,7 @@ interface Params {
   dependencies?: MapS<{
     packageJson?: string,
   }>,
+  hasCommon?: boolean,
 }
 
 interface Return {
@@ -24,26 +25,33 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
       files = {},
       packageJson = DefaultPackageJson,
       dependencies = [],
+      hasCommon = false,
     } = params,
       fileMap = {};
 
-  mock.fs.existsSync
-    .withArgs(CliPath.packageDist(packageName, packageName))
-    .returns(true);
+  mockDistPlantedPathsExist();
   
   mock.execFileSync;
   
-  Object.keys(files).forEach(srcFile => {
-    const srcFilename = CliPath.packageDistSrc(packageName, srcFile);
-    
-    mock.glob.sync
-      .withArgs(CliPath.packageDistSrc(packageName, '**/*.js'))
-      .returns([srcFilename]);
+  const fileKeys = Object.keys(files);
+  
+  if (fileKeys.length) {
+    fileKeys.forEach(srcFile => {
+      const srcFilename = packageDistPlantedSrcPath(srcFile);
 
-    mock.fs.readFileSync.withArgs(srcFilename).returns(files[srcFile]);
-    
-    fileMap[srcFile] = srcFilename;
-  });
+      mock.glob.sync
+        .withArgs(packageDistPlantedSrcPath('**/*.js'))
+        .returns([srcFilename]);
+
+      mock.fs.readFileSync.withArgs(srcFilename).returns(files[srcFile]);
+
+      fileMap[srcFile] = srcFilename;
+    });
+  } else {
+    mock.glob.sync
+      .withArgs(packageDistPlantedSrcPath('**/*.js'))
+      .returns([]);
+  }
 
   mock.fs.writeFileSync;
 
@@ -63,14 +71,53 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
 
   mock.fs.writeJsonSync;
 
-  Object.keys(dependencies).forEach(dPackageName => {
-    mock.glob.sync
-      .withArgs(CliPath.packageDistTmpIgnore(packageName))
-      .returns([CliPath.packageDist(dPackageName)]);
-  });
-  
+  mockDistIgnoreGlobPaths();
+
   mock.fs.copySync;
   mock.fs.removeSync;
   
   return { fileMap };
+
+  /*** Private ***/
+
+  function mockDistPlantedPathsExist() {
+    mock.fs.existsSync
+      .withArgs(CliPath.packageDist(packageName, CliPath.Part.COMMON))
+      .returns(hasCommon);
+    
+    if (hasCommon) {
+      mock.fs.existsSync.withArgs(CliPath.packageDist(packageName, packageName)).returns(false);
+      mock.fs.existsSync.withArgs(CliPath.packageDistPackages(packageName)).returns(true);
+    } else {
+      mock.fs.existsSync.withArgs(CliPath.packageDist(packageName, packageName)).returns(true);
+      mock.fs.existsSync.withArgs(CliPath.packageDistPackages(packageName)).returns(false);
+    }
+  }
+
+  function mockDistIgnoreGlobPaths() {
+    let paths;
+
+    if (hasCommon) {
+      paths = [CliPath.packageDistPackages(packageName)];
+    } else {
+      paths = Object.keys(dependencies).reduce(
+        (acc, dName) => acc.concat(CliPath.packageDist(dName)),
+        [CliPath.packageDist(packageName)],
+      );
+    }
+
+    mock.glob.sync
+      .withArgs(CliPath.packageDistIgnore(packageName))
+      .returns([paths]);
+  }
+
+  function packageDistPlantedPath(...parts) {
+    return hasCommon
+      ? CliPath.packageDistPackages(packageName, ...parts)
+      : CliPath.packageDist(packageName, ...parts)
+  }
+  
+  function packageDistPlantedSrcPath(...parts) {
+    return packageDistPlantedPath(packageName, CliPath.Part.SRC, ...parts);
+  }
 };

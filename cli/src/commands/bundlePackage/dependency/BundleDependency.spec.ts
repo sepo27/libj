@@ -64,9 +64,27 @@ describe('BundleDependency', () => {
     expect(d.packageName).toBe('foo');
   });
 
+  it('resolves lib dependency packageName for internal with common', () => {
+    const d = make(
+      CliPath.packageDistPackagesSrc('foxy', 'index.js'),
+      './lady.js',
+    ) as LibBundleDependency;
+
+    expect(d.packageName).toBe('foxy');
+  });
+
   it('resolves lib dependency packageName for external', () => {
     const d = make(
       CliPath.packageDistSrc('bar', 'bar.js'),
+      '../../bazzz/src/bazzz.js',
+    ) as LibBundleDependency;
+
+    expect(d.packageName).toBe('bazzz');
+  });
+
+  it('resolves lib dependency packageName for external with common', () => {
+    const d = make(
+      CliPath.packageDistPackagesSrc('bar', 'bar.js'),
       '../../bazzz/src/bazzz.js',
     ) as LibBundleDependency;
 

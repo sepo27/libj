@@ -2,6 +2,7 @@ import * as fs from 'fs-extra';
 import { BundleDependencyInterface } from './dependency/BundleDependencyInterface';
 import { makeBundleDependency } from './dependency/makeBundleDependency';
 import { LibBundleDependency } from './dependency/LibBundleDependency';
+import { CommonBundleDependency } from './dependency/CommonBundleDependency';
 
 const IMPORT_PATTERN = /require\((['"])(.*?)\1\)/g;
 
@@ -31,6 +32,10 @@ export class BundleModule {
 
   public replaceLibDependency(d: LibBundleDependency) {
     this.content = this.content.replace(d.importPath, d.npmPath);
+  }
+
+  public replaceCommonDependency(d: CommonBundleDependency) {
+    this.content = this.content.replace(d.importPath, d.replacePath);
   }
 
   public flush() {

@@ -191,7 +191,7 @@ describe('bundlePackageCommand()', () => {
     });
 
     bench.mock.glob.sync
-      .withArgs(CliPath.packageDistTmpIgnore(packageName))
+      .withArgs(CliPath.packageDistIgnore(packageName))
       .returns([packageDistDepPath]);
 
     bench.action.run(bundlePackageCommand, [packageName, '-d']);
@@ -329,5 +329,112 @@ describe('bundlePackageCommand()', () => {
 
   // TODO: usecase: no longer have external / npm dependencies => remove from packageJson
 
-  xit('handles common code', () => {});
+  it('rewrites common dependency', () => {
+    const
+      packageName = 'fox',
+      indexFile = 'index.js',
+      files = {
+        [indexFile]: `
+          const { abc } = require('../../../common/foxy.js');
+
+          // Code ...
+        `,
+      },
+      rewriteContent = `
+          const { abc } = require('./common/foxy.js');
+
+          // Code ...
+        `;
+
+    const { fileMap } = bench.mock.package(packageName, {
+      files,
+      hasCommon: true,
+    });
+
+    bench.action.run(bundlePackageCommand, [packageName, '-d']);
+
+    expect(bench.mock.fs.writeFileSync.calledOnce).toBeTruthy();
+    expect(bench.mock.fs.writeFileSync.getCall(0).args).toEqual([
+      fileMap[indexFile],
+      rewriteContent,
+    ]);
+  });
+
+  it('rewrites common dependency with nested src', () => {
+    const
+      packageName = 'fox',
+      indexFile = '/and/rabbit.js',
+      files = {
+        [indexFile]: `
+          const { abc } = require('../../../../common/foxy.js');
+
+          // Code ...
+        `,
+      },
+      rewriteContent = `
+          const { abc } = require('../common/foxy.js');
+
+          // Code ...
+        `;
+
+    const { fileMap } = bench.mock.package(packageName, {
+      files,
+      hasCommon: true,
+    });
+
+    bench.action.run(bundlePackageCommand, [packageName, '-d']);
+
+    expect(bench.mock.fs.writeFileSync.calledOnce).toBeTruthy();
+    expect(bench.mock.fs.writeFileSync.getCall(0).args).toEqual([
+      fileMap[indexFile],
+      rewriteContent,
+    ]);
+  });
+
+  it('flattens dist with common code', () => {
+    const
+      packageName = 'bar',
+      srcFile = 'index.js',
+      files = {
+        [srcFile]: `
+          const { foxy } = require('../../../common/foxy.js');
+
+          // Code ...
+        `,
+      },
+      distPackagesPath = CliPath.packageDistPackages(packageName),
+      distPackagesSrcPath = CliPath.packageDistPackagesSrc(packageName),
+      distTmpPath = CliPath.packageDistTmp(packageName);
+
+    bench.mock.package(packageName, {
+      files,
+      hasCommon: true,
+    });
+
+    bench.mock.glob.sync
+      .withArgs(CliPath.packageDistIgnore(packageName))
+      .returns([distPackagesPath]);
+
+    bench.action.run(bundlePackageCommand, [packageName, '-d']);
+
+    // assert copy to tmp
+    expect(bench.mock.fs.copySync.getCall(0).args).toEqual([
+      distPackagesSrcPath,
+      distTmpPath,
+    ]);
+
+    // assert drop dist packages structure
+    expect(bench.mock.fs.removeSync.getCall(0).args).toEqual([
+      distPackagesPath,
+    ]);
+
+    // assert unpack from tmp
+    expect(bench.mock.fs.copySync.getCall(1).args).toEqual([
+      distTmpPath,
+      CliPath.packageDist(packageName),
+    ]);
+    expect(bench.mock.fs.removeSync.getCall(1).args).toEqual([
+      distTmpPath,
+    ]);
+  });
 });

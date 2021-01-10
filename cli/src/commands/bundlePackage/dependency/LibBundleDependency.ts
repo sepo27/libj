@@ -5,8 +5,8 @@ import { makeLibjDepName } from '../makeLibjDepName';
 import { BundlePackageJson } from '../BundlePackageJson';
 
 export class LibBundleDependency implements BundleDependencyInterface {
-  constructor(contextPath: string, importPath: string) {
-    const { contextPackageName, packageName } = this.defineBaseProperties(contextPath, importPath);
+  constructor(contextFile: string, importPath: string) {
+    const { contextPackageName, packageName } = this.defineBaseProperties(contextFile, importPath);
 
     this.importPath = importPath;
     this.isExternal = contextPackageName !== packageName;
@@ -33,8 +33,8 @@ export class LibBundleDependency implements BundleDependencyInterface {
 
     const
       basePaths = [
-        CliPath.packageDist(contextPackageName),
         CliPath.packageDistPackages(contextPackageName),
+        CliPath.packageDist(contextPackageName),
       ],
       ext = importPath.indexOf('.js') === -1 ? '.js' : '',
       absolutePath = path.resolve(path.dirname(contextFile), `${importPath}${ext}`),
