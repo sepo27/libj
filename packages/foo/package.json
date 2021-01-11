@@ -1,6 +1,6 @@
 {
   "name": "@libj/foo",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "Foo package (dummy)",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/foo/README.md",
@@ -16,5 +16,5 @@
   "bugs": {
     "url": "https://github.com/sepo27/libj/issues"
   },
-  "gitHead": "85702c58851bd869454a3ca27749a6979122837c"
+  "gitHead": "2a70183267cd68c9246e498930e7cf10f23db28b"
 }
