@@ -4,7 +4,7 @@
   "scripts": {
     "publish": "lerna publish --yes",
     "prepublishOnly": "cli/c build",
-    "postpack": "./scripts/postpublish.sh"
+    "postpack": "./scripts/postpack.sh"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
