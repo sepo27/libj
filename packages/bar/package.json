@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "@libj/foo": "0.0.31"
+    "@libj/foo": "^0.0.32"
   },
   "name": "@libj/bar",
-  "version": "0.0.50",
+  "version": "0.0.51",
   "description": "Bar dummy",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/bar",
