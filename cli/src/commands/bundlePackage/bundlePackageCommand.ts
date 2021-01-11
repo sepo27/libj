@@ -1,5 +1,6 @@
+import * as fs from 'fs-extra';
 import { execFileSync } from '../../../../packages/node/src/execFileSync';
-import { CliPath as P } from '../../CliPath';
+import { CliPath, CliPath as P } from '../../CliPath';
 import { debuggableCommand } from '../../../../packages/cli/src/debuggableCommand';
 import { cliLogger } from '../../cliLogger';
 import { BundlePackage } from './BundlePackage';
@@ -14,6 +15,10 @@ const logger = cliLogger();
 
 function action(packageName) {
   logger.info('Bundling package: %s', packageName);
+
+  logger.infoProgress('Cleaning up dist...done', () => {
+    fs.removeSync(CliPath.packageDist(packageName));
+  });
 
   logger.infoProgress('Compiling...done', () => {
     execFileSync('npx', ['tsc', '-p', P.package(packageName, 'tsconfig.json')]);

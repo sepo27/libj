@@ -14,6 +14,18 @@ describe('bundlePackageCommand()', () => {
     bench.reset();
   });
 
+  it('cleans up dist in the first place', () => {
+    const packageName = 'alpha';
+
+    bench.mock.package(packageName);
+
+    bench.action.run(bundlePackageCommand, [packageName, '-d']);
+
+    expect(bench.mock.fs.removeSync.getCall(0).args).toEqual(
+      [CliPath.packageDist(packageName)],
+    );
+  });
+
   it('runs typescript compiler for package', () => {
     const packageName = 'foo';
 
@@ -203,7 +215,7 @@ describe('bundlePackageCommand()', () => {
     ]);
 
     // assert drop dist structure
-    expect(bench.mock.fs.removeSync.getCall(0).args).toEqual([
+    expect(bench.mock.fs.removeSync.getCall(1).args).toEqual([
       packageDistDepPath,
     ]);
 
@@ -212,7 +224,7 @@ describe('bundlePackageCommand()', () => {
       CliPath.packageDistTmp(packageName),
       CliPath.packageDist(packageName),
     ]);
-    expect(bench.mock.fs.removeSync.getCall(1).args).toEqual([
+    expect(bench.mock.fs.removeSync.getCall(2).args).toEqual([
       CliPath.packageDistTmp(packageName),
     ]);
   });
@@ -424,7 +436,7 @@ describe('bundlePackageCommand()', () => {
     ]);
 
     // assert drop dist packages structure
-    expect(bench.mock.fs.removeSync.getCall(0).args).toEqual([
+    expect(bench.mock.fs.removeSync.getCall(1).args).toEqual([
       distPackagesPath,
     ]);
 
@@ -433,7 +445,7 @@ describe('bundlePackageCommand()', () => {
       distTmpPath,
       CliPath.packageDist(packageName),
     ]);
-    expect(bench.mock.fs.removeSync.getCall(1).args).toEqual([
+    expect(bench.mock.fs.removeSync.getCall(2).args).toEqual([
       distTmpPath,
     ]);
   });

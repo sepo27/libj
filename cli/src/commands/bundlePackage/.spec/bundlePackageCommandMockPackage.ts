@@ -101,14 +101,14 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
       paths = [CliPath.packageDistPackages(packageName)];
     } else {
       paths = Object.keys(dependencies).reduce(
-        (acc, dName) => acc.concat(CliPath.packageDist(dName)),
-        [CliPath.packageDist(packageName)],
+        (acc, dName) => acc.concat(CliPath.packageDist(packageName, dName)),
+        [CliPath.packageDist(packageName, packageName)],
       );
     }
 
     mock.glob.sync
       .withArgs(CliPath.packageDistIgnore(packageName))
-      .returns([paths]);
+      .returns(paths);
   }
 
   function packageDistPlantedPath(...parts) {
