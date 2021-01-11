@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "publish": "lerna publish --yes from-package",
-    "prepublishOnly": "cli/c build"
+    "prepublishOnly": "cli/c build",
+    "postpack": "./scripts/postpack.sh"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
