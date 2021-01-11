@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "@libj/foo": "0.0.34"
+  },
   "name": "@libj/bar",
   "version": "0.0.57",
   "description": "Bar dummy",
@@ -19,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "24d44509e4de899703b0020bba7126e1e0f246fe"
+  "gitHead": "0afa99c1951d6dc5e4dcbf0f04492d48a4743d9b"
 }
