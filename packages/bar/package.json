@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@libj/foo": "^0.0.32"
+    "@libj/foo": "0.0.32"
   },
   "name": "@libj/bar",
   "version": "0.0.51",
@@ -22,5 +22,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "720a6b99db42c654d58dda6d335d7cd33ce6da98"
+  "gitHead": "85702c58851bd869454a3ca27749a6979122837c"
 }
