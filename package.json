@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "publish": "lerna publish --yes",
+    "publish": "lerna publish --yes from-package",
     "prepublishOnly": "cli/c build"
   },
   "devDependencies": {
