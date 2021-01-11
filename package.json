@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "publish": "lerna publish --yes",
-    "prepublishOnly": "cli/c build"
+    "prepublishOnly": "cli/c build; ./scripts/prepublishOnly.sh"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
