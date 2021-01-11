@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ -n "$(git status --porcelain)" ]; then
-  echo "[prepublishOnly] info: Commiting prepublish changes"
-  git commit -a -m "Prepublish changes"
+  echo "[postpublish] info: Commiting prepublish changes"
+  git commit -a -m "Postpublish commit"
 else
-  echo "[prepublishOnly] info: Nothing to commit for prepublish";
+  echo "[postpublish] info: Nothing to commit for prepublish";
 fi
