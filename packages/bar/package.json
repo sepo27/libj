@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "@libj/foo": "0.0.34"
-  },
   "name": "@libj/bar",
   "version": "0.0.58",
   "description": "Bar dummy",
