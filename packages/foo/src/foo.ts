@@ -1,4 +1,4 @@
 export const foo = (): string => {
-  console.log('The Foo');
+  console.log('The Foooo');
   return 'foo';
 };
