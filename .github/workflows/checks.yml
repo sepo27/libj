@@ -18,4 +18,4 @@ jobs:
           node-version: 12.19.0
       - run: npm ci
       - run: ./node_modules/.bin/eslint -c ./.eslintrc packages/**/*.ts
-#      - run: ./node_modules/.bin/jest -c ./jest.config.js
+      - run: ./node_modules/.bin/jest -c ./jest.config.js
