@@ -27,5 +27,6 @@
     "build url",
     "make url",
     "url"
-  ]
+  ],
+  "dependencies": {}
 }
