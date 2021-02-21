@@ -1,6 +1,6 @@
 {
   "name": "@libj/make-uri",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Uri builder",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/makeUri/README.md",
@@ -16,5 +16,16 @@
   "bugs": {
     "url": "https://github.com/sepo27/libj/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%3Amake-uri"
   },
-  "keywords": ["uri bulder", "uri maker", "make uri", "build uri", "uri", "url builder", "url maker", "build url", "make url", "url"]
+  "keywords": [
+    "uri bulder",
+    "uri maker",
+    "make uri",
+    "build uri",
+    "uri",
+    "url builder",
+    "url maker",
+    "build url",
+    "make url",
+    "url"
+  ]
 }
