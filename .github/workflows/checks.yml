@@ -2,6 +2,7 @@ name: checks
 on:
   push:
     paths:
+      - './.github/workflows/*.yml'
       - '**.ts'
       - '!**.d.ts'
 
