@@ -8,3 +8,4 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm ci
       - run: ./node_modules/.bin/eslint -c ./.eslintrc packages/**/*.ts
+      - run: ./node_modules/.bin/jest -c ./jest.config.js
