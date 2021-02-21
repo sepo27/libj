@@ -3,8 +3,7 @@ on:
   push:
     paths:
       - '**.ts'
-    paths-ignore:
-      - '**.d.ts'
+      - '!**.d.ts'
 
 jobs:
   run-checks:
