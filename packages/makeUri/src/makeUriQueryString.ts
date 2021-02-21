@@ -6,22 +6,30 @@ interface Options {
 }
 export { Options as UriQueryStringOptions };
 
-export const makeUriQueryString = (query: LooseObject, options: Options = {}): string => Object
-  .keys(query)
-  .map(k => {
-    let val = query[k];
+const DefaultOptions: Options = {
+  encode: true,
+};
 
-    if (val === true) {
-      return k;
-    }
+export const makeUriQueryString = (query: LooseObject, options: Options = {}): string => {
+  const opts = { ...DefaultOptions, ...options };
 
-    if (needEncode(options, k)) {
-      val = encode(val);
-    }
+  return Object
+    .keys(query)
+    .map(k => {
+      let val = query[k];
 
-    return `${k}=${val}`;
-  })
-  .join('&');
+      if (val === true) {
+        return k;
+      }
+
+      if (needEncode(opts, k)) {
+        val = encode(val);
+      }
+
+      return `${k}=${val}`;
+    })
+    .join('&');
+};
 
 /*** Private ***/
 

@@ -46,4 +46,9 @@ describe('makeUriQueryString()', () => {
       { encode: { exclude: ['foo'] } },
     )).toBe('foo={a&bar=%20b&baz=b%7D');
   });
+
+  it('defaults to encode everything', () => {
+    expect(makeUriQueryString({ foo: 'a foo' }))
+      .toBe('foo=a%20foo');
+  });
 });
