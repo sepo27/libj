@@ -21,7 +21,6 @@ export const makeUri = (...args: Args): string => {
   const
     params = extractParams(args),
     parts = defineParts(params),
-    // baseUri = prepareBaseUri(params.baseUri, parts),
     baseUri = params.baseUri,
     builtUri = UriTemplate.uri(parts);
 
