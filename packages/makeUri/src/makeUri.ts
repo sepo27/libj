@@ -6,6 +6,7 @@ import { MakeUriBaseUri as BaseUri } from './MakeUriBaseUri';
 import { MakeUriError } from './MakeUriError';
 import { rtrimUriPath } from './trimUriPath';
 import { joinUriPath } from './joinUriPath';
+import { UriPart } from './UriPart';
 
 interface Params {
   scheme?: string,
@@ -180,21 +181,30 @@ function makeAuthority(authority, { scheme, baseUri }: InternalParams) {
 }
 
 function makePath(path) {
-  let rawPath = '';
+  let res = '';
 
   if (isStr(path)) {
-    rawPath = path as string;
+    res = path as string;
   } else if (isObj(path)) {
-    const { template, params } = path as PathParams;
-    rawPath = template.replace(
-      new RegExp(`:(${Object.keys(params).join('|')})`, 'g'),
-      (_, p) => params[p],
+    const { template, params = {} } = path as PathParams;
+    res = template.replace(
+      new RegExp(`${UriPart.COLON}(${Object.keys(params).join('|')})`, 'g'),
+      (m, p) => params[p] || m,
     );
+
+    // Check if all params substituted
+    if (res.indexOf(UriPart.COLON) > -1) {
+      const missingParams = res
+        .match(new RegExp(`${UriPart.COLON}\\w+`, 'g'))
+        .map(p => p.substr(1));
+
+      throw new MakeUriError(`Missing params: ${missingParams.join(',')} | for path template: ${template}`);
+    }
   } else if (isArr(path)) {
-    rawPath = joinUriPath(...path);
+    res = joinUriPath(...path);
   }
 
-  return UriTemplate.path(rawPath);
+  return UriTemplate.path(res);
 }
 
 function makeQuery(query, { authority, path, baseUri }: InternalParams) {
