@@ -1,4 +1,5 @@
 import { makeUri } from '../src/makeUri';
+import { MakeUriError } from '../src/MakeUriError';
 
 const path = '/find/us';
 
@@ -22,6 +23,18 @@ describe('makeUri()', () => {
         params: { bar: 'baz' },
       },
     })).toBe('/foo/baz');
+  });
+
+  it('errors out with template & missing params', () => {
+    // @ts-ignore
+    expect(() => makeUri({ path: { template: '/foo/:baz' } }))
+      .toThrow(new MakeUriError('Missing params: baz | for path template: /foo/:baz'));
+  });
+
+  it('errors out with template & incomplete params', () => {
+    // @ts-ignore
+    expect(() => makeUri({ path: { template: '/foo/:bar/:baz/:zak', params: { bar: 'bar' } } }))
+      .toThrow(new MakeUriError('Missing params: baz,zak | for path template: /foo/:bar/:baz/:zak'));
   });
 
   it('with authority & path', () => {
