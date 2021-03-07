@@ -1,4 +1,4 @@
-import { LooseObject } from '../../../common/types';
+import { LooseObject } from '../../../../../common/types';
 
 export interface ModuleMockT extends LooseObject {}
 

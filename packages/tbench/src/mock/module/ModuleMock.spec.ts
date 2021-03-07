@@ -1,16 +1,16 @@
 import * as fs from 'fs';
-import { ModuleMock } from '../ModuleMock';
-import { _barModuleMock, _fooModuleMock } from './.func';
-import * as FuncModule from './.func';
-import { _foxModuleMock } from './.func2';
-import { _FooObjModuleMock } from './.obj';
+import { ModuleMock } from './ModuleMock';
+import { _barModuleMock, _fooModuleMock } from './.spec/func';
+import * as FuncModule from './.spec/func';
+import { _foxModuleMock } from './.spec/func2';
 
 describe('ModuleMock', () => {
   it('mocks node module directly', () => {
     const mock = ModuleMock('fs');
-    mock.readFileSync.returns('Dummy file');
 
-    expect(fs.readFileSync('')).toBe('Dummy file');
+    mock.statSync.returns('Dummy');
+
+    expect(fs.statSync('')).toBe('Dummy');
   });
 
   it('restores node module mock', () => {
@@ -49,7 +49,7 @@ describe('ModuleMock', () => {
 
   it('mocks custom module', () => {
     const mock = ModuleMock(FuncModule);
-    mock._barModuleMock.returns('Bar is Bar');
+    mock._barModuleMock.returns('Bar is Bar'); // eslint-disable-line no-underscore-dangle
 
     expect(_foxModuleMock()).toBe('Bar is Bar');
   });
