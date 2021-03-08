@@ -1,0 +1,26 @@
+{
+  "dependencies": {},
+  "name": "@libj/tbench",
+  "version": "0.0.0",
+  "description": "Toolset for testing JavaScript code with ease",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/tbench/README.md",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "cd ../../ && cli/c pkg:bundle tbench"
+  },
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sepo27/libj/labels/pkg%3Atbench"
+  },
+  "keywords": [
+    "testing",
+    "testing tool",
+    "unit testing",
+    "test mock"
+  ]
+}
