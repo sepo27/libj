@@ -158,6 +158,15 @@ describe('BundleDependency', () => {
     expect(d.replacePath).toBe('../common/abc.js');
   });
 
+  it('resolves common dependency replace path #3', () => {
+    const d = make(
+      CliPath.packageDistPackagesSrc('foo', 'abc', 'def', 'fox.js'),
+      '../../../../../common/bar.js',
+    ) as CommonBundleDependency;
+
+    expect(d.replacePath).toBe('../../common/bar.js');
+  });
+
   it('resolves npm dependency', () => {
     const d = make(
       CliPath.packageDistPackagesSrc('foo', 'index.js'),

@@ -38,7 +38,7 @@ export class CommonBundleDependency implements BundleDependencyInterface {
     const levelCount = n - DIR_LEVEL_SHIFT;
 
     return levelCount > 0
-      ? Array(levelCount).fill(UPPER_DIR_LEVEL).join()
+      ? Array(levelCount).fill(UPPER_DIR_LEVEL).join('')
       : THIS_DIR_LEVEL;
   }
 
