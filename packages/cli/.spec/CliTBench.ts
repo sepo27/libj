@@ -1,6 +1,6 @@
 import * as sinonLib from 'sinon';
 import { Command } from 'commander';
-import { ModuleMock } from '../../tbench/src/ModuleMock';
+import { ModuleMock } from '../../tbench/src/mock/module/ModuleMock';
 import * as ExecFileSyncModule from '../../node/src/execFileSync';
 import { CliPath } from '../../../cli/src/CliPath';
 

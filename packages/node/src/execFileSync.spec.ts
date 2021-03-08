@@ -1,4 +1,4 @@
-import { ModuleMock } from '../../tbench/src/ModuleMock';
+import { ModuleMock } from '../../tbench/src/mock/module/ModuleMock';
 import { execFileSync } from './execFileSync';
 
 describe('execFileSync()', () => {
