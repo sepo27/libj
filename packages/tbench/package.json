@@ -1,7 +1,6 @@
 {
-  "dependencies": {},
   "name": "@libj/tbench",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Toolset for testing JavaScript code with ease",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/tbench/README.md",
