@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "sinon": "^9.1.0"
+  },
   "name": "@libj/tbench",
   "version": "0.0.1",
   "description": "Toolset for testing JavaScript code with ease",
@@ -22,8 +25,5 @@
     "unit testing",
     "test mock"
   ],
-  "gitHead": "6e7e3d08a8d5ffe2fe8f657658a5343fb590d8bb",
-  "dependencies": {
-    "sinon": "^9.1.0"
-  }
+  "gitHead": "6f438ddbeb3b22fb8c2c2444e4073e4f4bf31850"
 }
