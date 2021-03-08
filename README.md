@@ -15,6 +15,19 @@ npm run version
 
 ### Publishing
 
+Login with public scope:
+```bash
+npm login --scope @libj
+```
+
+First, publish with public access manually:
+```bash
+cd packages/<name>
+npm publish --access public
+```
+
+Then further publishes:
+
 ```bash
 npm run publish
 ```
