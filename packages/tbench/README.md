@@ -100,8 +100,8 @@ describe('myBar()', () => {
 // MyFooClass.js
 export class MyFooClass {
   constructor() {
-    this.foo = 'Initial Foo';
-    this.bar = 'Initial Bar';
+    this.foo = 'Initial Foo'
+    this.bar = 'Initial Bar'
   }
 }
 ```
@@ -125,7 +125,7 @@ describe('myBar()', () => {
       foo: 'The Foo',
       bar: null,
     })
-    mock.foo;
+    mock.foo
     mock.bar.value('At the Bar')
 
     const res = myBar()
@@ -171,7 +171,7 @@ describe('myBar()', () => {
       'bar()': 'The Bar from Method',
     })
     mock.foo.returns('And The Foo')
-    mock.bar;
+    mock.bar
 
     const o = myBar()
 
