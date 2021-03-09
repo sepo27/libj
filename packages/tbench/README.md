@@ -14,6 +14,7 @@ Mocks any JavaScript module.
 
 ```javascript
 import * as fs from 'fs'
+import { ModuleMock } from '@libj/tbench'
 
 const mock = ModuleMock('fs')
 mock.existsSync.withArgs('/foo/bar.json').returns(true)
@@ -37,6 +38,7 @@ export const myBar = () => myFoo()
 
 ```javascript
 // myBar.test.js
+import { ModuleMock } from '@libj/tbench'
 import * as MyFooModule from './myFoo.js'
 import { myBar } from './myBar.js'
 
@@ -74,6 +76,7 @@ export const myBar = arg => new MyFooClass(arg)
 
 ```javascript
 // myBar.test.js
+import { ClassMock } from '@libj/tbench'
 import * as MyFooClassModule from './MyFooClass'
 import { myBar } from './myBar'
 
@@ -112,6 +115,7 @@ export const myBar = () => new MyFooClass()
 
 ```javascript
 // myBar.test.js
+import { ClassMock } from '@libj/tbench'
 import * as MyFooClassModule from './MyFooClass'
 import { myBar } from './myBar'
 
@@ -156,6 +160,7 @@ export const myBar = () => new MyFooClass()
 
 ```javascript
 // myBar.test.js
+import { ClassMock } from '@libj/tbench'
 import * as MyFooClassModule from './MyFooClass'
 import { myBar } from './myBar'
 
