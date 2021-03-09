@@ -112,6 +112,7 @@ import { myBar } from './myBar'
 describe('myBar()', () => {
   it('constructs class with arg', () => {
     const mock = ClassMock(MyFooClassModule)
+    mock.$constructor
 
     myBar('Foxy Lady')
 

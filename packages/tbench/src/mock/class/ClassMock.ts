@@ -20,9 +20,8 @@ export const ClassMock = (...args: Args) => {
     className = defineClassName(),
     cache = new ClassMockCache(className);
 
-  const
-    instance = {},
-    constructorMock = sinon.stub(Module, className).returns(instance);
+  const instance = {};
+  let constructorMock;
 
   /*** Public ***/
 
@@ -32,6 +31,8 @@ export const ClassMock = (...args: Args) => {
 
   return new Proxy({}, {
     get(_, memberName: string) {
+      mockConstructor();
+
       if (memberName === ClassMockMember.CONSTRUCTOR) {
         return constructorMock;
       }
@@ -81,6 +82,13 @@ export const ClassMock = (...args: Args) => {
     }
 
     return cache.set(member.name, mock);
+  }
+
+  function mockConstructor() {
+    if (constructorMock) {
+      return;
+    }
+    constructorMock = sinon.stub(Module, className).returns(instance);
   }
 
   function defineMembers() {

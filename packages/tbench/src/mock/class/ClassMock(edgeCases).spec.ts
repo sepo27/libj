@@ -61,6 +61,17 @@ describe('ClassMock', () => {
     ).toThrow(new Error(`Missing class name in module: ${Module.constructor.name}`));
   });
 
+  it('only mocks class when required', () => {
+    class MyFoo {
+      public foo: string = 'bar';
+    }
+    const Module = { MyFoo };
+
+    ClassMock(Module);
+
+    expect(new Module.MyFoo().foo).toBe('bar');
+  });
+
   /*** Lib ***/
 
   function makeMock(spec = {}) {

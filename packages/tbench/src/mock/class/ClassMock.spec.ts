@@ -16,6 +16,7 @@ describe('ClassMock', () => {
 
   it('mocks constructor', () => {
     const mock = makeMock();
+    mock.$constructor;
 
     instance('foo');
 
