@@ -13,6 +13,7 @@ All mocks are [sinon stubs](https://sinonjs.org/releases/v9.2.4/stubs/).
 ### `ModuleMock`
 
 Mocks any JavaScript module.
+See API in [here](https://github.com/sepo27/libj/blob/master/packages/tbench/src/mock/module/ModuleMock.ts).
 
 #### NPM module
 
