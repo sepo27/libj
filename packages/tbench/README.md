@@ -4,6 +4,10 @@ A "test bench" tools set for testing JavaScript / TypeScript code with comfort.
 Based on [sinon.js](https://sinonjs.org/) library.  
 All mocks are [sinon stubs](https://sinonjs.org/releases/v9.2.4/stubs/).
 
+### Features
+- convenient API
+- unit test itself
+
 ## Mocks
 
 ### `ModuleMock`
