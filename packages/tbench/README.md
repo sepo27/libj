@@ -13,7 +13,18 @@ All mocks are [sinon stubs](https://sinonjs.org/releases/v9.2.4/stubs/).
 ### `ModuleMock`
 
 Mocks any JavaScript module.
-See API in [here](https://github.com/sepo27/libj/blob/master/packages/tbench/src/mock/module/ModuleMock.ts).
+
+#### API
+
+````javascript
+function ModuleMock(
+  module: string | Object,
+  sinon: SinonSandbox = sinon.createSandbox(),
+)
+````
+
+- `module`: npm module name or custom module
+- `sinon`: custom instance of `SinonSandbox`
 
 #### NPM module
 
@@ -64,6 +75,19 @@ See in [specs](https://github.com/sepo27/libj/tree/master/packages/tbench/src/mo
 ### `ClassMock`
 
 Mocks instances of classes.
+
+#### API
+
+```javascript
+function ClassMock(module: Object)
+function ClassMock(module: Object, spec: Object)
+function ClassMock(module: Object, spec: Object, sinon: SinonSandbox)
+function ClassMock(module: Object, sinon: SinonSandbox)
+```
+
+- `module`: Custom module which holds class export
+- `spec`: Specification object on how to mock the instance of class
+- `sinon`: custom instance of `SinonSandbox`
 
 #### Asserting constructor call
 
@@ -190,6 +214,52 @@ describe('myBar()', () => {
 *(i) Mind how mock values are initialized for `foo()` and `bar()` methods*  
 *(i) It is always possible to overwrite initialized values at any time with any constraints*  
 *(i) See respective [specs](https://github.com/sepo27/libj/tree/master/packages/tbench/src/mock/class) for more examples*
+
+#### Restoring single mock only
+
+```javascript
+// test.js
+import { ClassMock } from '@libj/tbench'
+
+describe('FooTest', () => {
+  let mock
+
+  beforeEach(() => {
+    mock = ClassMock(FooClassModule)
+  })
+
+  afterEach(() => {
+    mock.$restore()
+  })
+});
+```
+
+*(i) Applies to both `ModuleMock` / `ClassMock`*
+
+### Restoring all mocks at once
+
+This can be controlled via custom sinon instance
+
+```javascript
+// test.js
+import * as sinonLib from 'sinon'
+import { ModuleMock, ClassMock } from '@libj/tbench'
+
+describe('FooTest', () => {
+  let sinon, moduleMock, classMock
+
+  beforeEach(() => {
+    sinon = sinonLib.createSandbox()
+    moduleMock = ModuleMock('fs', sinon)
+    classMock = ClassMock(FooClassModule, sinon)
+  })
+
+  afterEach(() => {
+    sinon.restore()
+  })
+});
+
+```
 
 ### Using in pure NodeJS code
 
