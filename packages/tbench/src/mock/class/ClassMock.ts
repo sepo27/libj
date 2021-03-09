@@ -28,6 +28,10 @@ export const ClassMock = (...args: Args) => {
 
   /*** Public ***/
 
+  const self = {
+    [ClassMockMember.RESTORE]: () => { sinon.restore(); },
+  };
+
   return new Proxy({}, {
     get(_, memberName: string) {
       if (memberName === CONSTRUCTOR_NAME) {
@@ -36,6 +40,11 @@ export const ClassMock = (...args: Args) => {
 
       if (cache.has(memberName)) {
         return cache.get(memberName);
+      }
+
+      if (self[memberName]) {
+        // @ts-ignore
+        return (...fnArgs) => self[memberName](...fnArgs);
       }
 
       const member = findMember(memberName);

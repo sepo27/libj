@@ -159,6 +159,21 @@ describe('ClassMock', () => {
     expect(instance().hex.baz()).toBe('It\'s the beezzzzz');
   });
 
+  it('restores the mock', () => {
+    class MyFoo {
+      public bar: string = 'Orig bar';
+    }
+    const Module = { MyFoo };
+
+    const mock = ClassMock(Module, { bar: 'Mocked bar' });
+    mock.bar;
+
+    expect(new Module.MyFoo().bar).toBe('Mocked bar');
+
+    mock.$restore();
+    expect(new Module.MyFoo().bar).toBe('Orig bar');
+  });
+
   /*** Lib ***/
 
   function makeMock(spec = {}) {
