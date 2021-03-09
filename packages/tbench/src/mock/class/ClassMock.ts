@@ -11,8 +11,6 @@ type Args = [LooseObject]
 
 type Spec = LooseObject;
 
-const CONSTRUCTOR_NAME = '$constructor';
-
 export const ClassMock = (...args: Args) => {
   /*** Init ***/
 
@@ -34,7 +32,7 @@ export const ClassMock = (...args: Args) => {
 
   return new Proxy({}, {
     get(_, memberName: string) {
-      if (memberName === CONSTRUCTOR_NAME) {
+      if (memberName === ClassMockMember.CONSTRUCTOR) {
         return constructorMock;
       }
 
