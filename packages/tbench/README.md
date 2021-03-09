@@ -121,6 +121,7 @@ describe('myBar()', () => {
       foo: 'The Foo',
       bar: null,
     })
+    mock.foo;
     mock.bar.value('At the Bar')
 
     const res = myBar()
@@ -132,6 +133,7 @@ describe('myBar()', () => {
 ```
 
 *(i) Mind how mock values are initialized for `foo` and `bar` props*  
+*(i) Mock property has to be accessed even if initialized to trigger mocking*  
 *(i) It is always possible to overwrite initialized values at any time with any constraints*  
 *(i) See respective [specs](https://github.com/sepo27/libj/tree/master/packages/tbench/src/mock/class) for more examples*
 
@@ -164,6 +166,7 @@ describe('myBar()', () => {
       'bar()': 'The Bar from Method',
     })
     mock.foo.returns('And The Foo')
+    mock.bar;
 
     const o = myBar()
 
