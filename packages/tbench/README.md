@@ -138,7 +138,7 @@ describe('myBar()', () => {
 
 *(i) Mind how mock values are initialized for `foo` and `bar` props*  
 *(i) Mock property has to be accessed even if initialized to trigger mocking*  
-*(i) It is always possible to overwrite initialized values at any time with any constraints*  
+*(i) It is always possible to overwrite initialized values at any time with any conditions (see [sinon stubs](https://sinonjs.org/releases/v9.2.4/stubs/))*  
 *(i) See respective [specs](https://github.com/sepo27/libj/tree/master/packages/tbench/src/mock/class) for more examples*
 
 #### Mock class instance methods
