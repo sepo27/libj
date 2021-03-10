@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ES5",
-    "outDir": "dist",
-    "declaration": true
+    "outDir": "dist"
   },
   "include": ["src"]
 }
