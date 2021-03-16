@@ -210,7 +210,9 @@ function makePath(path) {
 function makeQuery(query, { authority, path, baseUri }: InternalParams) {
   const
     [data, options] = extractQueryOpt(query),
-    usePrefix = !!(authority || path) || baseUri.hasAuthority || baseUri.hasPath;
+    usePrefix = Object.keys(data).length && (
+      !!(authority || path) || baseUri.hasAuthority || baseUri.hasPath
+    );
 
   return UriTemplate.query(makeUriQueryString(data, options), usePrefix);
 }
@@ -221,6 +223,9 @@ function makeFragment(fragment) {
 }
 
 function extractQueryOpt(opt: QueryOpt) {
-  const [data, options] = opt.$data ? [opt.$data, opt.$options] : [opt, {}];
+  const [data = {}, options] = Object.prototype.hasOwnProperty.call(opt, '$data')
+    ? [opt.$data, opt.$options]
+    : [opt, {}];
+
   return [data, options];
 }

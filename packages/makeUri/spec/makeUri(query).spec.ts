@@ -30,6 +30,13 @@ describe('makeUri()', () => {
     })).toBe('/foo/bar?fox=baz');
   });
 
+  it('with options query & path', () => {
+    expect(makeUri({
+      path: '/foo/bar',
+      query: { $data: undefined, $options: { encode: false } },
+    })).toBe('/foo/bar');
+  });
+
   it('with query, path & authority', () => {
     expect(makeUri({
       authority: host,
