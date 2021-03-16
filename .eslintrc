@@ -1,6 +1,4 @@
 {
-  "extends": "airbnb-base",
-
   "rules": {
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
     "strict": "off",
@@ -19,11 +17,20 @@
     "no-use-before-define": "warn",
     "no-return-assign": "warn",
     "no-unused-expressions": "warn",
+    "no-shadow": "off",
+    "no-unused-vars": "off",
 
     "import/prefer-default-export": "off",
     "import/extensions": "off",
-    "import/no-extraneous-dependencies": "warn"
+    "import/no-extraneous-dependencies": "warn",
+
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-unused-vars": "error"
   },
+
+  "extends": [
+    "airbnb-base"
+  ],
 
   "parser": "@typescript-eslint/parser",
 
@@ -31,7 +38,10 @@
     "jest/globals": true
   },
 
-  "plugins": ["@typescript-eslint", "jest"],
+  "plugins": [
+    "jest",
+    "@typescript-eslint"
+  ],
 
   "settings": {
     "import/resolver": {
