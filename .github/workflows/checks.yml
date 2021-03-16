@@ -22,9 +22,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/setup-node@v1
         with:
           node-version: 12.19.0
-      - run: npm ci
-      - run: ./node_modules/.bin/eslint -c ./.eslintrc packages/**/*.ts
-      - run: LIBJ_SKIP_TEST_LOG=1 ./node_modules/.bin/jest -c ./jest.config.js
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install node modules
+        run: npm ci
+
+      - name: Run linter
+        run: ./node_modules/.bin/eslint -c ./.eslintrc packages/**/*.ts
+
+      - name: Run tests
+        run: |
+          LIBJ_SKIP_TEST_LOG=1 ./node_modules/.bin/jest -c ./jest.config.js cli
+          LIBJ_SKIP_TEST_LOG=1 ./node_modules/.bin/jest -c ./jest.config.js common
+          ls packages | while read pkg; do \
+            LIBJ_SKIP_TEST_LOG=1 ./node_modules/.bin/jest -c ./jest.config.js packages/$pkg; \
+          done
