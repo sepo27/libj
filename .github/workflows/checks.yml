@@ -40,8 +40,17 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install node modules
+      - name: Install root node modules
         run: npm ci
+
+      - name: Install per package node modules
+        run: |
+          ls packages | while read pkg; do \
+            if [[ -f "packages/$pkg/package-lock.json" ]]; then \
+              echo "===Pkg: $pkg"; \
+              npm ci --prefix packages/$pkg --ignore-scripts; \
+            fi \
+          done
 
       - name: Run linter
         run: ./node_modules/.bin/eslint -c ./.eslintrc packages/**/*.ts
