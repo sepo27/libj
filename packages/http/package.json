@@ -1,0 +1,32 @@
+{
+  "name": "@libj/http",
+  "version": "0.0.0-alpha",
+  "description": "Http toolbox",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/http/README.md",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "cd ../../ && cli/c pkg:bundle http"
+  },
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sepo27/libj/labels/pkg%3Ahttp"
+  },
+  "keywords": [
+    "http",
+    "http toolbox",
+    "http client",
+    "xhr",
+    "ajax"
+  ],
+  "gitHead": "94a02e5cc2ab91a08a6572e999bc4d0a185c8282",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "form-data": "^4.0.0",
+    "fs-extra": "^9.1.0"
+  }
+}
