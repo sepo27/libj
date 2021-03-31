@@ -1,4 +1,8 @@
 {
+  "dependencies": {
+    "axios": "^0.21.1",
+    "fs-extra": "^9.1.0"
+  },
   "name": "@libj/http",
   "version": "0.0.1-alpha.0",
   "description": "Http toolbox",
@@ -23,10 +27,5 @@
     "xhr",
     "ajax"
   ],
-  "gitHead": "94a02e5cc2ab91a08a6572e999bc4d0a185c8282",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "form-data": "^4.0.0",
-    "fs-extra": "^9.1.0"
-  }
+  "gitHead": "727e1bb95fa634cdf8aa338adb9d89b35109fa8a"
 }
