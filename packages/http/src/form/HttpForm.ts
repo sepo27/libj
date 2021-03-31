@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { FormData } from '../../lib/FormData';
+import { FormData } from './FormData';
 import { HttpConfigError } from '../error/HttpConfigError';
 
 export class HttpForm extends FormData {

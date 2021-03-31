@@ -5,7 +5,7 @@ import { ClassMock, ModuleMock } from '../../../tbench/src';
 import { HttpClientConfig } from '../../src/client/types';
 import { HttpClient } from '../../src/client/HttpClient';
 import { LooseObject } from '../../../../common/types';
-import { FormData } from '../../lib/FormData';
+import { FormData } from '../../src/form/FormData';
 import * as HttpFormModule from '../../src/form/HttpForm';
 
 interface HttpResult {
