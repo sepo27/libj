@@ -14,6 +14,7 @@
     "prepare": "cd ../../ && cli/c pkg:bundle http"
   },
   "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sepo27/libj.git"
