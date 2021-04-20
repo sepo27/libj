@@ -2,20 +2,16 @@ name: checks
 on:
   push:
     branches:
-      - master
-    paths:
-      - '.github/workflows/*.yml'
-      - '**.ts'
-      - '!**.d.ts'
-      - './package.json'
-  pull_request:
-    branches:
       - main
     paths:
       - '.github/workflows/*.yml'
       - '**.ts'
       - '!**.d.ts'
       - './package.json'
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
   run-checks:

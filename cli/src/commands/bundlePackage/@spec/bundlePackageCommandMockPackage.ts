@@ -1,5 +1,6 @@
 import { LooseObject, MapS } from '../../../../../common/types';
 import { CliPath } from '../../../CliPath';
+import { bundlePackageGlobNestedPattern } from '../bundlePackageGlobPattern';
 
 interface Params {
   files?: MapS<string>,
@@ -27,20 +28,20 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
       dependencies = [],
       hasCommon = false,
     } = params,
-      fileMap = {};
+    fileMap = {};
 
   mockDistPlantedPathsExist();
-  
+
   mock.execFileSync;
-  
+
   const fileKeys = Object.keys(files);
-  
+
   if (fileKeys.length) {
     fileKeys.forEach(srcFile => {
       const srcFilename = packageDistPlantedSrcPath(srcFile);
 
       mock.glob.sync
-        .withArgs(packageDistPlantedSrcPath('**/*.js'))
+        .withArgs(packageDistPlantedSrcPath(bundlePackageGlobNestedPattern()))
         .returns([srcFilename]);
 
       mock.fs.readFileSync.withArgs(srcFilename).returns(files[srcFile]);
@@ -49,7 +50,7 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
     });
   } else {
     mock.glob.sync
-      .withArgs(packageDistPlantedSrcPath('**/*.js'))
+      .withArgs(packageDistPlantedSrcPath(bundlePackageGlobNestedPattern()))
       .returns([]);
   }
 
@@ -75,7 +76,7 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
 
   mock.fs.copySync;
   mock.fs.removeSync;
-  
+
   return { fileMap };
 
   /*** Private ***/
@@ -84,7 +85,7 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
     mock.fs.existsSync
       .withArgs(CliPath.packageDist(packageName, CliPath.Part.COMMON))
       .returns(hasCommon);
-    
+
     if (hasCommon) {
       mock.fs.existsSync.withArgs(CliPath.packageDist(packageName, packageName)).returns(false);
       mock.fs.existsSync.withArgs(CliPath.packageDistPackages(packageName)).returns(true);
@@ -114,9 +115,9 @@ export const mockBundlePackageCommandPackage = mock => (packageName: string, par
   function packageDistPlantedPath(...parts) {
     return hasCommon
       ? CliPath.packageDistPackages(packageName, ...parts)
-      : CliPath.packageDist(packageName, ...parts)
+      : CliPath.packageDist(packageName, ...parts);
   }
-  
+
   function packageDistPlantedSrcPath(...parts) {
     return packageDistPlantedPath(packageName, CliPath.Part.SRC, ...parts);
   }

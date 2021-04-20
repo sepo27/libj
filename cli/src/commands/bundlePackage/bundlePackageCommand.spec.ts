@@ -1,7 +1,7 @@
 import { CliTBench } from '../../../../packages/cli/.spec/CliTBench';
 import { bundlePackageCommand } from './bundlePackageCommand';
 import { CliPath } from '../../CliPath';
-import { BundlePackageCommandTBench } from './.spec/BundlePackageCommandTBench';
+import { BundlePackageCommandTBench } from './@spec/BundlePackageCommandTBench';
 
 describe('bundlePackageCommand()', () => {
   let bench: CliTBench;
