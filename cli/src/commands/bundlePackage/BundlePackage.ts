@@ -4,14 +4,15 @@ import { CliPath } from '../../CliPath';
 import { BundleModule } from './BundleModule';
 import { BundlePackageJson } from './BundlePackageJson';
 import { LibBundleDependency } from './dependency/LibBundleDependency';
+import { bundlePackageGlobNestedPattern } from './bundlePackageGlobPattern';
 
 export class BundlePackage {
   constructor(private name: string) {
     const
       hasCommon = fs.existsSync(CliPath.packageDist(name, CliPath.Part.COMMON)),
       distFilesPat = hasCommon
-        ? CliPath.packageDistPackagesSrc(name, '**/*.js')
-        : CliPath.packageDistSrc(name, '**/*.js'),
+        ? CliPath.packageDistPackagesSrc(name, bundlePackageGlobNestedPattern())
+        : CliPath.packageDistSrc(name, bundlePackageGlobNestedPattern()),
       distFiles = glob.sync(distFilesPat);
 
     this.hasCommon = hasCommon;

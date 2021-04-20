@@ -1,5 +1,5 @@
 import { CliPath } from '../../../CliPath';
-import { BundlePackageCommandTBench } from '../.spec/BundlePackageCommandTBench';
+import { BundlePackageCommandTBench } from '../@spec/BundlePackageCommandTBench';
 import { makeBundleDependency } from './makeBundleDependency';
 import { LibBundleDependency } from './LibBundleDependency';
 import { CommonBundleDependency } from './CommonBundleDependency';

@@ -4,7 +4,9 @@ import { makeBundleDependency } from './dependency/makeBundleDependency';
 import { LibBundleDependency } from './dependency/LibBundleDependency';
 import { CommonBundleDependency } from './dependency/CommonBundleDependency';
 
-const IMPORT_PATTERN = /require\((['"])(.*?)\1\)/g;
+const
+  RequirePattern = /require\((['"])(.*?)\1\)/g,
+  ImportPattern = /import.*?from\s*(['"])([^'"]*)\1/g;
 
 export class BundleModule {
   constructor(file: string) {
@@ -18,12 +20,21 @@ export class BundleModule {
     if (this.$dependencies) { return this.$dependencies; }
 
     // TODO: refactor into matchAll()
-    const imports = Array
+    let imports = Array
       .from(
         // @ts-ignore: TODO upgrade ts ?
-        this.content.matchAll(IMPORT_PATTERN), // eslint-disable-line quotes
+        this.content.matchAll(RequirePattern),
       )
       .map(m => m[2]);
+
+    imports = imports.concat(
+      Array
+        .from(
+          // @ts-ignore: TODO upgrade ts ?
+          this.content.matchAll(ImportPattern),
+        )
+        .map(m => m[2]),
+    );
 
     return (
       this.$dependencies = imports.map(importPath => makeBundleDependency(this.file, importPath))

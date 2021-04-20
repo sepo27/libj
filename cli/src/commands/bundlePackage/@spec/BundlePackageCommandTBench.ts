@@ -1,6 +1,6 @@
+import * as path from 'path';
 import { CliTBench } from '../../../../../packages/cli/.spec/CliTBench';
 import { mockBundlePackageCommandPackage } from './bundlePackageCommandMockPackage';
-import * as path from "path";
 
 export class BundlePackageCommandTBench extends CliTBench {
   constructor() {
