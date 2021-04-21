@@ -1,10 +1,10 @@
-import { SuccessHttpResponse } from './SuccessHttpResponse';
+import { SuccessHttpResponse, DEFAULT_SUCCESS_HTTP_RESPONSE_STATUS } from './SuccessHttpResponse';
 import { HttpStatus } from '../status/HttpStatus';
 
 describe('SuccessHttpResponse', () => {
   it('assigns default OK status', () => {
     const res = new SuccessHttpResponse();
-    expect(res.status).toBe(HttpStatus.OK);
+    expect(res.status).toBe(DEFAULT_SUCCESS_HTTP_RESPONSE_STATUS);
   });
 
   it('assigns custom status', () => {
@@ -52,7 +52,23 @@ describe('SuccessHttpResponse', () => {
       headers = { 'content-type': 'application/json' },
       res = new SuccessHttpResponse({ headers });
 
-    expect(res.headers).toBe(headers);
+    expect(res.status).toBe(DEFAULT_SUCCESS_HTTP_RESPONSE_STATUS);
+  });
+
+  it('preserves default status when assigns custom headers only', () => {
+    const
+      headers = { foo: 'barrry' },
+      res = new SuccessHttpResponse({ headers });
+
+    expect(res.status).toBe(DEFAULT_SUCCESS_HTTP_RESPONSE_STATUS);
+  });
+
+  it('preserves default status when assigns custom body only', () => {
+    const
+      body = { lady: 'nice' },
+      res = new SuccessHttpResponse({ body });
+
+    expect(res.status).toBe(DEFAULT_SUCCESS_HTTP_RESPONSE_STATUS);
   });
 
   it('assigns custom body only', () => {
