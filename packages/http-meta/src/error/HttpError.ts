@@ -1,14 +1,13 @@
-import { HttpResponseInterface } from '../responseInterface/HttpResponseInterface';
-import { HttpResponseBody, HttpResponseHeaders } from '../responseInterface/types';
+import { HttpResponseInterface } from '../response/HttpResponseInterface';
+import { HttpResponseBody, HttpResponseHeaders, HttpResponseOptions } from '../response/types';
 import { HttpStatus } from '../status/HttpStatus';
 import { httpStatusText } from '../status/httpStatusText';
-import { HttpErrorOptions } from './types';
 
 export class HttpError<B extends HttpResponseBody = HttpResponseBody>
   extends Error
   implements HttpResponseInterface<B>
 { // eslint-disable-line brace-style
-  constructor(status: HttpStatus, { body, headers }: HttpErrorOptions<B> = {}) {
+  constructor(status: HttpStatus, { headers, body }: HttpResponseOptions<B> = {}) {
     super(msg(status, body));
 
     // Set the prototype explicitly
@@ -16,8 +15,8 @@ export class HttpError<B extends HttpResponseBody = HttpResponseBody>
     this.name = HttpError.name;
 
     this.status = status;
-    this.body = body;
     this.headers = headers;
+    this.body = body;
   }
 
   public readonly status: HttpStatus;

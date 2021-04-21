@@ -1,10 +1,11 @@
 import { HttpStatus } from './status/HttpStatus';
 import { HttpMethod } from './HttpMethod';
-import { HttpResponseInterface } from './responseInterface/HttpResponseInterface';
+import { HttpResponseInterface } from './response/HttpResponseInterface';
+import { SuccessHttpResponse } from './response/SuccessHttpResponse';
 import {
   HttpResponseBody,
   HttpResponseHeaders,
-} from './responseInterface/types';
+} from './response/types';
 import {
   HttpError,
   BadRequestHttpError,
@@ -42,6 +43,7 @@ export {
 };
 export {
   HttpResponseInterface,
+  SuccessHttpResponse,
   HttpResponseBody,
   HttpResponseHeaders,
 };
