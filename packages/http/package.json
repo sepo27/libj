@@ -5,7 +5,7 @@
     "fs-extra": "^9.1.0"
   },
   "name": "@libj/http",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Http toolbox",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http/README.md",
