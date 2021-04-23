@@ -28,7 +28,7 @@ export const makeUri = (...args: Args): string => {
   return `${baseUri}${builtUri}`;
 };
 
-/*** Private ***/
+/*** Lib ***/
 
 interface InternalParams extends Params {
   baseUri: BaseUri,
