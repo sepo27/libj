@@ -1,6 +1,6 @@
 {
   "name": "@libj/http-meta",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Http meta kit",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http-meta/README.md",
