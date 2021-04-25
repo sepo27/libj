@@ -1,5 +1,4 @@
 {
-  "dependencies": {},
   "name": "@libj/http-meta",
   "version": "0.0.7",
   "description": "Http meta kit",
