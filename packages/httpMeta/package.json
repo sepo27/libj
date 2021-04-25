@@ -6,7 +6,7 @@
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http-meta/README.md",
   "license": "ISC",
   "scripts": {
-    "prepare": "cd ../../ && cli/c pkg:bundle http-meta"
+    "prepare": "cd ../../ && cli/c pkg:bundle httpMeta"
   },
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
