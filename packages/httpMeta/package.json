@@ -1,7 +1,7 @@
 {
   "dependencies": {},
   "name": "@libj/http-meta",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Http meta kit",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http-meta/README.md",
@@ -21,5 +21,5 @@
     "http method",
     "http error"
   ],
-  "gitHead": "be0ca1372ef78201a78f6a2fd81321dd8bced2a0"
+  "gitHead": "9b735b8bbd7d44a77a5fa1f740a668d1669d540e"
 }
