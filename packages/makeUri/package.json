@@ -1,6 +1,6 @@
 {
   "name": "@libj/make-uri",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Uri builder",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/makeUri/README.md",
