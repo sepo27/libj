@@ -1,4 +1,5 @@
 import { HttpStatus } from './status/HttpStatus';
+import { httpStatusText } from './status/httpStatusText';
 import { HttpMethod } from './HttpMethod';
 import { HttpResponseInterface } from './response/HttpResponseInterface';
 import { SuccessHttpResponse } from './response/SuccessHttpResponse';
@@ -23,7 +24,7 @@ import {
   GatewayTimeoutHttpError,
 } from './error';
 
-export { HttpStatus };
+export { HttpStatus, httpStatusText };
 export { HttpMethod };
 export {
   HttpError,
