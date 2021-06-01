@@ -1,7 +1,6 @@
 import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
-import { HttpMethod } from '../../src/meta/HttpMethod';
-import { HttpStatus } from '../../src/meta/status';
+import { HttpStatus, HttpMethod } from '../../../httpMeta/src';
 
 describe('HttpClient(request)', () => {
   let bench: HttpClientTBench;

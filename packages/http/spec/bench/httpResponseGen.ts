@@ -1,5 +1,5 @@
 import { HttpResponse } from '../../src/client/types';
-import { HttpStatus, httpStatusText } from '../../src/meta/status';
+import { HttpStatus, httpStatusText } from '../../../httpMeta/src';
 
 type Input = Partial<HttpResponse>;
 

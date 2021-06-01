@@ -1,7 +1,9 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { LooseObject } from '../../../../common/types';
 
-export interface HttpRequestOptions extends AxiosRequestConfig {}
+export interface HttpRequestOptions extends AxiosRequestConfig {
+  method?: any, // TODO: find out the way to strictly type it
+}
 
 export interface HttpClientConfig extends HttpRequestOptions {}
 

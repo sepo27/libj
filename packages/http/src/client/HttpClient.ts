@@ -1,9 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import { HttpClientConfig, HttpRequestOptions, HttpResponse, HttpSubmitArgs } from './types';
 import { LooseObject } from '../../../../common/types';
-import { HttpResponseError } from '../error/HttpResponseError';
 import { HttpForm } from '../form/HttpForm';
-import { HttpMethod } from '../meta/HttpMethod';
+import { HttpMethod, HttpError } from '../../../httpMeta/src';
 import { HttpConfigError } from '../error/HttpConfigError';
 
 export class HttpClient {
@@ -40,7 +39,7 @@ export class HttpClient {
       .catch(err => {
         if (err.response) {
           const { status, data, headers } = err.response as HttpResponse;
-          throw new HttpResponseError(status, { data, headers });
+          throw new HttpError(status, { body: data, headers });
         }
         throw err;
       });

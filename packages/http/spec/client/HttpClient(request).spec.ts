@@ -1,9 +1,7 @@
 import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
 import { HttpClient } from '../../src/client/HttpClient';
-import { HttpMethod } from '../../src/meta/HttpMethod';
-import { HttpStatus } from '../../src/meta/status';
-import { HttpResponseError } from '../../src/error/HttpResponseError';
+import { HttpStatus, HttpMethod, HttpError } from '../../../httpMeta/src';
 import { HttpForm } from '../../src/form/HttpForm';
 import { HttpConfigError } from '../../src/error/HttpConfigError';
 
@@ -86,7 +84,7 @@ describe('HttpClient(request)', () => {
 
     return expect(http.request(''))
       .rejects
-      .toMatchObject(new HttpResponseError(HttpStatus.BAD_REQUEST, { data: response.data, headers: response.headers }));
+      .toMatchObject(new HttpError(HttpStatus.BAD_REQUEST, { headers: response.headers, body: response.data }));
   });
 
   it('request() re-throws other errors', () => {
