@@ -109,6 +109,15 @@ describe('BundleDependency', () => {
     expect(d.npmPath).toBe(makeLibjDepName('bar'));
   });
 
+  it('resolves lib dependency npmPath for external multi-word', () => {
+    const d = make(
+      CliPath.packageDistSrc('foo', 'index.js'),
+      '../../barRab/src/bar.js',
+    ) as LibBundleDependency;
+
+    expect(d.npmPath).toBe(makeLibjDepName('bar-rab'));
+  });
+
   it('resolves lib dependency package json', () => {
     const readJsonSpy = bench.mock.fs.readJsonSync;
 

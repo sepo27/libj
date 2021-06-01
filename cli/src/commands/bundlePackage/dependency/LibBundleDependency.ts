@@ -11,7 +11,7 @@ export class LibBundleDependency implements BundleDependencyInterface {
     this.importPath = importPath;
     this.isExternal = contextPackageName !== packageName;
     this.packageName = packageName;
-    this.npmPath = makeLibjDepName(packageName);
+    this.npmPath = this.makeNpmPath(packageName);
     this.packageJson = new BundlePackageJson(packageName);
   }
 
@@ -46,5 +46,10 @@ export class LibBundleDependency implements BundleDependencyInterface {
         .split(path.sep)[0];
 
     return { contextPackageName, packageName };
+  }
+
+  private makeNpmPath(packageName) {
+    // TODO: use string.splitCamelCase() util fn
+    return makeLibjDepName(packageName.split(/(?=[A-Z])/g).join('-').toLowerCase());
   }
 }
