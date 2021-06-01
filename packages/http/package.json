@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@libj/httpMeta": "0.0.12",
+    "@libj/httpMeta": "0.0.13",
     "axios": "^0.21.1",
     "form-data": "^4.0.0",
     "fs-extra": "^9.1.0"
@@ -30,5 +30,5 @@
     "xhr",
     "ajax"
   ],
-  "gitHead": "6e2429de8cae264dfcb8207c588cc37c26ff71b7"
+  "gitHead": "10b63c28115f114e0cbbb6b9253e19303c9cb412"
 }
