@@ -8,7 +8,7 @@ import { rtrimUriPath } from './trimUriPath';
 import { joinUriPath } from './joinUriPath';
 import { UriPart } from './UriPart';
 
-interface Params {
+export interface MakeUriParams {
   scheme?: string,
   authority?: AuthorityOpt, // eslint-disable-line no-use-before-define
   path?: PathOpt, // eslint-disable-line no-use-before-define
@@ -16,7 +16,7 @@ interface Params {
   fragment?: QueryOpt, // eslint-disable-line no-use-before-define
 }
 
-type Args = [Params] | [string] | [string, Params];
+type Args = [MakeUriParams] | [string] | [string, MakeUriParams];
 
 export const makeUri = (...args: Args): string => {
   const
@@ -30,7 +30,7 @@ export const makeUri = (...args: Args): string => {
 
 /*** Lib ***/
 
-interface InternalParams extends Params {
+interface InternalParams extends MakeUriParams {
   baseUri: BaseUri,
 }
 

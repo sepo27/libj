@@ -1,3 +1,3 @@
-import { makeUri } from './makeUri';
+import { makeUri, MakeUriParams } from './makeUri';
 
-export { makeUri };
+export { makeUri, MakeUriParams };
