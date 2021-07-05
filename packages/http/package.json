@@ -6,7 +6,7 @@
     "@libj/http-meta": "0.0.15"
   },
   "name": "@libj/http",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Http toolbox",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http/README.md",
