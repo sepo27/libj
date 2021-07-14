@@ -8,7 +8,7 @@ export class HttpError<B extends HttpResponseBody = HttpResponseBody>
   implements HttpResponseInterface<B>
 { // eslint-disable-line brace-style
   constructor(status: HttpStatus, { headers, body }: HttpResponseOptions<B> = {}) {
-    super(msg(status, body));
+    super(msg(status));
 
     // Set the prototype explicitly
     Object.setPrototypeOf(this, HttpError.prototype);
@@ -26,16 +26,18 @@ export class HttpError<B extends HttpResponseBody = HttpResponseBody>
 
 /*** Lib ***/
 
-function msg(status, body) {
+function msg(status) {
   validateStatus(status);
 
-  let res = `${status} ${httpStatusText(status)}`;
+  return `${status} ${httpStatusText(status)}`;
 
-  if (body) {
-    res += `: ${JSON.stringify(body)}`;
-  }
+  // TODO: this one fails for circular JSON returned by axios
 
-  return res;
+  // if (body) {
+  //   res += `: ${JSON.stringify(body)}`;
+  // }
+
+  // return res;
 }
 
 function validateStatus(status) {

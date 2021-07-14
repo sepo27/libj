@@ -25,7 +25,7 @@ describe('HttpError', () => {
       body = { foo: 'bar' },
       err = new HttpError(status, { body });
 
-    expect(err.message).toBe(`${status} ${httpStatusText(status)}: ${JSON.stringify(body)}`);
+    expect(err.message).toBe(`${status} ${httpStatusText(status)}`);
   });
 
   it('assigns body', () => {
