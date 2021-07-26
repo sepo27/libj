@@ -3,7 +3,7 @@
     "@libj/http-meta": "0.0.16",
     "axios": "^0.21.1",
     "form-data": "^4.0.0",
-    "fs-extra": "^9.1.0"
+    "fs-extra": "^8.1.0"
   },
   "name": "@libj/http",
   "version": "0.0.16",
