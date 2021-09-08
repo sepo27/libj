@@ -50,12 +50,48 @@ describe('HttpClient', () => {
 
     expect(infoSpy.calledOnce).toBeTruthy();
     expect(infoSpy.getCall(0).args).toEqual([
-      `[Http] GET https://foo.bar?baz ${response.status} ${response.statusText}`,
+      `[http] GET https://foo.bar?baz ${response.status} ${response.statusText}`,
     ]);
 
     // Assert request config is returned by callback
 
     expect(resCbResult).toBe(response);
+  });
+
+  it('logs successful response with base url', () => {
+    const
+      reqConfig = {
+        baseURL: 'https://foo.bar',
+        url: '/baz?zak=zak',
+        method: 'post',
+      },
+      response = httpResponseGen({
+        status: HttpStatus.OK,
+        statusText: httpStatusText(HttpStatus.OK),
+        config: reqConfig as AxiosRequestConfig,
+      });
+
+    bench.mock.axios.instance.interceptors.value({
+      response: {
+        use(successCb) {
+          successCb(response);
+        },
+      },
+    });
+
+    const
+      logger = new DummyLogger(),
+      infoSpy = bench.mock.sinon.stub(logger, 'info');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({ logger });
+
+    // Assert logger info called
+
+    expect(infoSpy.calledOnce).toBeTruthy();
+    expect(infoSpy.getCall(0).args).toEqual([
+      `[http] POST https://foo.bar/baz?zak=zak ${response.status} ${response.statusText}`,
+    ]);
   });
 
   it('logs error response', () => {
@@ -97,12 +133,54 @@ describe('HttpClient', () => {
 
     expect(errorSpy.calledOnce).toBeTruthy();
     expect(errorSpy.getCall(0).args).toEqual([
-      `[Http] GET https://bar.baz?fox ${error.response.status} ${error.response.statusText}`,
+      `[http] GET https://bar.baz?fox ${error.response.status} ${error.response.statusText}`,
     ]);
 
     // Assert error is thrown
 
     expect(thrownErr).toBe(error);
+  });
+
+  it('logs error response with base url', () => {
+    const
+      reqConfig = {
+        baseURL: 'https://bar.bazzzzz',
+        url: '/foo#stuff',
+        method: 'get',
+      },
+      error = {
+        config: reqConfig,
+        response: httpResponseGen({
+          status: HttpStatus.BAD_REQUEST,
+          statusText: httpStatusText(HttpStatus.BAD_REQUEST),
+        }),
+      };
+
+    bench.mock.axios.instance.interceptors.value({
+      response: {
+        use(_, failureCb) {
+          try {
+            failureCb(error);
+          } catch (e) {
+            // Silent
+          }
+        },
+      },
+    });
+
+    const
+      logger = new DummyLogger(),
+      errorSpy = bench.mock.sinon.stub(logger, 'error');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({ logger });
+
+    // Assert logger error called
+
+    expect(errorSpy.calledOnce).toBeTruthy();
+    expect(errorSpy.getCall(0).args).toEqual([
+      `[http] GET https://bar.bazzzzz/foo#stuff ${error.response.status} ${error.response.statusText}`,
+    ]);
   });
 
   it('logs other error', () => {
@@ -140,7 +218,7 @@ describe('HttpClient', () => {
 
     expect(errorSpy.calledOnce).toBeTruthy();
     expect(errorSpy.getCall(0).args).toEqual([
-      `[Http] POST https://dummy.error/foo ${error.toString()}`,
+      `[http] POST https://dummy.error/foo ${error.toString()}`,
     ]);
   });
 });

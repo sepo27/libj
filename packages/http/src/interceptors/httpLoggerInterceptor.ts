@@ -1,29 +1,32 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { LoggerInterface } from '../../../../common/LoggerInterface';
 
 export function httpLoggerInterceptor(agent: AxiosInstance, logger: LoggerInterface) {
   agent.interceptors.response.use(
     response => {
-      const { url, method } = response.config;
-
-      const message = `[Http] ${method.toUpperCase()} ${url} ${response.status} ${response.statusText}`;
+      const message = `[http] ${makeEndpoint(response.config)} ${response.status} ${response.statusText}`;
 
       logger.info(message);
 
       return response;
     },
     error => {
-      const
-        { url, method } = error.config,
-        suffix = error.response
-          ? `${error.response.status} ${error.response.statusText}`
-          : error.toString();
+      const suffix = error.response
+        ? `${error.response.status} ${error.response.statusText}`
+        : error.toString();
 
-      const message = `[Http] ${method.toUpperCase()} ${url} ${suffix}`;
+      const message = `[http] ${makeEndpoint(error.config)} ${suffix}`;
 
       logger.error(message);
 
       throw error;
     },
   );
+}
+
+/*** Lib ***/
+
+function makeEndpoint({ method, baseURL, url }: AxiosRequestConfig): string {
+  const uri = baseURL ? `${baseURL}${url}` : url;
+  return `${method.toUpperCase()} ${uri}`;
 }
