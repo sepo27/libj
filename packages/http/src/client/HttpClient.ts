@@ -4,7 +4,7 @@ import { LooseObject } from '../../../../common/types';
 import { HttpForm } from '../form/HttpForm';
 import { HttpMethod, HttpError } from '../../../httpMeta/src';
 import { HttpConfigError } from '../error/HttpConfigError';
-import { httpLoggerInterceptor } from './httpLoggerInterceptor';
+import { httpLoggerInterceptor } from '../interceptors/httpLoggerInterceptor';
 
 export class HttpClient {
   constructor(config: HttpClientConfig = {}) {

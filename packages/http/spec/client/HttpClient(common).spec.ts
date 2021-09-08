@@ -104,6 +104,45 @@ describe('HttpClient', () => {
 
     expect(thrownErr).toBe(error);
   });
+
+  it('logs other error', () => {
+    const
+      reqConfig = {
+        url: 'https://dummy.error/foo',
+        method: 'post',
+      },
+      error = {
+        config: reqConfig,
+        response: undefined,
+        toString() { return 'Error: Dummy error'; },
+      };
+
+    bench.mock.axios.instance.interceptors.value({
+      response: {
+        use(_, failureCb) {
+          try {
+            failureCb(error);
+          } catch (e) {
+            // Silence
+          }
+        },
+      },
+    });
+
+    const
+      logger = new DummyLogger(),
+      errorSpy = bench.mock.sinon.stub(logger, 'error');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({ logger });
+
+    // Assert logger error called
+
+    expect(errorSpy.calledOnce).toBeTruthy();
+    expect(errorSpy.getCall(0).args).toEqual([
+      `[Http] POST https://dummy.error/foo ${error.toString()}`,
+    ]);
+  });
 });
 
 /*** Lib ***/

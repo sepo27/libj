@@ -13,9 +13,13 @@ export function httpLoggerInterceptor(agent: AxiosInstance, logger: LoggerInterf
       return response;
     },
     error => {
-      const { url, method } = error.config;
+      const
+        { url, method } = error.config,
+        suffix = error.response
+          ? `${error.response.status} ${error.response.statusText}`
+          : error.toString();
 
-      const message = `[Http] ${method.toUpperCase()} ${url} ${error.response.status} ${error.response.statusText}`;
+      const message = `[Http] ${method.toUpperCase()} ${url} ${suffix}`;
 
       logger.error(message);
 
