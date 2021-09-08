@@ -19,6 +19,7 @@ export class HttpClientTMock {
 
     const
       axiosInstance = {
+        interceptors: {},
         request() {},
       },
       axiosInstanceMock = ModuleMock(axiosInstance, this.sinon);

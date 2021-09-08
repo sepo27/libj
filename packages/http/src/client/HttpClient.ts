@@ -4,10 +4,18 @@ import { LooseObject } from '../../../../common/types';
 import { HttpForm } from '../form/HttpForm';
 import { HttpMethod, HttpError } from '../../../httpMeta/src';
 import { HttpConfigError } from '../error/HttpConfigError';
+import { httpLoggerInterceptor } from './httpLoggerInterceptor';
 
 export class HttpClient {
   constructor(config: HttpClientConfig = {}) {
     this.agent = axios.create(config);
+
+    // Attach logger
+
+    const { logger } = config;
+    if (logger) {
+      httpLoggerInterceptor(this.agent, logger);
+    }
   }
 
   public get<D = LooseObject>(url: string, options: HttpRequestOptions = {}): Promise<HttpResponse<D>> {

@@ -3,3 +3,4 @@ lerna-debug.log
 packages/*/dist
 .npmrc
 *.tgz
+.sandbox
