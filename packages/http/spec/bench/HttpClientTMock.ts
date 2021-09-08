@@ -17,12 +17,15 @@ export class HttpClientTMock {
   constructor() {
     this.sinon = sinonLib.createSandbox();
 
-    const axiosInstance = ModuleMock({
-      request() {},
-    }, this.sinon);
+    const
+      axiosInstance = {
+        request() {},
+      },
+      axiosInstanceMock = ModuleMock(axiosInstance, this.sinon);
+
     this.axios = {
       main: ModuleMock(axios, this.sinon),
-      instance: axiosInstance,
+      instance: axiosInstanceMock,
     };
     this.axios.main.create.returns(axiosInstance);
 
