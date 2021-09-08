@@ -55,16 +55,42 @@ fi
 
 # Dry compile
 
-# TODO: Accessors are only available when targeting ECMAScript 5 and higher
+# TODO: optimize only when changed
+if grepTypes "ts|tsx"; then
 
-#if grepTypes "ts|tsx";
-#then
-#  infom "Dry compiling..."
+  # packages/*
 
-#  ./node_modules/.bin/tsc --noEmit `diff | grep -P "\.(ts|tsx)$"` || exit 1
+  echo "`diff | grep -P "\.(ts|tsx)$"`" | while read -r file; do
+    if [[ "$file" == "packages"* ]]; then
+      pkgName="`echo "$file" | cut  -d "/" -f 2`"
+      tsConfigPath="packages/$pkgName/tsconfig.json"
 
+      if [[ -f "$tsConfigPath" ]]; then
+        infom "Dry compiling 'packages/$pkgName' ..."
+
+        ./node_modules/.bin/tsc -p "$tsConfigPath" --noEmit || exit 1
+
+        println "done."
+      fi
+    fi
+  done
+
+  # cli
+
+  infom "Dry compiling 'cli'..."
+
+  ./node_modules/.bin/tsc -p ./cli/tsconfig.json --noEmit || exit 1
+
+  println "done."
+
+  # common: TODO
+
+#  infom "Dry compiling 'common'..."
+#
+#  ./node_modules/.bin/tsc -p ./tsconfig.json "./common" --noEmit || exit 1
+#
 #  println "done."
-#fi
+fi
 
 # Test
 
