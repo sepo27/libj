@@ -23,6 +23,11 @@ import {
   ServiceUnavailableHttpError,
   GatewayTimeoutHttpError,
 } from './error';
+import { HttpHeader } from './header/HttpHeader';
+import {
+  makeHttpBearerAuth,
+  parseHttpBearerAuthToken,
+} from './header/auth';
 
 export { HttpStatus, httpStatusText };
 export { HttpMethod };
@@ -47,4 +52,9 @@ export {
   SuccessHttpResponse,
   HttpResponseBody,
   HttpResponseHeaders,
+};
+export {
+  HttpHeader,
+  makeHttpBearerAuth,
+  parseHttpBearerAuthToken,
 };
