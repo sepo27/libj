@@ -18,6 +18,8 @@ export class HttpClient {
     }
   }
 
+  /*** Public ***/
+
   public get<D = LooseObject>(url: string, options: HttpRequestOptions = {}): Promise<HttpResponse<D>> {
     return this.request<D>(url, {
       ...options,
@@ -52,6 +54,8 @@ export class HttpClient {
         throw err;
       });
   }
+
+  public get interceptors() { return this.agent.interceptors; }
 
   /*** Private ***/
 
