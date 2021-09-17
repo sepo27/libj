@@ -1,4 +1,5 @@
 import { HttpAuthScheme } from './HttpAuthScheme';
+import { UnauthorizedHttpError } from '../../error';
 
 export const makeHttpBearerAuth = (token: string): string => {
   if (!token || !token.trim()) {
@@ -7,12 +8,20 @@ export const makeHttpBearerAuth = (token: string): string => {
   return `${HttpAuthScheme.BEARER} ${token.trim()}`;
 };
 
-export const parseHttpBearerAuthToken = (auth: string): string => {
-  const parts = auth.split(HttpAuthScheme.BEARER);
+interface ParseOptions {
+  silent?: boolean,
+}
 
-  if (parts.length === 2) {
+export const parseHttpBearerAuthToken = (auth: string, options: ParseOptions = {}): string | null => {
+  const parts = auth && auth.split(HttpAuthScheme.BEARER);
+
+  if (parts && parts.length === 2 && parts[1].trim()) {
     return parts[1].trim();
   }
 
-  throw new Error(`Unable to parse bearer token from auth: ${auth}`);
+  if (options.silent) {
+    return null;
+  }
+
+  throw new UnauthorizedHttpError();
 };

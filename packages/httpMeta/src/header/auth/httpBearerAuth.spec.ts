@@ -1,5 +1,6 @@
 import { HttpAuthScheme } from './HttpAuthScheme';
 import { makeHttpBearerAuth, parseHttpBearerAuthToken } from './httpBearerAuth';
+import { UnauthorizedHttpError } from '../../error';
 
 describe('makeHttpBearerAuth()', () => {
   it('makes auth for some token', () => {
@@ -40,15 +41,15 @@ describe('parseHttpBearerAuthToken()', () => {
     const auth = `${HttpAuthScheme.BASIC} abcd-efgh`;
 
     expect(() => parseHttpBearerAuthToken(auth)).toThrow(
-      new Error(`Unable to parse bearer token from auth: ${auth}`),
+      new UnauthorizedHttpError(),
     );
   });
 
   it('errors out for auth with invalid scheme #2', () => {
-    const auth = `${HttpAuthScheme.BASIC} abcd-efgh ${HttpAuthScheme.BASIC}`;
+    const auth = `${HttpAuthScheme.BEARER} abcd-efgh ${HttpAuthScheme.BEARER}`;
 
     expect(() => parseHttpBearerAuthToken(auth)).toThrow(
-      new Error(`Unable to parse bearer token from auth: ${auth}`),
+      new UnauthorizedHttpError(),
     );
   });
 
@@ -56,15 +57,30 @@ describe('parseHttpBearerAuthToken()', () => {
     const auth = 'bar';
 
     expect(() => parseHttpBearerAuthToken(auth)).toThrow(
-      new Error(`Unable to parse bearer token from auth: ${auth}`),
+      new UnauthorizedHttpError(),
     );
   });
 
   it('errors out for auth with invalid scheme #4', () => {
-    const auth = `${HttpAuthScheme.BASIC} `;
+    const auth = `${HttpAuthScheme.BEARER} `;
 
     expect(() => parseHttpBearerAuthToken(auth)).toThrow(
-      new Error(`Unable to parse bearer token from auth: ${auth}`),
+      new UnauthorizedHttpError(),
     );
+  });
+
+  it('provides ability to return null when unable to parse token', () => {
+    [
+      '',
+      ' ',
+      null,
+      undefined,
+      `${HttpAuthScheme.BASIC} `,
+      `${HttpAuthScheme.BASIC} abcd-efgh`,
+      `${HttpAuthScheme.BEARER} `,
+      `${HttpAuthScheme.BASIC} abcd-efgh ${HttpAuthScheme.BASIC}`,
+    ].forEach(auth => {
+      expect(parseHttpBearerAuthToken(auth, { silent: true })).toBeNull();
+    });
   });
 });
