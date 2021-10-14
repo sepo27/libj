@@ -1,0 +1,25 @@
+{
+  "name": "@libj/pager",
+  "version": "0.0.1",
+  "description": "Abstract promise based pager",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/pager/README.md",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "cd ../../ && cli/c pkg:bundle pager"
+  },
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sepo27/libj/labels/pkg%3Apager"
+  },
+  "keywords": [
+    "pagination",
+    "paging",
+    "pager"
+  ]
+}
