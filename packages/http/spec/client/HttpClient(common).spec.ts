@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
 import { HttpClient } from '../../src';
-import { LoggerInterface } from '../../../../common/LoggerInterface';
+import { LoggerInterface } from '../../../logger/src/LoggerInterface';
 import { HttpStatus, httpStatusText } from '../../../httpMeta/src';
 
 describe('HttpClient', () => {

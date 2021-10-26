@@ -1,4 +1,4 @@
-import { isArr, isBool, isFn, isNull, isNum, isObj, isStr } from './isType';
+import { isArr, isBool, isEnumVal, isFn, isNull, isNum, isObj, isStr } from './isType';
 
 describe('$', () => {
   describe('isStr()', () => {
@@ -116,6 +116,24 @@ describe('$', () => {
       ['blah', 333, true, false, {}, [], null, undefined].forEach(val => {
         expect(isFn(val)).toBeFalsy();
       });
+    });
+  });
+
+  describe('isEnumVal()', () => {
+    it('returns true if it is', () => {
+      enum Enum {
+        FOO = 'bar',
+      }
+
+      expect(isEnumVal(Enum, 'bar')).toBeTruthy();
+    });
+
+    it('returns false if it is NOT', () => {
+      enum Enum {
+        FOO = 'bar',
+      }
+
+      expect(isEnumVal(Enum, 'dummy')).toBeFalsy();
     });
   });
 });

@@ -1,5 +1,3 @@
-// TODO: move to  packages/logger
-
 export type LoggerArg = (string|number|any[]|Object);
 
 export interface LoggerInterface {
