@@ -1,4 +1,5 @@
 {
+  "dependencies": {},
   "name": "@libj/logger",
   "version": "0.0.3",
   "description": "Generic logger",
@@ -21,5 +22,6 @@
     "logging",
     "logger",
     "log"
-  ]
+  ],
+  "gitHead": "54f8b070b985801949cdd703345ec2c27748bb74"
 }
