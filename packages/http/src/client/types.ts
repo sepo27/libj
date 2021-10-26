@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { LooseObject } from '../../../../common/types';
-import { LoggerInterface } from '../../../logger/src/LoggerInterface';
+import { LoggerInterface } from '../../../logger/src';
 
 export interface HttpRequestOptions extends AxiosRequestConfig {
   method?: any, // TODO: find out the way to strictly type it

@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { LoggerInterface } from '../../../logger/src/LoggerInterface';
+import { LoggerInterface } from '../../../logger/src';
 
 export function httpLoggerInterceptor(agent: AxiosInstance, logger: LoggerInterface) {
   agent.interceptors.response.use(
