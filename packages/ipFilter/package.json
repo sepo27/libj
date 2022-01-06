@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@libj/http-meta": "^0.1.5",
-    "@libj/logger": "^0.0.5",
+    "@libj/http-meta": "0.1.5",
+    "@libj/logger": "0.0.5",
     "ip-range-check": "^0.2.0"
   },
   "name": "@libj/ip-filter",
@@ -34,5 +34,6 @@
   ],
   "devDependencies": {
     "express": "^4.17.2"
-  }
+  },
+  "gitHead": "f3465afd0105f9003e74b9171b25f6181f36e59e"
 }
