@@ -1,6 +1,8 @@
 {
   "dependencies": {
-    "ip-range-check": "^0.2.0"
+    "ip-range-check": "^0.2.0",
+    "@libj/http-meta": "0.1.4",
+    "@libj/logger": "0.0.4"
   },
   "name": "@libj/ip-filter",
   "version": "0.0.0",
@@ -29,5 +31,8 @@
     "ip filter middleware",
     "ip check middleware",
     "ip validation middleware"
-  ]
+  ],
+  "devDependencies": {
+    "express": "^4.17.2"
+  }
 }
