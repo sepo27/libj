@@ -1,0 +1,31 @@
+{
+  "dependencies": {},
+  "name": "@libj/ip-filter",
+  "version": "0.0.0",
+  "description": "Ip filter utils (function, middleware)",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/ipFilter/README.md",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "cd ../../ && cli/c pkg:bundle ipFilter"
+  },
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sepo27/libj/labels/pkg%3Aip-filter"
+  },
+  "keywords": [
+    "ip filtering",
+    "ip filter",
+    "ip check",
+    "ip validation",
+    "ip filtering middleware",
+    "ip filter middleware",
+    "ip check middleware",
+    "ip validation middleware"
+  ]
+}
