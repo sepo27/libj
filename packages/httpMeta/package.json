@@ -1,4 +1,5 @@
 {
+  "dependencies": {},
   "name": "@libj/http-meta",
   "version": "0.1.6",
   "description": "Http meta kit",
@@ -20,5 +21,5 @@
     "http method",
     "http error"
   ],
-  "gitHead": "f3465afd0105f9003e74b9171b25f6181f36e59e"
+  "gitHead": "9f86083862e66b5d34d2fdb6954bb3d6d7d563e4"
 }
