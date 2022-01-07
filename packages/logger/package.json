@@ -1,7 +1,6 @@
 {
-  "dependencies": {},
   "name": "@libj/logger",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generic logger",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/logger/README.md",
