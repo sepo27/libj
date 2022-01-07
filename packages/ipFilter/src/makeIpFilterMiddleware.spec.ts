@@ -4,6 +4,7 @@ import { makeIpFilterMiddleware } from './makeIpFilterMiddleware';
 import { HttpStatus } from '../../httpMeta/src';
 import { LoggerInterface } from '../../logger/src';
 import { ModuleMock } from '../../tbench/src';
+import { WILDCARD_IP } from './constants';
 
 describe('makeIpFilterMiddleware()', () => {
   let sinon, mock;
@@ -49,6 +50,19 @@ describe('makeIpFilterMiddleware()', () => {
     callMiddleware({ whitelist: [] });
 
     assertReject();
+  });
+
+  it('allows whitelisted ip through wildcard', () => {
+    const
+      ip = '1.2.3.4',
+      whitelist = [WILDCARD_IP];
+
+    mock.req.headers['x-forwarded-for'] = ip;
+
+    callMiddleware({ whitelist });
+
+    expect(mock.isIpInRange.notCalled).toBeTruthy();
+    expect(mock.next.calledOnce).toBeTruthy();
   });
 
   it('allows non-blacklisted ip', () => {

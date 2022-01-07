@@ -3,6 +3,7 @@ import { isIpInRange } from './isIpInRange';
 import { HttpStatus } from '../../httpMeta/src';
 import { LooseObject } from '../../../common/types';
 import { LoggerInterface } from '../../logger/src';
+import { WILDCARD_IP } from './constants';
 
 interface Config {
   whitelist: string[],
@@ -17,11 +18,11 @@ interface Config {
 
 export const makeIpFilterMiddleware = (config: Config) => (req: Request, res: Response, next: NextFunction) => { // eslint-disable-line consistent-return
   const
-    { whitelist, blacklist, response } = validateConfig(config),
+    { response } = validateConfig(config),
     ip = defineIp(req, config);
 
   if (ip) {
-    const isAllowed = whitelist ? isIpInRange(ip, whitelist) : !isIpInRange(ip, blacklist);
+    const isAllowed = isIpAllowed(ip, config);
 
     if (isAllowed) {
       return next();
@@ -53,6 +54,16 @@ function defineIp(req: Request, config: Config): string | null {
   }
 
   return req.headers['x-forwarded-for'] || req.socket.remoteAddress || null;
+}
+
+function isIpAllowed(ip: string, config: Config): boolean {
+  const { whitelist, blacklist } = config;
+
+  if (whitelist) {
+    return whitelist.indexOf(WILDCARD_IP) > -1 ? true : isIpInRange(ip, whitelist);
+  }
+
+  return !isIpInRange(ip, blacklist);
 }
 
 function validateConfig(config: Config): Config {
