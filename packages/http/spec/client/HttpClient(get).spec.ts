@@ -1,6 +1,7 @@
 import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
 import { HttpStatus, HttpMethod } from '../../../httpMeta/src';
+import { makeUri } from '../../../makeUri/src';
 
 describe('HttpClient(request)', () => {
   let bench: HttpClientTBench;
@@ -68,5 +69,20 @@ describe('HttpClient(request)', () => {
     expect(http.get('')).resolves.toMatchObject({
       status: res.status,
     });
+  });
+
+  it('get() with query', () => {
+    const { http, mock } = bench.mock.http.instance();
+
+    mock.request;
+
+    const query = { bar: 'baz' };
+
+    http.get('/foo', { query });
+
+    const expectedUrl = makeUri('/foo', { query });
+
+    expect(mock.request.calledOnce).toBeTruthy();
+    expect(mock.request.getCall(0).args[0]).toBe(expectedUrl);
   });
 });

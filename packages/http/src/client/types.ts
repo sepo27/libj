@@ -6,6 +6,10 @@ export interface HttpRequestOptions extends AxiosRequestConfig {
   method?: any, // TODO: find out the way to strictly type it
 }
 
+export interface GetRequestOptions extends HttpRequestOptions {
+  query?: LooseObject, // TODO: import proper type from make-uri
+}
+
 export interface HttpClientConfig extends HttpRequestOptions {
   logger?: LoggerInterface,
 }

@@ -1,10 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
-import { HttpClientConfig, HttpRequestOptions, HttpResponse, HttpSubmitArgs } from './types';
+import { GetRequestOptions, HttpClientConfig, HttpRequestOptions, HttpResponse, HttpSubmitArgs } from './types';
 import { LooseObject } from '../../../../common/types';
 import { HttpForm } from '../form/HttpForm';
 import { HttpMethod, HttpError } from '../../../httpMeta/src';
 import { HttpConfigError } from '../error/HttpConfigError';
 import { httpLoggerInterceptor } from '../interceptors/httpLoggerInterceptor';
+import { makeUri } from '../../../makeUri/src';
 
 export class HttpClient {
   constructor(config: HttpClientConfig = {}) {
@@ -20,8 +21,10 @@ export class HttpClient {
 
   /*** Public ***/
 
-  public get<D = LooseObject>(url: string, options: HttpRequestOptions = {}): Promise<HttpResponse<D>> {
-    return this.request<D>(url, {
+  public get<D = LooseObject>(url: string, options: GetRequestOptions = {}): Promise<HttpResponse<D>> {
+    const finalUrl = options.query ? makeUri(url, { query: options.query }) : url;
+
+    return this.request<D>(finalUrl, {
       ...options,
       method: HttpMethod.GET,
     });
