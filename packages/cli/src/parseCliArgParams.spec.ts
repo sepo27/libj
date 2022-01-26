@@ -72,6 +72,13 @@ describe('parseCliArgParams()', () => {
     });
   });
 
+  it('returns opts with default arg and description', () => {
+    const opts = { baz: 'fox' };
+
+    expect(parseCliArgParams([opts], DefaultParams))
+      .toEqual([DefaultParams.arg, DefaultParams.description, opts]);
+  });
+
   it('errors out for invalid params', () => {
     const invalidParams = [
       ['a', 'b', 'c'],

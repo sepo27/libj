@@ -1,7 +1,7 @@
 import { LooseObject } from '../../../common/types';
 import { isObj, isStr } from '../../../common/isType/isType';
 
-export type CliArgParams<O = LooseObject> = [] | [string] | [string, string] | [string, O] | [string, string, O];
+export type CliArgParams<O = LooseObject> = [] | [string] | [O] | [string, string] | [string, O] | [string, string, O];
 
 interface Defaults<O = LooseObject> {
   arg: string,
@@ -17,8 +17,10 @@ export const parseCliArgParams = <O = LooseObject>(params: CliArgParams<O>, defa
     description = defaults.description,
     opts: O = defaults.opts || {} as O;
 
-  if (params.length === 1) {
-    arg = params[0];
+  if (params.length === 1 && isStr(params[0])) {
+    arg = params[0] as string;
+  } else if (params.length === 1 && isObj(params[0])) {
+    opts = params[0] as O;
   } else if (params.length === 2 && isStr(params[1])) {
     ([arg, description] = params as [string, string]);
   } else if (params.length === 2 && isObj(params[1])) {
