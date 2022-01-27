@@ -2,13 +2,17 @@ import { PagerOptions, PagerRequest } from './types';
 
 const DefaultOptions: PagerOptions = {
   perPage: 25,
+  initialPage: 1,
 };
 
 export class Pager<T = any> {
   constructor( // eslint-disable-line no-useless-constructor
     private request: PagerRequest<T>,
-    private options: PagerOptions = DefaultOptions,
-  ) {} // eslint-disable-line no-empty-function
+    options: PagerOptions = DefaultOptions,
+  ) {
+    this.options = { ...DefaultOptions, ...options };
+    this.page = this.options.initialPage;
+  }
 
   /*** Public ***/
 
@@ -47,6 +51,7 @@ export class Pager<T = any> {
 
   /*** Private ***/
 
-  private page: number = 1;
+  private options: PagerOptions;
+  private page: number;
   private ended: boolean = false;
 }

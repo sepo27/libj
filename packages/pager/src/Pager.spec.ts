@@ -88,6 +88,17 @@ describe('Pager', () => {
     expect(res).toEqual([1, 2, 3, 4]);
   });
 
+  it('supports initial page', () => {
+    const
+      request = makeRequest(7),
+      pager = new Pager(request, {
+        initialPage: 2,
+        perPage: 2,
+      });
+
+    return expect(pager.all()).resolves.toEqual([3, 4, 5, 6, 7]);
+  });
+
   /*** Lib ***/
 
   function makeRequest(dataLength) {
