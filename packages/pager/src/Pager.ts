@@ -29,6 +29,8 @@ export class Pager<T = any> {
       });
   }
 
+  public undone(): boolean { return !this.ended; }
+
   public all(): Promise<T[]> {
     let res = [];
 

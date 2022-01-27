@@ -44,6 +44,21 @@ describe('Pager', () => {
     expect(next).toHaveLength(0);
   });
 
+  it('exposes hasNext() api', async () => {
+    const
+      request = makeRequest(5),
+      pager = new Pager(request, { perPage: 2 });
+
+    const res = [];
+
+    while (pager.undone()) {
+      // eslint-disable-next-line no-await-in-loop
+      res.push(await pager.next());
+    }
+
+    expect(res).toEqual([[1, 2], [3, 4], [5], []]);
+  });
+
   it('prevents redundant requests', async () => {
     const
       request = makeRequest(3),
