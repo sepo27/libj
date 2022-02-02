@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "@libj/http-meta": "0.1.12",
-    "@libj/logger": "0.0.12",
+    "@libj/http-meta": "^0.1.13",
+    "@libj/logger": "^0.1.0",
     "ip-range-check": "^0.2.0"
   },
   "name": "@libj/ip-filter",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Ip filter utils (function, middleware)",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/ipFilter/README.md",
