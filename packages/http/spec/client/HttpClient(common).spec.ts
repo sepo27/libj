@@ -94,7 +94,7 @@ describe('HttpClient', () => {
     ]);
   });
 
-  it('logs error response', () => {
+  it('logs http error response', () => {
     const
       reqConfig = {
         url: 'https://bar.baz?fox',
@@ -183,6 +183,116 @@ describe('HttpClient', () => {
     ]);
   });
 
+  it('logs http error response with request data', () => {
+    const
+      reqConfig = {
+        url: 'https://bar.baz?fox',
+        method: 'post',
+        data: { foo: 'bar' },
+      },
+      error = {
+        config: reqConfig,
+        response: httpResponseGen({
+          status: HttpStatus.BAD_REQUEST,
+          statusText: httpStatusText(HttpStatus.BAD_REQUEST),
+        }),
+      };
+
+    // let thrownErr;
+
+    bench.mock.axios.instance.interceptors.value({
+      response: {
+        use(_, failureCb) {
+          try {
+            failureCb(error);
+          } catch (e) {
+            // Silent
+          }
+        },
+      },
+    });
+
+    const
+      logger = new DummyLogger(),
+      errorSpy = bench.mock.sinon.stub(logger, 'error');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({
+      logger: {
+        logger,
+        options: { requestDataLog: true },
+      },
+    });
+
+    // Assert logger error called
+
+    expect(errorSpy.calledOnce).toBeTruthy();
+
+    expect(errorSpy.getCall(0).args).toEqual([
+      // eslint-disable-next-line max-len
+      `[http] POST https://bar.baz?fox ${JSON.stringify(reqConfig.data)} ${error.response.status} ${error.response.statusText}`,
+    ]);
+  });
+
+  it('logs http error response with request data custom mapper', () => {
+    const
+      reqConfig = {
+        url: 'https://bar.baz?fox',
+        method: 'post',
+        data: { foo: 'bar', baz: 'fox' },
+      },
+      error = {
+        config: reqConfig,
+        response: httpResponseGen({
+          status: HttpStatus.BAD_REQUEST,
+          statusText: httpStatusText(HttpStatus.BAD_REQUEST),
+        }),
+      };
+
+    // let thrownErr;
+
+    bench.mock.axios.instance.interceptors.value({
+      response: {
+        use(_, failureCb) {
+          try {
+            failureCb(error);
+          } catch (e) {
+            // Silent
+          }
+        },
+      },
+    });
+
+    const
+      logger = new DummyLogger(),
+      errorSpy = bench.mock.sinon.stub(logger, 'error');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({
+      logger: {
+        logger,
+        options: {
+          requestDataLog: data => Object
+            .keys(data)
+            .filter(k => k !== 'baz')
+            .reduce(
+              (acc, k) => Object.assign(acc, { [k]: data[k] }),
+              {},
+            ),
+        },
+      },
+    });
+
+    // Assert logger error called
+
+    expect(errorSpy.calledOnce).toBeTruthy();
+
+    expect(errorSpy.getCall(0).args).toEqual([
+      // eslint-disable-next-line max-len
+      `[http] POST https://bar.baz?fox ${JSON.stringify({ foo: 'bar' })} ${error.response.status} ${error.response.statusText}`,
+    ]);
+  });
+
   it('logs other error', () => {
     const
       reqConfig = {
@@ -219,6 +329,46 @@ describe('HttpClient', () => {
     expect(errorSpy.calledOnce).toBeTruthy();
     expect(errorSpy.getCall(0).args).toEqual([
       `[http] POST https://dummy.error/foo ${error.toString()}`,
+    ]);
+  });
+
+  it('logs other error with request data', () => {
+    const
+      reqConfig = {
+        url: 'https://dummy.error/foo',
+        method: 'post',
+        data: { bazzzz: 'barrrrr' },
+      },
+      error = {
+        config: reqConfig,
+        response: undefined,
+        toString() { return 'Error: Dummy error'; },
+      };
+
+    bench.mock.axios.instance.interceptors.value({
+      response: {
+        use(_, failureCb) {
+          try {
+            failureCb(error);
+          } catch (e) {
+            // Silence
+          }
+        },
+      },
+    });
+
+    const
+      logger = new DummyLogger(),
+      errorSpy = bench.mock.sinon.stub(logger, 'error');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({ logger: { logger, options: { requestDataLog: true } } });
+
+    // Assert logger error called
+
+    expect(errorSpy.calledOnce).toBeTruthy();
+    expect(errorSpy.getCall(0).args).toEqual([
+      `[http] POST https://dummy.error/foo ${JSON.stringify(reqConfig.data)} ${error.toString()}`,
     ]);
   });
 });
