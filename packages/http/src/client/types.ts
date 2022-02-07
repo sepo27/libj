@@ -11,17 +11,14 @@ export interface GetRequestOptions extends HttpRequestOptions {
 }
 
 type LoggerSettingRequestDataLogMapper = (data: LooseObject) => LooseObject;
-
 export type { LoggerSettingRequestDataLogMapper as HttpClientLoggerSettingRequestDataLogMapper };
 
 interface LoggerSettingOptions {
   requestDataLog?: boolean | LoggerSettingRequestDataLogMapper,
 }
-
 export { LoggerSettingOptions as HttpClientLoggerSettingOptions };
 
 type LoggerSetting = LoggerInterface | { logger: LoggerInterface, options: LoggerSettingOptions };
-
 export { LoggerSetting as HttpClientLoggerSetting };
 
 export interface HttpClientConfig extends HttpRequestOptions {
