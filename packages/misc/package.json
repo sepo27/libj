@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "sprintf-js": "^1.1.2"
+  },
   "name": "@libj/misc",
   "version": "0.0.1",
   "description": "Miscellaneous",
@@ -20,8 +23,5 @@
   "keywords": [
     "formatted error",
     "config bag"
-  ],
-  "dependencies": {
-    "sprintf-js": "^1.1.2"
-  }
+  ]
 }
