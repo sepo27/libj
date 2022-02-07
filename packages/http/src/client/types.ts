@@ -10,7 +10,7 @@ export interface GetRequestOptions extends HttpRequestOptions {
   query?: LooseObject, // TODO: import proper type from make-uri
 }
 
-type LoggerSettingRequestDataLogMapper = (data: LooseObject) => LooseObject;
+type LoggerSettingRequestDataLogMapper = (data: any) => any;
 export type { LoggerSettingRequestDataLogMapper as HttpClientLoggerSettingRequestDataLogMapper };
 
 interface LoggerSettingOptions {
