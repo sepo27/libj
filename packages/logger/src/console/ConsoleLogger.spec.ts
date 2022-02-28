@@ -26,7 +26,7 @@ describe('ConsoleLogger', () => {
       new ConsoleLogger()[level]('Hello %s', 'World');
 
       expect(mock.calledOnce).toBeTruthy();
-      expect(mock.getCall(0).args).toEqual([`${level}: Hello World`]);
+      expect(mock.getCall(0).args).toEqual([`${level}: Hello World\n`]);
     });
   });
 });
