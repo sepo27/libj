@@ -371,6 +371,98 @@ describe('HttpClient', () => {
       `[http] POST https://dummy.error/foo ${JSON.stringify(reqConfig.data)} ${error.toString()}`,
     ]);
   });
+
+  it('supports cookies option', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    new HttpClient().request('', {
+      cookies: {
+        foo: 'bar',
+        baz: 'abc',
+      },
+    });
+
+    expect(axiosRequestMock.calledOnce);
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      headers: {
+        Cookie: [
+          'foo=bar',
+          'baz=abc',
+        ],
+      },
+    }]);
+  });
+
+  it('appends cookies via option to existing header cookies', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    new HttpClient().request('', {
+      headers: {
+        Cookie: ['foo=bar'],
+      },
+      cookies: {
+        xyz: 'baz',
+      },
+    });
+
+    expect(axiosRequestMock.calledOnce);
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      headers: {
+        Cookie: [
+          'foo=bar',
+          'xyz=baz',
+        ],
+      },
+    }]);
+  });
+
+  it('appends cookies via option to existing header single cookie', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    new HttpClient().request('', {
+      headers: {
+        Cookie: 'abc=zyx',
+      },
+      cookies: {
+        foo: 'baz',
+      },
+    });
+
+    expect(axiosRequestMock.calledOnce);
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      headers: {
+        Cookie: [
+          'abc=zyx',
+          'foo=baz',
+        ],
+      },
+    }]);
+  });
+
+  it('sets cookies from option minding other headers & cookies', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    new HttpClient().request('', {
+      headers: {
+        Foo: 'Bar',
+        Cookie: 'baz=foo',
+      },
+      cookies: {
+        MyCookie: 'val',
+      },
+    });
+
+    expect(axiosRequestMock.calledOnce);
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      headers: {
+        Foo: 'Bar',
+        Cookie: [
+          'baz=foo',
+          'MyCookie=val',
+        ],
+      },
+    }]);
+  });
 });
 
 /*** Lib ***/

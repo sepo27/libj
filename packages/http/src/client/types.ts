@@ -4,6 +4,7 @@ import { LoggerInterface } from '../../../logger/src';
 
 export interface HttpRequestOptions extends AxiosRequestConfig {
   method?: any, // TODO: find out the way to strictly type it
+  cookies?: LooseObject,
 }
 
 export interface GetRequestOptions extends HttpRequestOptions {

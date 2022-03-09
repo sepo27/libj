@@ -64,7 +64,7 @@ export class HttpClient {
 
   private agent: AxiosInstance;
 
-  private processOptions(inOptions) {
+  private processOptions(inOptions: HttpRequestOptions) {
     const options = { ...inOptions };
 
     if (options.data instanceof HttpForm) {
@@ -79,6 +79,24 @@ export class HttpClient {
         ...options.headers,
         ...options.data.getHeaders(),
       };
+    }
+
+    if (options.cookies) {
+      if (!options.headers) {
+        options.headers = {};
+      }
+
+      const cookiesArr = Object
+        .keys(options.cookies)
+        .map(cookieName => `${cookieName}=${options.cookies[cookieName]}`);
+
+      if (!options.headers.Cookie) {
+        options.headers.Cookie = [];
+      } else if (!Array.isArray(options.headers.Cookie)) {
+        options.headers.Cookie = [options.headers.Cookie];
+      }
+
+      options.headers.Cookie = options.headers.Cookie.concat(cookiesArr);
     }
 
     return options;
