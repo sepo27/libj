@@ -9,7 +9,7 @@ import { makeUri } from '../../../makeUri/src';
 
 export class HttpClient {
   constructor(config: HttpClientConfig = {}) {
-    this.agent = axios.create(config);
+    this.agent = axios.create(this.processRequestOptions(config));
 
     // Attach logger
 
@@ -46,7 +46,7 @@ export class HttpClient {
   ): Promise<HttpResponse<D>> {
     return this.agent
       .request<D, HttpResponse<D>>({
-        ...this.processOptions(options),
+        ...this.processRequestOptions(options),
         url,
       })
       .catch(err => {
@@ -64,7 +64,7 @@ export class HttpClient {
 
   private agent: AxiosInstance;
 
-  private processOptions(inOptions: HttpRequestOptions) {
+  private processRequestOptions(inOptions: HttpRequestOptions) {
     const options = { ...inOptions };
 
     if (options.data instanceof HttpForm) {

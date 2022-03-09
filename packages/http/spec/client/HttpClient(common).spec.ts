@@ -463,6 +463,28 @@ describe('HttpClient', () => {
       },
     }]);
   });
+
+  it('supports cookies option in constructor', () => {
+    const axiosCreateMock = bench.mock.axios.main.create;
+
+    // eslint-disable-next-line no-new
+    new HttpClient({
+      cookies: {
+        foo: 'bar',
+        baz: 'zab',
+      },
+    });
+
+    expect(axiosCreateMock.calledOnce).toBeTruthy();
+    expect(axiosCreateMock.getCall(0).args).toMatchObject([{
+      headers: {
+        Cookie: [
+          'foo=bar',
+          'baz=zab',
+        ],
+      },
+    }]);
+  });
 });
 
 /*** Lib ***/
