@@ -41,7 +41,14 @@ export abstract class BaseLogger {
       ? sprintf('%s: %s', prefix.join(' '), message)
       : message;
 
-    return this.sprintf(finalMessage, formatArgs);
+    try {
+      return this.sprintf(finalMessage, formatArgs);
+    } catch (err) {
+      if (this.isSprintfError(err)) {
+        return finalMessage;
+      }
+      throw err;
+    }
   }
 
   protected sprintf(message: string, args: LoggerArg[]) {
@@ -66,5 +73,9 @@ export abstract class BaseLogger {
     }
 
     return { level, message, formatArgs };
+  }
+
+  private isSprintfError(err: Error): boolean {
+    return (err instanceof TypeError && err.message.includes('[sprintf]'));
   }
 }

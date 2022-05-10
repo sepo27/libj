@@ -70,4 +70,28 @@ describe('BaseLogger', () => {
 
     expect(logger.foo('Hello World')).toBe('[Fooo]: Hello World');
   });
+
+  it('tolerates % symbols in message', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const logger = new DummyLogger();
+
+    expect(logger.foo('Bar %foo')).toBe('Bar %foo');
+  });
+
+  it('escapes % symbols in params', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const logger = new DummyLogger();
+
+    expect(logger.foo('Foo %s', '%bar')).toBe('Foo %bar');
+  });
 });
