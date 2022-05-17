@@ -76,6 +76,6 @@ export abstract class BaseLogger {
   }
 
   private isSprintfError(err: Error): boolean {
-    return (err instanceof TypeError && err.message.includes('[sprintf]'));
+    return err.message.includes('[sprintf]');
   }
 }
