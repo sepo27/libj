@@ -1,16 +1,21 @@
 import { AxiosRequestConfig } from 'axios';
+import * as AxiosRetryModule from '../../src/lib/axiosRetry';
 import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
 import { HttpClient } from '../../src';
 import { LoggerInterface } from '../../../logger/src/LoggerInterface';
 import { HttpStatus, httpStatusText } from '../../../httpMeta/src';
+import * as HttpLoggerInterceptorModule from '../../src/interceptors/httpLoggerInterceptor';
 
 describe('HttpClient', () => {
-  let bench: HttpClientTBench;
+  let
+    bench: HttpClientTBench,
+    axiosRetryMock;
 
   beforeEach(() => {
     bench = new HttpClientTBench();
     bench.mock.axios.instance.request.resolves(httpResponseGen());
+    axiosRetryMock = bench.mock.sinon.stub(AxiosRetryModule, 'axiosRetry');
   });
 
   afterEach(() => {
@@ -483,6 +488,49 @@ describe('HttpClient', () => {
           'baz=zab',
         ],
       },
+    }]);
+  });
+
+  it('supports retry logic over constructor', () => {
+    const retryConfig = {
+      retries: 3,
+      retryDelay: () => 300,
+    };
+
+    const client = new HttpClient({ retry: retryConfig });
+
+    expect(axiosRetryMock.calledOnce).toBeTruthy();
+    // @ts-ignore
+    expect(axiosRetryMock.getCall(0).args).toEqual([client.agent, retryConfig]);
+  });
+
+  it('skips retry logic over constructor if not configured', () => {
+    // eslint-disable-next-line no-new
+    new HttpClient();
+
+    expect(axiosRetryMock.callCount).toBe(0);
+  });
+
+  it('properly supports logger with retry logic', () => {
+    const httpLoggerInterceptorMock = bench.mock.sinon.stub(HttpLoggerInterceptorModule, 'httpLoggerInterceptor');
+
+    // eslint-disable-next-line no-new
+    new HttpClient({ retry: { retries: 1 }, logger: new DummyLogger() });
+
+    bench.mock.sinon.assert.callOrder(httpLoggerInterceptorMock, axiosRetryMock);
+  });
+
+  it('overwrites retry config on request level', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    const retryConfig = { retries: 1 };
+
+    new HttpClient().request('/dummy', { retry: retryConfig });
+
+    expect(axiosRequestMock.calledOnce).toBeTruthy();
+    expect(axiosRequestMock.getCall(0).args).toEqual([{
+      url: '/dummy',
+      'axios-retry': retryConfig,
     }]);
   });
 });

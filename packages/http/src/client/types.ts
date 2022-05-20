@@ -1,10 +1,14 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { IAxiosRetryConfig } from 'axios-retry';
 import { LooseObject } from '../../../../common/types';
 import { LoggerInterface } from '../../../logger/src';
+
+export type HttpRetryConfig = IAxiosRetryConfig;
 
 export interface HttpRequestOptions extends AxiosRequestConfig {
   method?: any, // TODO: find out the way to strictly type it
   cookies?: LooseObject,
+  retry?: HttpRetryConfig,
 }
 
 export interface GetRequestOptions extends HttpRequestOptions {

@@ -7,6 +7,7 @@ import {
   HttpResponse,
   HttpSubmitArgs,
   HttpClientLoggerSetting,
+  HttpRetryConfig,
 } from './client/types';
 import { HttpForm } from './form/HttpForm';
 
@@ -19,6 +20,7 @@ export {
   HttpSubmitArgs,
   HttpClientLoggerSetting,
   LoggerInterface,
+  HttpRetryConfig,
 };
 
 export { HttpForm };

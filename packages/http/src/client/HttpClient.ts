@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { axiosRetry } from '../lib/axiosRetry';
 import { GetRequestOptions, HttpClientConfig, HttpRequestOptions, HttpResponse, HttpSubmitArgs } from './types';
 import { LooseObject } from '../../../../common/types';
 import { HttpForm } from '../form/HttpForm';
@@ -16,6 +17,12 @@ export class HttpClient {
     const { logger } = config;
     if (logger) {
       httpLoggerInterceptor(this.agent, logger);
+    }
+
+    // Configure retry logic
+
+    if (config.retry) {
+      axiosRetry(this.agent, config.retry);
     }
   }
 
@@ -97,6 +104,11 @@ export class HttpClient {
       }
 
       options.headers.Cookie = options.headers.Cookie.concat(cookiesArr);
+    }
+
+    if (options.retry) {
+      options['axios-retry'] = { ...options.retry };
+      delete options.retry;
     }
 
     return options;
