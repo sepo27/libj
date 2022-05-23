@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@libj/http-meta": "0.1.23",
-    "@libj/logger": "0.2.2",
+    "@libj/http-meta": "^0.1.24",
+    "@libj/logger": "^0.2.3",
     "@libj/make-uri": "1.1.15",
     "axios": "^0.21.1",
     "axios-retry": "^3.2.5",
@@ -9,7 +9,7 @@
     "fs-extra": "^8.1.0"
   },
   "name": "@libj/http",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Http toolbox",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http/README.md",
