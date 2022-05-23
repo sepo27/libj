@@ -1,6 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
 import { axiosRetry } from '../lib/axiosRetry';
-import { GetRequestOptions, HttpClientConfig, HttpRequestOptions, HttpResponse, HttpSubmitArgs } from './types';
+import {
+  GetRequestOptions,
+  HttpClientConfig,
+  HttpRequestOptions,
+  HttpResponse,
+  HttpRetryConfig,
+  HttpSubmitArgs,
+} from './types';
 import { LooseObject } from '../../../../common/types';
 import { HttpForm } from '../form/HttpForm';
 import { HttpMethod, HttpError } from '../../../httpMeta/src';
@@ -67,9 +74,14 @@ export class HttpClient {
 
   public get interceptors() { return this.agent.interceptors; }
 
+  public setRetry(config: HttpRetryConfig) {
+    this.retryConfig = config;
+  }
+
   /*** Private ***/
 
   private agent: AxiosInstance;
+  private retryConfig: HttpRetryConfig;
 
   private processRequestOptions(inOptions: HttpRequestOptions) {
     const options = { ...inOptions };
@@ -106,9 +118,21 @@ export class HttpClient {
       options.headers.Cookie = options.headers.Cookie.concat(cookiesArr);
     }
 
+    // Handle retry config
+
+    const retryConfig = {};
+
+    if (this.retryConfig) {
+      Object.assign(retryConfig, this.retryConfig);
+    }
+
     if (options.retry) {
-      options['axios-retry'] = { ...options.retry };
+      Object.assign(retryConfig, options.retry);
       delete options.retry;
+    }
+
+    if (Object.keys(retryConfig).length) {
+      options['axios-retry'] = retryConfig;
     }
 
     return options;

@@ -533,6 +533,41 @@ describe('HttpClient', () => {
       'axios-retry': retryConfig,
     }]);
   });
+
+  it('supports setting retry config after client instantiated', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    const retryConfig = { retries: 5 };
+
+    const client = new HttpClient();
+    client.setRetry(retryConfig);
+    client.request('/dummy');
+
+    expect(axiosRequestMock.calledOnce).toBeTruthy();
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      'axios-retry': retryConfig,
+    }]);
+  });
+
+  it('merges request retry config with global one', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    const
+      globalRetryConfig = { retries: 3, retryDelay: () => 500 },
+      requestRetryConfig = { retries: 5 };
+
+    const client = new HttpClient();
+    client.setRetry(globalRetryConfig);
+    client.request('/dummy', { retry: requestRetryConfig });
+
+    expect(axiosRequestMock.calledOnce).toBeTruthy();
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      'axios-retry': {
+        ...globalRetryConfig,
+        ...requestRetryConfig,
+      },
+    }]);
+  });
 });
 
 /*** Lib ***/
