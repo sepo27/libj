@@ -75,13 +75,13 @@ export class HttpClient {
   public get interceptors() { return this.agent.interceptors; }
 
   public setRetry(config: HttpRetryConfig) {
-    this.retryConfig = config;
+    this.retryConfig = { ...this.retryConfig, ...config };
   }
 
   /*** Private ***/
 
   private agent: AxiosInstance;
-  private retryConfig: HttpRetryConfig;
+  private retryConfig: HttpRetryConfig = {};
 
   private processRequestOptions(inOptions: HttpRequestOptions) {
     const options = { ...inOptions };
@@ -120,11 +120,7 @@ export class HttpClient {
 
     // Handle retry config
 
-    const retryConfig = {};
-
-    if (this.retryConfig) {
-      Object.assign(retryConfig, this.retryConfig);
-    }
+    const retryConfig = { ...this.retryConfig };
 
     if (options.retry) {
       Object.assign(retryConfig, options.retry);

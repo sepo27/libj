@@ -549,6 +549,28 @@ describe('HttpClient', () => {
     }]);
   });
 
+  it('merges retry configs when setting multiple times', () => {
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    const
+      retryConfigOne = { retries: 3, retryDelay: () => 1000 },
+      retryConfigTwo = { retryDelay: () => 500 };
+
+    const client = new HttpClient();
+    client.setRetry(retryConfigOne);
+    client.setRetry(retryConfigTwo);
+
+    client.request('/dummy');
+
+    expect(axiosRequestMock.calledOnce).toBeTruthy();
+    expect(axiosRequestMock.getCall(0).args).toMatchObject([{
+      'axios-retry': {
+        ...retryConfigOne,
+        ...retryConfigTwo,
+      },
+    }]);
+  });
+
   it('merges request retry config with global one', () => {
     const axiosRequestMock = bench.mock.axios.instance.request;
 
