@@ -62,4 +62,43 @@ describe('makeUri()', () => {
   it('with multiple paths to join', () => {
     expect(makeUri({ path: ['foo', '/bar', '/baz'] })).toBe('/foo/bar/baz');
   });
+
+  it('with path trimTrail option and string path', () => {
+    expect(makeUri({
+      path: {
+        path: '/foo/',
+        opts: { trimTrial: true },
+      },
+    })).toBe('/foo');
+  });
+
+  it('with path trimTrail option and string path #2', () => {
+    expect(makeUri({
+      path: {
+        path: '/foo///',
+        opts: { trimTrial: true },
+      },
+    })).toBe('/foo');
+  });
+
+  it('with path trimTrial option & multiple paths', () => {
+    expect(makeUri({
+      path: {
+        path: ['/foo', '/bar/', '/baz///'],
+        opts: { trimTrial: true },
+      },
+    })).toBe('/foo/bar/baz');
+  });
+
+  it('with path trimTrial option & template', () => {
+    expect(makeUri({
+      path: {
+        path: {
+          template: '/foo/:bar/baz///',
+          params: { bar: 'abc' },
+        },
+        opts: { trimTrial: true },
+      },
+    })).toBe('/foo/abc/baz');
+  });
 });

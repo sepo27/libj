@@ -45,9 +45,9 @@ export const UriTemplate = {
     return produce(Tpl.USER, { user: val });
   },
 
-  path(val: string): string {
+  path(val: string, { trimTrail }: { trimTrail?: boolean } = { trimTrail: false }): string {
     return produce(Tpl.PATH, { path: val }, {
-      sanitize: /^\/+/,
+      sanitize: trimTrail ? /^\/+|\/+$/g : /^\/+/,
     });
   },
 

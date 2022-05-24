@@ -47,7 +47,18 @@ interface PathParams {
   params: LooseObject,
 }
 
-type PathOpt = string | PathParams | string[];
+type PathVariants = string | PathParams | string[];
+
+interface PathOptOptions {
+  trimTrial?: boolean,
+}
+
+interface PathOptWithOpts {
+  path: PathVariants,
+  opts: PathOptOptions,
+}
+
+type PathOpt = PathVariants | PathOptWithOpts;
 
 interface QueryParams {
   $data: LooseObject,
@@ -181,6 +192,19 @@ function makeAuthority(authority, { scheme, baseUri }: InternalParams) {
 }
 
 function makePath(path) {
+  let resPath, opts: PathOptOptions = { trimTrial: false };
+
+  if (isObj(path) && path.path && path.opts) {
+    ({ path: resPath, opts } = path as PathOptWithOpts);
+    resPath = makeActualPath(resPath);
+  } else {
+    resPath = makeActualPath(path);
+  }
+
+  return UriTemplate.path(resPath, { trimTrail: opts.trimTrial });
+}
+
+function makeActualPath(path) {
   let res = '';
 
   if (isStr(path)) {
@@ -204,7 +228,7 @@ function makePath(path) {
     res = joinUriPath(...path);
   }
 
-  return UriTemplate.path(res);
+  return res;
 }
 
 function makeQuery(query, { authority, path, baseUri }: InternalParams) {
