@@ -67,7 +67,7 @@ describe('makeUri()', () => {
     expect(makeUri({
       path: {
         path: '/foo/',
-        opts: { trimTrial: true },
+        opts: { trimTrail: true },
       },
     })).toBe('/foo');
   });
@@ -76,7 +76,7 @@ describe('makeUri()', () => {
     expect(makeUri({
       path: {
         path: '/foo///',
-        opts: { trimTrial: true },
+        opts: { trimTrail: true },
       },
     })).toBe('/foo');
   });
@@ -85,7 +85,7 @@ describe('makeUri()', () => {
     expect(makeUri({
       path: {
         path: ['/foo', '/bar/', '/baz///'],
-        opts: { trimTrial: true },
+        opts: { trimTrail: true },
       },
     })).toBe('/foo/bar/baz');
   });
@@ -97,7 +97,7 @@ describe('makeUri()', () => {
           template: '/foo/:bar/baz///',
           params: { bar: 'abc' },
         },
-        opts: { trimTrial: true },
+        opts: { trimTrail: true },
       },
     })).toBe('/foo/abc/baz');
   });

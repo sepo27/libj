@@ -50,7 +50,7 @@ interface PathParams {
 type PathVariants = string | PathParams | string[];
 
 interface PathOptOptions {
-  trimTrial?: boolean,
+  trimTrail?: boolean,
 }
 
 interface PathOptWithOpts {
@@ -192,7 +192,7 @@ function makeAuthority(authority, { scheme, baseUri }: InternalParams) {
 }
 
 function makePath(path) {
-  let resPath, opts: PathOptOptions = { trimTrial: false };
+  let resPath, opts: PathOptOptions = { trimTrail: false };
 
   if (isObj(path) && path.path && path.opts) {
     ({ path: resPath, opts } = path as PathOptWithOpts);
@@ -201,7 +201,7 @@ function makePath(path) {
     resPath = makeActualPath(path);
   }
 
-  return UriTemplate.path(resPath, { trimTrail: opts.trimTrial });
+  return UriTemplate.path(resPath, { trimTrail: opts.trimTrail });
 }
 
 function makeActualPath(path) {
