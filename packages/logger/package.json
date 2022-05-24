@@ -3,7 +3,7 @@
     "sprintf-js": "^1.1.2"
   },
   "name": "@libj/logger",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Generic logger",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/logger/README.md",
