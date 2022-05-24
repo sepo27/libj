@@ -1,4 +1,5 @@
 {
+  "dependencies": {},
   "name": "@libj/make-uri",
   "version": "1.2.0",
   "description": "Uri builder",
@@ -29,5 +30,5 @@
     "make url",
     "url"
   ],
-  "gitHead": "0a6a9095b97de86372fb2b30d3865fefeee26327"
+  "gitHead": "41141b1a58ed4e0b6f9330597353efaf0c4fa4d7"
 }
