@@ -1,15 +1,15 @@
 {
   "dependencies": {
-    "@libj/http-meta": "0.1.25",
-    "@libj/logger": "0.2.4",
-    "@libj/make-uri": "1.1.15",
+    "@libj/http-meta": "^0.1.26",
+    "@libj/logger": "^0.2.5",
+    "@libj/make-uri": "^1.2.0",
     "axios": "^0.21.1",
     "axios-retry": "^3.2.5",
     "form-data": "^4.0.0",
     "fs-extra": "^8.1.0"
   },
   "name": "@libj/http",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "Http toolbox",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/http/README.md",
