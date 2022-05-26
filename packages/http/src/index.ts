@@ -10,6 +10,7 @@ import {
   HttpRetryConfig,
 } from './client/types';
 import { HttpForm } from './form/HttpForm';
+import { UrlEncodedHttpForm } from './form/UrlEncodedHttpForm';
 
 export {
   HttpClient,
@@ -23,4 +24,4 @@ export {
   HttpRetryConfig,
 };
 
-export { HttpForm };
+export { HttpForm, UrlEncodedHttpForm };
