@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@libj/http-meta": "^0.2.0",
-    "@libj/logger": "^0.2.8",
-    "@libj/make-uri": "^1.2.3",
+    "@libj/http-meta": "0.2.0",
+    "@libj/logger": "0.2.8",
+    "@libj/make-uri": "1.2.3",
     "axios": "^0.21.1",
     "axios-retry": "^3.2.5",
     "form-data": "^4.0.0",
@@ -33,5 +33,5 @@
     "xhr",
     "ajax"
   ],
-  "gitHead": "b0c2aefa422b03d79d900daaf1558e4933ed0730"
+  "gitHead": "22d4bdfa2f99803f584181fd0f2a8f583d254556"
 }
