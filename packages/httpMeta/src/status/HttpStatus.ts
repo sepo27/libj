@@ -23,6 +23,7 @@ export enum HttpStatus {
   NOT_ACCEPTABLE = 406,
   CONFLICT = 409,
   PRECONDITION_FAILED = 412,
+  UNSUPPORTED_MEDIA_TYPE = 415,
 
   /*** 5xx ***/
 
