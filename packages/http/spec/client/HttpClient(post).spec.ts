@@ -1,6 +1,7 @@
 import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
 import { HttpStatus, HttpMethod } from '../../../httpMeta/src';
+import { UrlEncodedHttpForm } from '../../src/form/UrlEncodedHttpForm';
 
 describe('HttpClient(request)', () => {
   let bench: HttpClientTBench;
@@ -104,6 +105,67 @@ describe('HttpClient(request)', () => {
 
     expect(http.post('')).resolves.toMatchObject({
       status: res.status,
+    });
+  });
+
+  it('supports UrlEncodedHttpForm', () => {
+    const { http, mock } = bench.mock.http.instance();
+    mock.request;
+
+    const form = new UrlEncodedHttpForm({ foo: 'baz' });
+
+    http.post('/dummy', form);
+
+    expect(mock.request.calledOnce).toBeTruthy();
+    expect(mock.request.getCall(0).args[1]).toMatchObject({
+      data: form.toBody(),
+      headers: form.getHeaders(),
+    });
+  });
+
+  it('supports UrlEncodedHttpForm preserving other headers & options passed along', () => {
+    const { http, mock } = bench.mock.http.instance();
+    mock.request;
+
+    const
+      form = new UrlEncodedHttpForm({}),
+      cookies = { xyz: 'abc' },
+      headers = {
+        'Content-Type': 'application/foo',
+        abc: 'xyz',
+      };
+
+    http.post('/dummy', form, { headers, cookies });
+
+    expect(mock.request.calledOnce).toBeTruthy();
+    expect(mock.request.getCall(0).args[1]).toMatchObject({
+      headers: {
+        ...headers,
+        ...form.getHeaders(),
+      },
+      cookies,
+    });
+  });
+
+  it('supports UrlEncodedHttpForm de-duplicating existing lower cased content type in headers', () => {
+    const { http, mock } = bench.mock.http.instance();
+    mock.request;
+
+    const
+      form = new UrlEncodedHttpForm({}),
+      headers = {
+        'content-type': 'application/bar',
+        bbc: 'sucks',
+      };
+
+    http.post('/dummy', form, { headers });
+
+    expect(mock.request.calledOnce).toBeTruthy();
+    expect(mock.request.getCall(0).args[1]).toMatchObject({
+      headers: {
+        bbc: 'sucks',
+        ...form.getHeaders(),
+      },
     });
   });
 });

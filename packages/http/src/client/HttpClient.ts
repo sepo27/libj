@@ -14,6 +14,7 @@ import { HttpMethod, HttpError } from '../../../httpMeta/src';
 import { HttpConfigError } from '../error/HttpConfigError';
 import { httpLoggerInterceptor } from '../interceptors/httpLoggerInterceptor';
 import { makeUri } from '../../../makeUri/src';
+import { UrlEncodedHttpForm } from '../form/UrlEncodedHttpForm';
 
 export class HttpClient {
   constructor(config: HttpClientConfig = {}) {
@@ -45,7 +46,23 @@ export class HttpClient {
   }
 
   public post<D = LooseObject>(...args: HttpSubmitArgs): Promise<HttpResponse<D>> {
-    const { url, data, options } = this.extractSubmitArgs(args);
+    const { url, data: inData, options: inOptions = {} } = this.extractSubmitArgs(args);
+
+    let data, options;
+
+    if (inData instanceof UrlEncodedHttpForm) {
+      data = inData.toBody();
+      options = {
+        ...inOptions,
+        headers: {
+          ...(inOptions.headers),
+          ...inData.getHeaders(),
+        },
+      };
+    } else {
+      data = inData;
+      options = inOptions;
+    }
 
     return this.request<D>(url, {
       ...options,
@@ -134,7 +151,7 @@ export class HttpClient {
     return options;
   }
 
-  private extractSubmitArgs(args: HttpSubmitArgs) {
+  private extractSubmitArgs(args: HttpSubmitArgs): { url: string, data: any, options: HttpRequestOptions } {
     let url, data = {}, options = {};
 
     if (args.length === 1) {
