@@ -1,6 +1,6 @@
 {
   "name": "@libj/pager",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Abstract promise based pager",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/pager/README.md",
