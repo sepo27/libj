@@ -4,7 +4,7 @@ import { HttpClientTBench } from '../bench/HttpClientTBench';
 import { httpResponseGen } from '../bench/httpResponseGen';
 import { HttpClient } from '../../src';
 import { LoggerInterface } from '../../../logger/src/LoggerInterface';
-import { HttpStatus, httpStatusText } from '../../../httpMeta/src';
+import { HttpStatus, httpStatusText, makeHttpBearerAuth } from '../../../httpMeta/src';
 import * as HttpLoggerInterceptorModule from '../../src/interceptors/httpLoggerInterceptor';
 
 describe('HttpClient', () => {
@@ -589,6 +589,83 @@ describe('HttpClient', () => {
         ...requestRetryConfig,
       },
     }]);
+  });
+
+  it('supports auth with bearer token in constructor', () => {
+    const token = 'sdlfksjdlfj';
+
+    // eslint-disable-next-line no-new
+    new HttpClient({ auth: { bearerToken: token } });
+
+    const axiosCreateMock = bench.mock.axios.main.create;
+
+    expect(axiosCreateMock.calledOnce).toBeTruthy();
+
+    const actualConfig = axiosCreateMock.getCall(0).args[0];
+
+    expect(actualConfig).toMatchObject({
+      headers: {
+        Authorization: makeHttpBearerAuth(token),
+      },
+    });
+    expect(actualConfig).not.toMatchObject({ auth: { bearerToken: token } });
+  });
+
+  it('supports auth with bearer token in constructor preserving other headers', () => {
+    const
+      token = 'sdlfksjdlfj',
+      config = {
+        auth: { bearerToken: token },
+        headers: {
+          Authorization: 'foo: bar',
+          Foo: 'Bar',
+        },
+      };
+
+    // eslint-disable-next-line no-new
+    new HttpClient(config);
+
+    const axiosCreateMock = bench.mock.axios.main.create;
+
+    expect(axiosCreateMock.calledOnce).toBeTruthy();
+
+    const actualConfig = axiosCreateMock.getCall(0).args[0];
+
+    expect(actualConfig).toMatchObject({
+      headers: {
+        Foo: 'Bar',
+        Authorization: makeHttpBearerAuth(token),
+      },
+    });
+    expect(actualConfig).not.toMatchObject({ auth: { bearerToken: token } });
+  });
+
+  it('supports auth with bearer in request', () => {
+    const
+      token = ';lkja;lskdfj;lskadf',
+      options = {
+        headers: {
+          Authorization: 'bar: foo',
+          Bar: 'Foo',
+        },
+        auth: { bearerToken: token },
+      };
+
+    const axiosRequestMock = bench.mock.axios.instance.request;
+
+    new HttpClient().request('/dummy', options);
+
+    expect(axiosRequestMock.calledOnce).toBeTruthy();
+
+    const actualOptions = axiosRequestMock.getCall(0).args[0];
+
+    expect(actualOptions).toMatchObject({
+      headers: {
+        Bar: 'Foo',
+        Authorization: makeHttpBearerAuth(token),
+      },
+    });
+    expect(actualOptions).not.toMatchObject({ auth: { bearerToken: token } });
   });
 });
 

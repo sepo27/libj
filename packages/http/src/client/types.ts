@@ -5,10 +5,15 @@ import { LoggerInterface } from '../../../logger/src';
 
 export type HttpRetryConfig = IAxiosRetryConfig;
 
-export interface HttpRequestOptions extends AxiosRequestConfig {
+export interface HtpRequestOptionsBearerAuth {
+  bearerToken: string
+}
+
+export interface HttpRequestOptions extends Omit<AxiosRequestConfig, 'auth'> {
   method?: any, // TODO: find out the way to strictly type it
   cookies?: LooseObject,
   retry?: HttpRetryConfig,
+  auth?: { username: string, password: string } | HtpRequestOptionsBearerAuth
 }
 
 export interface GetRequestOptions extends HttpRequestOptions {

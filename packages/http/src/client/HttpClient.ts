@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { axiosRetry } from '../lib/axiosRetry';
 import {
-  GetRequestOptions,
+  GetRequestOptions, HtpRequestOptionsBearerAuth,
   HttpClientConfig,
   HttpRequestOptions,
   HttpResponse,
@@ -10,7 +10,7 @@ import {
 } from './types';
 import { LooseObject } from '../../../../common/types';
 import { HttpForm } from '../form/HttpForm';
-import { HttpMethod, HttpError } from '../../../httpMeta/src';
+import { HttpMethod, HttpError, makeHttpBearerAuth } from '../../../httpMeta/src';
 import { HttpConfigError } from '../error/HttpConfigError';
 import { httpLoggerInterceptor } from '../interceptors/httpLoggerInterceptor';
 import { makeUri } from '../../../makeUri/src';
@@ -148,7 +148,17 @@ export class HttpClient {
       options['axios-retry'] = retryConfig;
     }
 
-    return options;
+    // Handle Bearer auth token
+
+    if (inOptions.auth && (inOptions.auth as HtpRequestOptionsBearerAuth).bearerToken) {
+      options.headers = {
+        ...options.headers,
+        Authorization: makeHttpBearerAuth((inOptions.auth as HtpRequestOptionsBearerAuth).bearerToken),
+      };
+      delete options.auth;
+    }
+
+    return options as AxiosRequestConfig;
   }
 
   private extractSubmitArgs(args: HttpSubmitArgs): { url: string, data: any, options: HttpRequestOptions } {
