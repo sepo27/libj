@@ -1,6 +1,6 @@
 import * as sinonLib from 'sinon';
 import * as fs from 'fs';
-import { ModuleMock } from '../../tbench/src';
+import { ModuleMock } from '../../../tbench/src';
 import { resolveConfig } from './resolveConfig';
 
 describe('resolveConfig()', () => {
