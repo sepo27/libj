@@ -40,6 +40,10 @@ export const resolveConfig = (configFile: string, fileReader: FileReader, opts: 
       extendConfig = deepMerge(extendConfig, resolveConfig(extendConfigFile, fileReader));
     });
 
+    if (Object.keys(extendConfig) && opts.resolveVars) {
+      extendConfig = resolveConfigVars(extendConfig);
+    }
+
     config = deepMerge(extendConfig, config);
     delete config[EXTENDS_KEYWORD];
   }

@@ -292,9 +292,43 @@ describe('resolveConfig()', () => {
     ).toThrow(new Error('Variable value not found by path: $dummy'));
   });
 
+  it('supports vars with @extends', () => {
+    const
+      configFile = '/local.json',
+      configMap = {
+        [configFile]: {
+          '@extends': './common.json',
+          abc: '{{ $xyz }}',
+          xyz: 'THE XYZ',
+        },
+        '/common.json': {
+          foo: '{{ .bar }}',
+          bar: 'Baz',
+        },
+      },
+      fileReader = mockFileReader(configMap);
+
+    expect(resolveConfig(configFile, fileReader, { resolveVars: true })).toEqual({
+      abc: 'THE XYZ',
+      xyz: 'THE XYZ',
+      foo: 'Baz',
+      bar: 'Baz',
+    });
+  });
+
   /*** Private ***/
 
   function assertConfig(expectedConfig) {
     expect(resolveConfig('/foo.yml', mock.fileReader, { resolveVars: true })).toEqual(expectedConfig);
   }
+
+  const mockFileReader = map => {
+    const fileReader = sinon.stub();
+
+    Object.keys(map).forEach(configFile => {
+      fileReader.withArgs(configFile).returns(map[configFile]);
+    });
+
+    return fileReader;
+  };
 });
