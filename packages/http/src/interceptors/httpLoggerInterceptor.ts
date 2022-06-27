@@ -38,7 +38,7 @@ export function httpLoggerInterceptor(agent: AxiosInstance, loggerSetting: HttpC
 function parseLoggerSetting(
   logger: HttpClientLoggerSetting,
 ): { logger: LoggerInterface, options: HttpClientLoggerSettingOptions } {
-  return ('options' in logger) ? logger : { logger, options: {} };
+  return ('options' in logger && 'logger' in logger) ? logger : { logger, options: {} };
 }
 
 function makeEndpoint(
