@@ -27,7 +27,7 @@ export class ConsoleLogger extends BaseLogger implements LoggerInterface {
     process.stdout.write(this.sprintf(message, args));
   }
 
-  public println(message: string, ...args: LoggerArg[]) {
+  public println(message: string = '', ...args: LoggerArg[]) {
     this.print(`${message}\n`, ...args);
   }
 
