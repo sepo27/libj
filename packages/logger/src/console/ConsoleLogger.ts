@@ -30,4 +30,8 @@ export class ConsoleLogger extends BaseLogger implements LoggerInterface {
   public println(message: string, ...args: LoggerArg[]) {
     this.print(`${message}\n`, ...args);
   }
+
+  public printSameLn(message: string, ...args: LoggerArg[]) {
+    this.print(`${message}\r`, args);
+  }
 }

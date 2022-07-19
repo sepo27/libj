@@ -29,4 +29,22 @@ describe('ConsoleLogger', () => {
       expect(mock.getCall(0).args).toEqual([`${level}: Hello World`]);
     });
   });
+
+  it('printSameLn() calls process stdout write with line ending', () => {
+    const writeMock = sinon.stub(process.stdout, 'write');
+
+    new ConsoleLogger().printSameLn('Foo');
+
+    expect(writeMock.calledOnce).toBeTruthy();
+    expect(writeMock.getCall(0).args).toEqual(['Foo\r']);
+  });
+
+  it('printSameLn() prints with args', () => {
+    const writeMock = sinon.stub(process.stdout, 'write');
+
+    new ConsoleLogger().printSameLn('Happy %s', 'Nation');
+
+    expect(writeMock.calledOnce).toBeTruthy();
+    expect(writeMock.getCall(0).args).toEqual(['Happy Nation\r']);
+  });
 });
