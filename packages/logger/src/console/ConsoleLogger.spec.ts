@@ -31,12 +31,22 @@ describe('ConsoleLogger', () => {
   });
 
   it('printSameLn() calls process stdout write with line ending', () => {
-    const writeMock = sinon.stub(process.stdout, 'write');
+    // @ts-ignore
+    process.stdout.clearLine = () => {}; // TODO: figure out why clearLine does not exist when trying to mock by sinon
+
+    const
+      clearLineMock = sinon.stub(process.stdout, 'clearLine'),
+      writeMock = sinon.stub(process.stdout, 'write');
 
     new ConsoleLogger().printSameLn('Foo');
 
     expect(writeMock.calledOnce).toBeTruthy();
     expect(writeMock.getCall(0).args).toEqual(['Foo\r']);
+
+    expect(clearLineMock.calledOnce).toBeTruthy();
+    expect(clearLineMock.getCall(0).args).toEqual([0]);
+
+    sinon.assert.callOrder(clearLineMock, writeMock);
   });
 
   it('printSameLn() prints with args', () => {
