@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@libj/http-meta": "0.2.3",
-    "@libj/logger": "^0.3.1",
+    "@libj/logger": "0.3.1",
     "@libj/make-uri": "1.2.6",
     "axios": "^0.21.1",
     "axios-retry": "^3.2.5",
@@ -33,5 +33,5 @@
     "xhr",
     "ajax"
   ],
-  "gitHead": "c7d83a5d85c0f4fd705f5c8dd5e3a2dd665e6395"
+  "gitHead": "9d8f4eb5798b8b6362e1c62e8245332b1ca0ddcd"
 }
