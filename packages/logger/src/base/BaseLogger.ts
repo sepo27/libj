@@ -3,6 +3,8 @@ import { LoggerLevel } from '../LoggerLevel';
 import { isEnumVal } from '../../../../common/isType/isType';
 import { LoggerArg } from '../LoggerInterface';
 
+const TIMESTAMP_PLACEHOLDER = '%a';
+
 type FormatArgs = [string] | [string, LoggerArg[]] | [LoggerLevel, string] | [LoggerLevel, string, LoggerArg[]];
 
 interface Options {
@@ -43,6 +45,10 @@ export abstract class BaseLogger {
       : message;
 
     if (this.options.timestamp) {
+      if (finalMessage.indexOf(TIMESTAMP_PLACEHOLDER) === -1) {
+        finalMessage = `[%a] ${finalMessage}`;
+      }
+
       const date = typeof this.options.timestamp === 'function'
         ? this.options.timestamp()
         : new Date().toISOString();

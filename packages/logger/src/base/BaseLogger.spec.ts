@@ -104,7 +104,7 @@ describe('BaseLogger', () => {
     expect(logger.foo('Foo %s', '%bar')).toBe('Foo %bar');
   });
 
-  it('supports default timestamp option', () => {
+  it('supports timestamp option with all defaults', () => {
     class DummyLogger extends BaseLogger {
       foo(...args: any[]): string { // @ts-ignore
         return this.format(...args);
@@ -116,10 +116,10 @@ describe('BaseLogger', () => {
 
     const logger = new DummyLogger({ timestamp: true });
 
-    expect(logger.foo('[%a] Foo bar')).toBe(`[${now.toISOString()}] Foo bar`);
+    expect(logger.foo('Foo bar')).toBe(`[${now.toISOString()}] Foo bar`);
   });
 
-  it('supports default timestamp with multiple placeholders option', () => {
+  it('supports timestamp option with custom placeholder but default date', () => {
     class DummyLogger extends BaseLogger {
       foo(...args: any[]): string { // @ts-ignore
         return this.format(...args);
@@ -131,10 +131,25 @@ describe('BaseLogger', () => {
 
     const logger = new DummyLogger({ timestamp: true });
 
-    expect(logger.foo('[%a] Foo bar [%a]')).toBe(`[${now.toISOString()}] Foo bar [${now.toISOString()}]`);
+    expect(logger.foo('{%a} Foo bar baz')).toBe(`{${now.toISOString()}} Foo bar baz`);
   });
 
-  it('supports custom timestamp option', () => {
+  it('supports timestamp options with multiple placeholders and default date', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const now = new Date('2011-10-05T14:48:00.000Z');
+    sinon.useFakeTimers(now);
+
+    const logger = new DummyLogger({ timestamp: true });
+
+    expect(logger.foo('{%a} Foo bar {%a}')).toBe(`{${now.toISOString()}} Foo bar {${now.toISOString()}}`);
+  });
+
+  it('supports timestamp option with default placeholder and custom date', () => {
     class DummyLogger extends BaseLogger {
       foo(...args: any[]): string { // @ts-ignore
         return this.format(...args);
@@ -145,6 +160,20 @@ describe('BaseLogger', () => {
 
     const logger = new DummyLogger({ timestamp: () => now.toISOString() });
 
-    expect(logger.foo('[%a] Foo bar')).toBe(`[${now.toISOString()}] Foo bar`);
+    expect(logger.foo('The message')).toBe(`[${now.toISOString()}] The message`);
+  });
+
+  it('supports timestamp option with custom placeholders and custom date', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const now = new Date('2011-10-05T14:48:00.000Z');
+
+    const logger = new DummyLogger({ timestamp: () => now.toISOString() });
+
+    expect(logger.foo('(%a) A message (%a)')).toBe(`(${now.toISOString()}) A message (${now.toISOString()})`);
   });
 });
