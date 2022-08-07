@@ -4,7 +4,7 @@
     "sprintf-js": "^1.1.2"
   },
   "name": "@libj/misc",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Miscellaneous",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/misc/README.md",
