@@ -7,6 +7,7 @@ type FormatArgs = [string] | [string, LoggerArg[]] | [LoggerLevel, string] | [Lo
 
 interface Options {
   prefix?: string,
+  timestamp?: boolean | (() => string),
 }
 
 export abstract class BaseLogger {
@@ -37,9 +38,17 @@ export abstract class BaseLogger {
       prefix.push(level);
     }
 
-    const finalMessage = prefix.length
+    let finalMessage = prefix.length
       ? sprintf('%s: %s', prefix.join(' '), message)
       : message;
+
+    if (this.options.timestamp) {
+      const date = typeof this.options.timestamp === 'function'
+        ? this.options.timestamp()
+        : new Date().toISOString();
+
+      finalMessage = finalMessage.replace(/%a/g, date);
+    }
 
     try {
       return this.sprintf(finalMessage, formatArgs);

@@ -1,9 +1,18 @@
 /* eslint-disable max-classes-per-file */
 
+import * as sinonLib from 'sinon';
 import { BaseLogger } from './BaseLogger';
 import { LoggerLevel } from '../LoggerLevel';
 
 describe('BaseLogger', () => {
+  let sinon: sinonLib.SinonSandbox;
+
+  beforeEach(() => {
+    sinon = sinonLib.createSandbox();
+  });
+
+  afterEach(() => { sinon.reset(); });
+
   it('formats message', () => {
     class DummyLogger extends BaseLogger {
       foo() { return this.format('Foo Bar'); }
@@ -93,5 +102,49 @@ describe('BaseLogger', () => {
     const logger = new DummyLogger();
 
     expect(logger.foo('Foo %s', '%bar')).toBe('Foo %bar');
+  });
+
+  it('supports default timestamp option', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const now = new Date('2011-10-05T14:48:00.000Z');
+    sinon.useFakeTimers(now);
+
+    const logger = new DummyLogger({ timestamp: true });
+
+    expect(logger.foo('[%a] Foo bar')).toBe(`[${now.toISOString()}] Foo bar`);
+  });
+
+  it('supports default timestamp with multiple placeholders option', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const now = new Date('2011-10-05T14:48:00.000Z');
+    sinon.useFakeTimers(now);
+
+    const logger = new DummyLogger({ timestamp: true });
+
+    expect(logger.foo('[%a] Foo bar [%a]')).toBe(`[${now.toISOString()}] Foo bar [${now.toISOString()}]`);
+  });
+
+  it('supports custom timestamp option', () => {
+    class DummyLogger extends BaseLogger {
+      foo(...args: any[]): string { // @ts-ignore
+        return this.format(...args);
+      }
+    }
+
+    const now = new Date('2011-10-05T14:48:00.000Z');
+
+    const logger = new DummyLogger({ timestamp: () => now.toISOString() });
+
+    expect(logger.foo('[%a] Foo bar')).toBe(`[${now.toISOString()}] Foo bar`);
   });
 });
