@@ -104,7 +104,7 @@ function getValByPath(data, valPath: string[]) {
 }
 
 function resolveRelativePath(partnerPath, levelUp, valPath) {
-  return partnerPath.slice(0, levelUp ? -levelUp : 1).concat(valPath);
+  return partnerPath.slice(0, levelUp ? -levelUp : partnerPath.length).concat(valPath);
 }
 
 function makeVarTokenRegex(pattern, flags = '') {

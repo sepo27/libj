@@ -117,6 +117,26 @@ describe('resolveConfig()', () => {
     });
   });
 
+  it('resolves relative ref vars on same level #2', () => {
+    mock.configData({
+      foo: {
+        bar: {
+          abc: 'abc',
+          xyz: '{{ .abc }}-xyz',
+        },
+      },
+    });
+
+    assertConfig({
+      foo: {
+        bar: {
+          abc: 'abc',
+          xyz: 'abc-xyz',
+        },
+      },
+    });
+  });
+
   it('resolves relative ref vars on same level at root', () => {
     mock.configData({
       abc: '{{ .xyz }}',
