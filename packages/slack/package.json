@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+  },
+  "name": "@libj/slack",
+  "version": "0.0.0",
+  "description": "Slack clients & tools",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/slack/README.md",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "cd ../../ && cli/c pkg:bundle slack"
+  },
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sepo27/libj/labels/pkg%3Aslack"
+  },
+  "keywords": [
+    "slack",
+    "slack client",
+    "slack webhoook"
+  ]
+}
