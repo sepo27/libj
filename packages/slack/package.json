@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "@libj/http": "0.12.7"
+  },
   "name": "@libj/slack",
   "version": "0.0.1",
   "description": "Slack clients & tools",
