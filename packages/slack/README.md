@@ -3,7 +3,7 @@
 ### `SlackWebhook`
 
 ```typescript
-interface SlackWebhoook {
+interface SlackWebhook {
   constructor(hookUrl: string)
 
   send(message: Object): Promise<void>
