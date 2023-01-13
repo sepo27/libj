@@ -23,6 +23,15 @@ describe('makeUri()', () => {
     })).toEqual('foxy=la%20dy');
   });
 
+  it('with encoded query keys', () => {
+    expect(makeUri({
+      query: {
+        $data: { 'foo[bar]': 'baz' },
+        $options: { encode: true },
+      },
+    })).toEqual(`${encodeURIComponent('foo[bar]')}=baz`);
+  });
+
   it('with query & path', () => {
     expect(makeUri({
       path: '/foo/bar',

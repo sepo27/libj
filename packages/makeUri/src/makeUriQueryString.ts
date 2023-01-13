@@ -16,17 +16,25 @@ export const makeUriQueryString = (query: LooseObject, options: Options = {}): s
   return Object
     .keys(query)
     .map(k => {
-      let val = query[k];
+      let
+        nextKey = k,
+        val = query[nextKey];
 
-      if (val === true) {
-        return k;
+      const isEncodeNeeded = needEncode(opts, nextKey);
+
+      if (isEncodeNeeded) {
+        nextKey = encode(nextKey);
       }
 
-      if (needEncode(opts, k)) {
+      if (val === true) {
+        return nextKey;
+      }
+
+      if (isEncodeNeeded) {
         val = encode(val);
       }
 
-      return `${k}=${val}`;
+      return `${nextKey}=${val}`;
     })
     .join('&');
 };
