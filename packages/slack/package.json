@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "@libj/http": "0.12.8"
+    "@libj/http": "^0.12.9"
   },
   "name": "@libj/slack",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Slack clients & tools",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/slack/README.md",
