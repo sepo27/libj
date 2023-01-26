@@ -47,7 +47,7 @@ describe('debugableCommand', () => {
   it('passes command options through', () => {
     const
       actionSpy = bench.sinon.spy(),
-      command = debuggableCommand('baz', cli => actionSpy(cli.opts().foo))
+      command = debuggableCommand('baz', ({ foo }) => actionSpy(foo))
         .option('--foo <val>', 'Foo option');
 
     bench.action.run(command, ['--foo', 'my foo']);
