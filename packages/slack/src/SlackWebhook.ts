@@ -2,6 +2,7 @@ import { HttpClient } from '../../http/src/client/HttpClient';
 import { SlackMessage } from './types/SlackMessage';
 import { SlackMessageBlockType } from './constants/SlackMessageBlockType';
 import { SLACK_MAX_TEXT_LENGTH } from './constants';
+import { HttpResponse } from '../../http/src/client/types';
 
 /**
  * Adding buffer of ten chars.
@@ -15,7 +16,7 @@ export class SlackWebhook {
     });
   }
 
-  public send(message: SlackMessage) {
+  public send(message: SlackMessage): Promise<HttpResponse> {
     return this.http.post('', this.trimLongMessageTexts(message));
   }
 
