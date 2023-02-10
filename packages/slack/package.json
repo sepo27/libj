@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@libj/http": "^0.13.0"
+    "@libj/http": "0.13.0"
   },
   "name": "@libj/slack",
   "version": "0.2.3",
@@ -25,5 +25,5 @@
     "slack client",
     "slack webhoook"
   ],
-  "gitHead": "b9c6f6030f8c00e94e3bcbeea62901b30db244ba"
+  "gitHead": "6a4475fc62b08bf981bb2290b171bbf0001431f3"
 }
