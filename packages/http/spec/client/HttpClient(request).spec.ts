@@ -155,6 +155,34 @@ describe('HttpClient(request)', () => {
       }),
     ).toThrow(new HttpConfigError('Form data is only allowed with POST / PUT / PATCH methods'));
   });
+
+  it('request() sends base data set in config', () => {
+    const baseData = { foo: 'bar' };
+
+    const mock = bench.mock.axios.instance.request;
+
+    new HttpClient({ data: baseData }).request('');
+
+    expect(mock.callCount).toBe(1);
+    expect(mock.getCall(0).args).toMatchObject([{
+      data: baseData,
+    }]);
+  });
+
+  it('request() merges request data with options data', () => {
+    const
+      baseData = { foo: 'bar', baz: 'xyz' },
+      reqData = { foo: 'The Bar', abc: 'aaa' };
+
+    const mock = bench.mock.axios.instance.request;
+
+    new HttpClient({ data: baseData }).request('', { data: reqData });
+
+    expect(mock.callCount).toBe(1);
+    expect(mock.getCall(0).args).toMatchObject([{
+      data: { ...baseData, ...reqData },
+    }]);
+  });
 });
 
 /*** Lib ***/

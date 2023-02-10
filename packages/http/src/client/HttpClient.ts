@@ -18,7 +18,8 @@ import { UrlEncodedHttpForm } from '../form/UrlEncodedHttpForm';
 
 export class HttpClient {
   constructor(config: HttpClientConfig = {}) {
-    this.agent = axios.create(this.processRequestOptions(config));
+    this.baseConfig = this.processRequestOptions(config);
+    this.agent = axios.create(this.baseConfig);
 
     // Attach logger
 
@@ -98,6 +99,7 @@ export class HttpClient {
   /*** Private ***/
 
   private agent: AxiosInstance;
+  private baseConfig: AxiosRequestConfig = {};
   private retryConfig: HttpRetryConfig = {};
 
   private processRequestOptions(inOptions: HttpRequestOptions) {
@@ -115,6 +117,10 @@ export class HttpClient {
         ...options.headers,
         ...options.data.getHeaders(),
       };
+    }
+
+    if (this.baseConfig.data) {
+      options.data = { ...this.baseConfig.data, ...options.data };
     }
 
     if (options.cookies) {
