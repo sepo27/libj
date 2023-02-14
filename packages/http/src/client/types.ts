@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IAxiosRetryConfig } from 'axios-retry';
 import { LooseObject } from '../../../../common/types';
 import { LoggerInterface } from '../../../logger/src';
@@ -47,3 +47,5 @@ export interface HttpLoggerSession {
   reqConfig: HttpRequestOptions,
   response: HttpResponse,
 }
+
+export type AxiosHttpError = AxiosError;

@@ -8,6 +8,7 @@ import {
   HttpSubmitArgs,
   HttpClientLoggerSetting,
   HttpRetryConfig,
+  AxiosHttpError,
 } from './client/types';
 import { HttpForm } from './form/HttpForm';
 import { UrlEncodedHttpForm } from './form/UrlEncodedHttpForm';
@@ -22,6 +23,7 @@ export {
   HttpClientLoggerSetting,
   LoggerInterface,
   HttpRetryConfig,
+  AxiosHttpError,
 };
 
 export { HttpForm, UrlEncodedHttpForm };
