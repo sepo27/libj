@@ -1,7 +1,10 @@
+/* eslint-disable max-classes-per-file */
+
 import * as sinonLib from 'sinon';
 import { ClassMock } from './ClassMock';
 import * as ClassModule from './.spec/class';
 import { _TestClassMock } from './.spec/class';
+import { ClassMockMember } from './ClassMockMember';
 
 describe('ClassMock', () => {
   let sinon;
@@ -173,6 +176,86 @@ describe('ClassMock', () => {
 
     mock.$restore();
     expect(new Module.MyFoo().bar).toBe('Orig bar');
+  });
+
+  it('partially mocks the class with orig function member', () => {
+    class MyFoo {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      public foo(arg: string) {}
+      public bar(arg: string) { return this.foo(`bar:${arg}`); }
+    }
+    const Module = { MyFoo };
+
+    const mock = ClassMock(Module, { 'foo()': null });
+
+    const
+      arg = 'abc',
+      resStub = 'xyz';
+
+    mock.foo.returns(resStub);
+
+    const res = mock.bar(arg);
+
+    expect(mock.foo.callCount).toBe(1);
+    expect(mock.foo.getCall(0).args).toEqual([`bar:${arg}`]);
+    expect(res).toBe(resStub);
+  });
+
+  it('partially mocks the class with orig function member and constructor with args', () => {
+    class MyFoo {
+      constructor(input) {
+        this.foo = input;
+      }
+
+      public readonly foo;
+
+      public bar(arg) { return arg; }
+
+      public baz() { this.bar(`baz:${this.foo}`); }
+    }
+    const Module = { MyFoo };
+
+    const
+      arg = 'The Foo',
+      resStub = 'A result';
+
+    const mock = ClassMock(Module, {
+      [ClassMockMember.CONSTRUCTOR]: [arg],
+      foo: null,
+      'bar()': null,
+    });
+
+    mock.foo.value(arg);
+    mock.bar.returns(resStub);
+
+    mock.baz();
+
+    expect(mock.bar.callCount).toBe(1);
+    expect(mock.bar.getCall(0).args).toEqual([`baz:${arg}`]);
+  });
+
+  // TODO
+  xit('partially mocks the class with orig getter member', () => {
+    class MyFoo {
+      public foo() { return 'dummy'; }
+
+      // @ts-ignore
+      public get bar() { return this.foo(); }
+    }
+    const Module = { MyFoo };
+
+    const mock = ClassMock(Module, {
+      'foo()': null,
+    });
+
+    const resStub = 'The Result';
+
+    mock.foo.returns(resStub);
+
+    const res = mock.bar;
+
+    expect(mock.foo.callCount).toBe(1);
+    expect(res).toBe(resStub);
   });
 
   /*** Lib ***/

@@ -20,8 +20,10 @@ export const ClassMock = (...args: Args) => {
     className = defineClassName(),
     cache = new ClassMockCache(className);
 
-  const instance = {};
+  const instanceMock = {};
   let constructorMock;
+
+  const origInstance = makeOrigInstance();
 
   /*** Public ***/
 
@@ -48,19 +50,28 @@ export const ClassMock = (...args: Args) => {
 
       const member = findMember(memberName);
 
-      instance[member.name] = member.defaultValue;
+      if (!(member instanceof ClassMockMember)) {
+        return member;
+      }
+
+      instanceMock[member.name] = member.defaultValue;
 
       // @ts-ignore
-      return mockMember(member, sinon.stub(instance, member.name));
+      return mockMember(member, sinon.stub(instanceMock, member.name));
     },
   }) as any;
 
   /*** Private ***/
 
-  function findMember(name): ClassMockMember {
+  function findMember(name): ClassMockMember | Function {
     if (memberMap[name]) {
       return memberMap[name];
     }
+
+    if (origInstance[name]) {
+      return origInstance[name].bind(instanceMock);
+    }
+
     throw new Error(`Undefined mock member: ${name}`);
   }
 
@@ -88,7 +99,7 @@ export const ClassMock = (...args: Args) => {
     if (constructorMock) {
       return;
     }
-    constructorMock = sinon.stub(Module, className).returns(instance);
+    constructorMock = sinon.stub(Module, className).returns(instanceMock);
   }
 
   function defineMembers() {
@@ -129,6 +140,16 @@ export const ClassMock = (...args: Args) => {
     }
 
     return { Module: M, spec: sp, sinon: si };
+  }
+
+  function makeOrigInstance() {
+    let ctorArgs = [];
+
+    if (spec[ClassMockMember.CONSTRUCTOR]) {
+      ctorArgs = spec[ClassMockMember.CONSTRUCTOR];
+    }
+
+    return new Module[className](...ctorArgs);
   }
 
   // TODO: improve detection
