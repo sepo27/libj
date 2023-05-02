@@ -1,11 +1,13 @@
 import { ModuleMock } from './mock/module/ModuleMock';
 import { ClassMock } from './mock/class/ClassMock';
-import { ClassMockMember } from './mock/class/ClassMockMember';
-
-const CLASS_MOCK_CTOR_SYMBOL = ClassMockMember.CONSTRUCTOR;
+import { CONSTRUCTOR_CMS, RESTORE_CMS, KEEP_ORIG_INSTANCE_CMS } from './mock/class/constants';
 
 export {
   ModuleMock,
   ClassMock,
-  CLASS_MOCK_CTOR_SYMBOL,
+
+  /*** Constants ***/
+  CONSTRUCTOR_CMS,
+  RESTORE_CMS,
+  KEEP_ORIG_INSTANCE_CMS,
 };

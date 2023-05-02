@@ -4,7 +4,7 @@ import * as sinonLib from 'sinon';
 import { ClassMock } from './ClassMock';
 import * as ClassModule from './.spec/class';
 import { _TestClassMock } from './.spec/class';
-import { ClassMockMember } from './ClassMockMember';
+import { CONSTRUCTOR_CMS, KEEP_ORIG_INSTANCE_CMS } from './constants';
 
 describe('ClassMock', () => {
   let sinon;
@@ -186,7 +186,10 @@ describe('ClassMock', () => {
     }
     const Module = { MyFoo };
 
-    const mock = ClassMock(Module, { 'foo()': null });
+    const mock = ClassMock(Module, {
+      [KEEP_ORIG_INSTANCE_CMS]: true,
+      'foo()': null,
+    });
 
     const
       arg = 'abc',
@@ -220,7 +223,8 @@ describe('ClassMock', () => {
       resStub = 'A result';
 
     const mock = ClassMock(Module, {
-      [ClassMockMember.CONSTRUCTOR]: [arg],
+      [KEEP_ORIG_INSTANCE_CMS]: true,
+      [CONSTRUCTOR_CMS]: [arg],
       foo: null,
       'bar()': null,
     });
@@ -245,6 +249,7 @@ describe('ClassMock', () => {
     const Module = { MyFoo };
 
     const mock = ClassMock(Module, {
+      [KEEP_ORIG_INSTANCE_CMS]: true,
       'foo()': null,
     });
 
@@ -256,6 +261,17 @@ describe('ClassMock', () => {
 
     expect(mock.foo.callCount).toBe(1);
     expect(res).toBe(resStub);
+  });
+
+  it('does not retain orig instance when not configured in specs', () => {
+    class MyFoo {
+      public foo() {}
+    }
+    const Module = { MyFoo };
+
+    const mock = ClassMock(Module);
+
+    expect(() => mock.foo).toThrow(new Error('Undefined mock member: foo'));
   });
 
   /*** Lib ***/

@@ -3,6 +3,7 @@ import { LooseObject } from '../../../../../common/types';
 import { isObj } from '../../../../../common/isType/isType';
 import { ClassMockMember } from './ClassMockMember';
 import { ClassMockCache } from './ClassMockCache';
+import { CONSTRUCTOR_CMS, KEEP_ORIG_INSTANCE_CMS, RESTORE_CMS } from './constants';
 
 type Args = [LooseObject]
   | [LooseObject, sinonLib.SinonSandbox]
@@ -23,19 +24,19 @@ export const ClassMock = (...args: Args) => {
   const instanceMock = {};
   let constructorMock;
 
-  const origInstance = makeOrigInstance();
+  const origInstance = spec[KEEP_ORIG_INSTANCE_CMS] ? makeOrigInstance() : null;
 
   /*** Public ***/
 
   const self = {
-    [ClassMockMember.RESTORE]: () => { sinon.restore(); },
+    [RESTORE_CMS]: () => { sinon.restore(); },
   };
 
   return new Proxy({}, {
     get(_, memberName: string) {
       mockConstructor();
 
-      if (memberName === ClassMockMember.CONSTRUCTOR) {
+      if (memberName === CONSTRUCTOR_CMS) {
         return constructorMock;
       }
 
@@ -68,7 +69,7 @@ export const ClassMock = (...args: Args) => {
       return memberMap[name];
     }
 
-    if (origInstance[name]) {
+    if (origInstance && origInstance[name]) {
       return origInstance[name].bind(instanceMock);
     }
 
@@ -145,8 +146,8 @@ export const ClassMock = (...args: Args) => {
   function makeOrigInstance() {
     let ctorArgs = [];
 
-    if (spec[ClassMockMember.CONSTRUCTOR]) {
-      ctorArgs = spec[ClassMockMember.CONSTRUCTOR];
+    if (spec[CONSTRUCTOR_CMS]) {
+      ctorArgs = spec[CONSTRUCTOR_CMS];
     }
 
     return new Module[className](...ctorArgs);

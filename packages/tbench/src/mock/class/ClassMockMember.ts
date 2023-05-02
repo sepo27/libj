@@ -57,9 +57,6 @@ export class ClassMockMember {
 
   public get isStruct(): boolean { return isObj(this.initializer); }
 
-  public static CONSTRUCTOR = '$constructor';
-  public static RESTORE = '$restore';
-
   /*** Private ***/
 
   private get isMethod(): boolean { return MethodPattern.test(this.ref); }
