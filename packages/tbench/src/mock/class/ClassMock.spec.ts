@@ -4,7 +4,7 @@ import * as sinonLib from 'sinon';
 import { ClassMock } from './ClassMock';
 import * as ClassModule from './.spec/class';
 import { _TestClassMock } from './.spec/class';
-import { CONSTRUCTOR_CMS, KEEP_ORIG_INSTANCE_CMS } from './constants';
+import { CONSTRUCTOR_ARGS_KEY, KEEP_ORIG_INSTANCE_KEY } from './constants';
 
 describe('ClassMock', () => {
   let sinon;
@@ -187,7 +187,7 @@ describe('ClassMock', () => {
     const Module = { MyFoo };
 
     const mock = ClassMock(Module, {
-      [KEEP_ORIG_INSTANCE_CMS]: true,
+      [KEEP_ORIG_INSTANCE_KEY]: true,
       'foo()': null,
     });
 
@@ -223,8 +223,8 @@ describe('ClassMock', () => {
       resStub = 'A result';
 
     const mock = ClassMock(Module, {
-      [KEEP_ORIG_INSTANCE_CMS]: true,
-      [CONSTRUCTOR_CMS]: [arg],
+      [KEEP_ORIG_INSTANCE_KEY]: true,
+      [CONSTRUCTOR_ARGS_KEY]: [arg],
       foo: null,
       'bar()': null,
     });
@@ -249,7 +249,7 @@ describe('ClassMock', () => {
     const Module = { MyFoo };
 
     const mock = ClassMock(Module, {
-      [KEEP_ORIG_INSTANCE_CMS]: true,
+      [KEEP_ORIG_INSTANCE_KEY]: true,
       'foo()': null,
     });
 
@@ -261,6 +261,34 @@ describe('ClassMock', () => {
 
     expect(mock.foo.callCount).toBe(1);
     expect(res).toBe(resStub);
+  });
+
+  it('partially mocks function class with orig function member', () => {
+    function FooClass() {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      this.foo = arg => null;
+      this.bar = function (arg) {
+        return `The Bar: ${this.foo(arg)}`;
+      };
+    }
+    const Module = { FooClass };
+
+    const mock = ClassMock(Module, {
+      [KEEP_ORIG_INSTANCE_KEY]: true,
+      'foo()': null,
+    });
+
+    const
+      arg = 'The Text',
+      fooRes = 'A foo';
+
+    const fooMock = mock.foo.returns(fooRes);
+
+    const res = mock.bar(arg);
+
+    expect(fooMock.callCount).toBe(1);
+    expect(fooMock.getCall(0).args).toEqual([arg]);
+    expect(res).toBe(`The Bar: ${fooRes}`);
   });
 
   it('does not retain orig instance when not configured in specs', () => {
