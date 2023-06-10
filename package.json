@@ -5,7 +5,8 @@
     "publish": "lerna publish --yes --no-git-reset from-package",
     "prepublishOnly": "cli/c build",
     "postpack": "./scripts/postpack.sh",
-    "version": "lerna version --yes"
+    "version": "lerna version --yes",
+    "test": "LIBJ_SKIP_TEST_LOG=1 jest -c ./jest.config.js ./packages"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
