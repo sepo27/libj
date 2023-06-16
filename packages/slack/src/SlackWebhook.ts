@@ -9,18 +9,35 @@ import { HttpResponse } from '../../http/src/client/types';
  */
 const MAX_TEXT_LENGTH = SLACK_MAX_TEXT_LENGTH - 10;
 
+interface Options {
+  extraHooks?: {
+    [key: string]: string
+  }
+}
+
+interface SendOptions {
+  hook?: string,
+}
+
 export class SlackWebhook {
-  constructor(hookUrl: string) {
-    this.http = new HttpClient({
-      baseURL: hookUrl,
-    });
+  constructor(defaultHook: string, opts: Options = {}) {
+    this.http = new HttpClient({});
+    this.defaultHook = defaultHook;
+    this.opts = opts;
   }
 
-  public send(message: SlackMessage): Promise<HttpResponse> {
-    return this.http.post('', this.trimLongMessageTexts(message));
+  /*** Public ***/
+
+  public send(message: SlackMessage, opts: SendOptions = {}): Promise<HttpResponse> {
+    const hookUrl = opts.hook ? this.getExtraHookUrl(opts.hook) : this.defaultHook;
+    return this.http.post(hookUrl, this.trimLongMessageTexts(message));
   }
 
-  private http: HttpClient;
+  private readonly http: HttpClient;
+  private readonly defaultHook: string;
+  private readonly opts: Options = {};
+
+  /*** Private ***/
 
   /**
    * Only works for section blocks currently.
@@ -48,5 +65,12 @@ export class SlackWebhook {
     }
 
     return message;
+  }
+
+  private getExtraHookUrl(hook) {
+    if (this.opts?.extraHooks?.[hook]) {
+      return this.opts.extraHooks[hook];
+    }
+    throw new Error(`Extra hook '${hook}' is not defined`);
   }
 }

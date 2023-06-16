@@ -23,7 +23,7 @@ describe('SlackWebhook', () => {
     sinon.restore();
   });
 
-  it('Instantiates http client', () => {
+  it('constructs with default hook', () => {
     const url = 'http://boo.bar';
 
     mock.http.$constructor;
@@ -32,20 +32,51 @@ describe('SlackWebhook', () => {
     new SlackWebhook(url);
 
     expect(mock.http.$constructor.calledOnce).toBeTruthy();
-    expect(mock.http.$constructor.getCall(0).args).toEqual([{
-      baseURL: url,
-    }]);
+    expect(mock.http.$constructor.getCall(0).args).toEqual([{}]);
   });
 
-  it('send() posts message to slack', () => {
-    const message = { text: 'Foo Bar' };
+  it('send() posts message to default hook', () => {
+    const
+      defaultHook = 'http://foo.bar',
+      message = { text: 'Foo Bar' };
 
     mock.http.post;
 
-    new SlackWebhook('bar.foo').send(message);
+    new SlackWebhook(defaultHook).send(message);
 
     expect(mock.http.post.calledOnce).toBeTruthy();
-    expect(mock.http.post.getCall(0).args).toEqual(['', message]);
+    expect(mock.http.post.getCall(0).args).toEqual([defaultHook, message]);
+  });
+
+  it('send() posts message to extra hook', () => {
+    const
+      defaultHook = 'http://foo.bar',
+      extraHooks = {
+        bar_hook: 'http://bar.baz',
+      },
+      message = { text: 'Foo Bar' };
+
+    mock.http.post;
+
+    new SlackWebhook(defaultHook, { extraHooks }).send(message, { hook: 'bar_hook' });
+
+    expect(mock.http.post.calledOnce).toBeTruthy();
+    expect(mock.http.post.getCall(0).args).toEqual([extraHooks.bar_hook, message]);
+  });
+
+  it('send() errors out trying to send to non-configured extra hook', () => {
+    const
+      defaultHook = 'http://foo.bar',
+      extraHooks = {
+        bar_hook: 'http://bar.baz',
+      },
+      message = { text: 'Foo Bar' };
+
+    mock.http.post;
+
+    expect(
+      () => new SlackWebhook(defaultHook, { extraHooks }).send(message, { hook: 'dummy' }),
+    ).toThrow(new Error("Extra hook 'dummy' is not defined"));
   });
 
   it('send() trims long text blocks', () => {
