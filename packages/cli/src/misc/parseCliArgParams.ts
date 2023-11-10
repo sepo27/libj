@@ -1,5 +1,5 @@
-import { LooseObject } from '../../../common/types';
-import { isObj, isStr } from '../../../common/isType/isType';
+import { LooseObject } from '../../../../common/types';
+import { isObj, isStr } from '../../../../common/isType/isType';
 
 export type CliArgParams<O = LooseObject> = [] | [string] | [O] | [string, string] | [string, O] | [string, string, O];
 

@@ -1,5 +1,5 @@
 import { execCommand } from './execCommand';
-import { CliTBench } from '../.spec/CliTBench';
+import { CliTBench } from '../../.spec/CliTBench';
 
 // TODO: remove
 describe('execCommand()', () => {

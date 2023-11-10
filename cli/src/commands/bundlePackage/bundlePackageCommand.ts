@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import { execFileSync } from '../../../../packages/node/src/execFileSync';
 import { CliPath, CliPath as P } from '../../CliPath';
-import { debuggableCommand } from '../../../../packages/cli/src/debuggableCommand';
+import { debuggableCommand } from '../../../../packages/cli/src/command/debuggableCommand';
 import { cliLogger } from '../../cliLogger';
 import { BundlePackage } from './BundlePackage';
 import { NpmBundleDependency } from './dependency/NpmBundleDependency';

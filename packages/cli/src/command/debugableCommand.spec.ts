@@ -1,4 +1,4 @@
-import { CliTBench } from '../.spec/CliTBench';
+import { CliTBench } from '../../.spec/CliTBench';
 import { debuggableCommand } from './debuggableCommand';
 
 describe('debugableCommand', () => {
