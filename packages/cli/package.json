@@ -3,7 +3,7 @@
     "commander": "^9.4.0"
   },
   "name": "@libj/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Cli toolbox",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/cli/README.md",

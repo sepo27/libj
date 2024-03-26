@@ -3,7 +3,7 @@
     "@libj/http": "0.13.4"
   },
   "name": "@libj/slack",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Slack clients & tools",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/slack/README.md",
