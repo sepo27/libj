@@ -3,7 +3,7 @@
     "sinon": "^17.0.1"
   },
   "name": "@libj/tbench",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Toolset for testing JavaScript code with ease",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/tbench/README.md",
