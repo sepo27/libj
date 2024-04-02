@@ -11,7 +11,7 @@ describe('BaseLogger', () => {
     sinon = sinonLib.createSandbox();
   });
 
-  afterEach(() => { sinon.reset(); });
+  afterEach(() => { sinon.restore(); });
 
   it('formats message', () => {
     class DummyLogger extends BaseLogger {
