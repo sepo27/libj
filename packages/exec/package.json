@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "zx": "^4.3.0"
+  },
+  "name": "@libj/exec",
+  "version": "2.0.0",
+  "description": "CLI zx exec wrapper. Plus lib of various exec functions",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "homepage": "https://github.com/sepo27/libj/blob/master/packages/exec/README.md",
+  "license": "ISC",
+  "scripts": {
+    "prepare": "cd ../../ && cli/c pkg:bundle exec"
+  },
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sepo27/libj/labels/pkg%3Acli-exec"
+  },
+  "keywords": [
+    "Command Line Interace zx exec wrapper",
+    "CLI exec function library"
+  ],
+  "gitHead": "718c3864c6f7e652357a733c5dfbb9ed746dc5d3"
+}
