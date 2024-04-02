@@ -3,7 +3,7 @@
     "zx": "^4.3.0"
   },
   "name": "@libj/exec",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "CLI zx exec wrapper. Plus lib of various exec functions",
   "author": "Sergey Poskachey <seregynp@gmail.com>",
   "homepage": "https://github.com/sepo27/libj/blob/master/packages/exec/README.md",
