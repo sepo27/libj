@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "sinon": "^9.1.0"
+    "sinon": "^17.0.1"
   },
   "name": "@libj/tbench",
   "version": "0.1.2",
@@ -26,5 +26,8 @@
     "unit testing",
     "test mock"
   ],
-  "gitHead": "ffc7b81149debf5cc19dd5946dd868226072926e"
+  "gitHead": "ffc7b81149debf5cc19dd5946dd868226072926e",
+  "devDependencies": {
+    "@types/sinon": "^17.0.3"
+  }
 }
