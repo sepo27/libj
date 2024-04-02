@@ -4,4 +4,4 @@ export { exec, ExecResponse } from './lib/exec/exec';
 export * from './lib/exec/docker';
 export * from './lib/exec/ansible';
 export * from './lib/util';
-export { ExecParams, StructExecParams, WrapExecParams } from './lib/types';
+export { ExecParams, StructExecParams, WrapExecParams, StructWrapExecParams } from './lib/types';
