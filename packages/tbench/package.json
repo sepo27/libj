@@ -26,7 +26,7 @@
     "unit testing",
     "test mock"
   ],
-  "gitHead": "66428127f28a3a21de05191ff0837e1abe66871d",
+  "gitHead": "c4c8b9398411b998050451a0cb3fc3884f5001e4",
   "devDependencies": {
     "@types/sinon": "^17.0.3"
   }
