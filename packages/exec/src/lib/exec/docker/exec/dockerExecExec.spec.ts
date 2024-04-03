@@ -67,6 +67,24 @@ describe('dockerExecExec()', () => {
     }]);
   });
 
+  it('minds docker context option in container match', () => {
+    const
+      containerName = 'abc_run',
+      container = `@~${containerName}`;
+
+    dockerExecExec(['-c', 'cba', '-D'], container, 'ls');
+
+    expect(dockerExecMock.callCount).toBe(1);
+    expect(dockerExecMock.getCall(0).args).toMatchObject([{
+      execOpts: ['-c', 'cba', '-D'],
+      commandOptsAndArgs: [
+        `$(docker -c cba ps -f "name=${containerName}" --format "{{.ID}}")`,
+        'ls',
+      ],
+      zxOpts: { allowSubScript: true },
+    }]);
+  });
+
   it('resolves with response from docker exec', () => {
     const expectedRes = { res: 'is' };
 
