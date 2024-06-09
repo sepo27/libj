@@ -1,4 +1,4 @@
-import { isArr, isBool, isEnumVal, isFn, isNull, isNum, isObj, isStr } from './isType';
+import { isArr, isBool, isEnumVal, isFn, isNull, isNum, isObj, isRegex, isStr } from './isType';
 
 describe('$', () => {
   describe('isStr()', () => {
@@ -134,6 +134,28 @@ describe('$', () => {
       }
 
       expect(isEnumVal(Enum, 'dummy')).toBeFalsy();
+    });
+  });
+
+  describe('isRegex()', () => {
+    it('returns true for pattern', () => {
+      expect(isRegex(/a/)).toBeTruthy();
+    });
+
+    it('returns true for RegExp instance', () => {
+      expect(isRegex(new RegExp('a'))).toBeTruthy();
+    });
+
+    it('returns false for other types', () => {
+      [
+        'a',
+        1,
+        false,
+        null,
+        {},
+        [],
+        () => {},
+      ].forEach(val => expect(isRegex(val)).toBeFalsy());
     });
   });
 });
