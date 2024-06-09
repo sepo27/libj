@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+PACKAGES_DIR="./packages"
+
+ls "$PACKAGES_DIR" | while read -r pkg; do
+  echo "=== Installing packages for: $pkg"
+  npm i --prefix "$PACKAGES_DIR/$pkg"
+done
