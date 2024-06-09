@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "install-all": "./scripts/npm-install-all",
     "publish": "lerna publish --yes --no-git-reset from-package",
     "prepublishOnly": "cli/c build",
     "postpack": "./scripts/postpack.sh",

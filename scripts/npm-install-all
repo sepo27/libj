@@ -3,6 +3,7 @@
 PACKAGES_DIR="./packages"
 command="${1:-install}"
 
+echo "===Installing root packages"
 npm "$command"
 
 ls "$PACKAGES_DIR" | while read -r pkg; do
