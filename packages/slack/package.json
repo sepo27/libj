@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@libj/http": "^0.13.10"
+    "@libj/http": "0.13.10"
   },
   "name": "@libj/slack",
   "version": "0.3.8",

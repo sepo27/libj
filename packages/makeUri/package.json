@@ -1,4 +1,5 @@
 {
+  "dependencies": {},
   "name": "@libj/make-uri",
   "version": "1.3.10",
   "description": "Uri builder",
