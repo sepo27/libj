@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 PACKAGES_DIR="./packages"
+command="${1:-install}"
+
+npm "$command"
 
 ls "$PACKAGES_DIR" | while read -r pkg; do
   echo "=== Installing packages for: $pkg"
-  npm i --prefix "$PACKAGES_DIR/$pkg"
+  npm "$command" --prefix "$PACKAGES_DIR/$pkg"
 done
