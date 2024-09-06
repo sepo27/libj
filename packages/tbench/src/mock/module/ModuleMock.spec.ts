@@ -53,4 +53,12 @@ describe('ModuleMock', () => {
 
     expect(_foxModuleMock()).toBe('Bar is Bar');
   });
+
+  it('supports skipping to stub some properties', () => {
+    const mock = ModuleMock({ foo() {} }, {
+      skipProps: ['then'],
+    });
+
+    expect(mock.then).toBeUndefined();
+  });
 });
