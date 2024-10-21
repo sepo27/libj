@@ -101,4 +101,16 @@ describe('makeUri()', () => {
       },
     })).toBe('/foo/abc/baz');
   });
+
+  it('with single slash path in between', () => {
+    expect(makeUri({
+      path: ['/foo', '/', '/bar'],
+    })).toBe('/foo/bar');
+  });
+
+  it('with empty strings in path parts', () => {
+    expect(makeUri({
+      path: ['/foo', '', 'bar', '', '/baz/', ''],
+    })).toBe('/foo/bar/baz');
+  });
 });

@@ -6,7 +6,10 @@ const
   NonPathCheckPattern = new RegExp(`[${NonPathCharset.join('')}]`);
 
 export const joinUriPath = (...parts: string[]): string => { // eslint-disable-line
-  let res = parts.map(trimUriPath).join(UriPart.SLASH);
+  let res = parts
+    .map(trimUriPath)
+    .filter(p => !!p)
+    .join(UriPart.SLASH);
 
   if (!NonPathCheckPattern.test(res)) {
     res = `${UriPart.SLASH}${res}`;
