@@ -31,6 +31,9 @@ describe('zxec()', () => {
   });
 
   // TODO
+  xit('exces command disabling quotes', () => {});
+
+  // TODO
   xit('execs command disabling quote of sub-script', () => {});
 
   it('execs command with args and zx opts', () => {

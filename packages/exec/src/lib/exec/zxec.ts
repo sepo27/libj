@@ -59,7 +59,9 @@ function extractArgs(args) {
 function setOpts(opts) {
   const nextOpts = { ...opts };
 
-  if (nextOpts.allowSubScript) {
+  if (nextOpts.disableQuotes) {
+    nextOpts.quote = val => val;
+  } else if (nextOpts.allowSubScript) {
     const ctx = { origQuote: $.quote };
     nextOpts.quote = allowSubScriptQuoteFn.bind(ctx);
     delete nextOpts.allowSubScript;

@@ -3,4 +3,6 @@ export const ZxOptsList = [
   'allowSubScript',
 ] as const;
 
-export type ZxOpts = { [K in typeof ZxOptsList[number]]?: any };
+export type ZxOpts = { [K in typeof ZxOptsList[number]]?: any } & {
+  disableQuotes?: boolean
+};
