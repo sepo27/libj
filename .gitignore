@@ -1,6 +1,12 @@
-node_modules
-lerna-debug.log
-packages.111826.bak/*/dist
-.npmrc
+# Common
+.idea
+*.log
+.env
+*.bak
 *.tgz
+
+# Project
 .sandbox
+node_modules
+npm-debug.log*
+
