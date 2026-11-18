@@ -1,0 +1,20 @@
+{
+  "name": "",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "homepage": "",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "keywords": [],
+  "license": "ISC"
+}

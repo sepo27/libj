@@ -9,4 +9,4 @@
 .sandbox
 node_modules
 npm-debug.log*
-
+/packages/*/dist

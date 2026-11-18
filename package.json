@@ -1,7 +1,4 @@
 {
   "name": "libj",
-  "private": true,
-  "devDependencies": {
-    "@changesets/cli": "^3.0.3"
-  }
+  "private": true
 }
