@@ -1,0 +1,27 @@
+{
+  "name": "@libj/foo",
+  "version": "0.0.0",
+  "description": "Foo dummy package",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "homepage": "https://github.com/sepo27/libj/tree/master/packages/foo#readme",
+  "author": "Sergey Poskachey <seregynp@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sepo27/libj.git"
+  },
+  "keywords": [
+    "foo",
+    "dummy",
+    "package"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
