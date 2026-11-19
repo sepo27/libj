@@ -1,9 +1,9 @@
 {
   "name": "@libj/foo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Foo dummy package",
   "scripts": {
-    "version": "conventional-changelog -i CHANGELOG.md -s -n ../.versionrc.js && git add CHANGELOG.md"
+    "version": "conventional-changelog -i CHANGELOG.md -s -n ../../.versionrc.js && git add CHANGELOG.md"
   },
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
