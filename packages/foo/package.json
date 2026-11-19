@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "description": "Foo dummy package",
   "scripts": {
-    "version": "conventional-changelog -i CHANGELOG.md -s -n ../../.versionrc.js --commit-path packages/foo && git add CHANGELOG.md"
+    "version": "conventional-changelog -i CHANGELOG.md -s -n ../../.versionrc.js -l @libj/foo && git add CHANGELOG.md"
   },
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
