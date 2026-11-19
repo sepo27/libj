@@ -1,6 +1,6 @@
 {
   "name": "@libj/foo",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Foo dummy package",
   "scripts": {
     "version": "conventional-changelog -i CHANGELOG.md -s -n ../../.versionrc.js -l @libj/foo && git add CHANGELOG.md"

@@ -1,3 +1,7 @@
+## <small>0.1.5 (2026-11-19)</small>
+
+* packages/feat(foo): Dummy update foo package ([a0cc40e](https://github.com/sepo27/libj/commit/a0cc40e))
+
 ## <small>0.1.4 (2026-11-19)</small>
 
 * packages/feat(foo): Dummy update foo package ([6d62849](https://github.com/sepo27/libj/commit/6d62849))
