@@ -28,5 +28,5 @@ Then perform the following steps:
 6. Initialize README
   - create `README.md` file within the package
   - put dummy content "Stay tuned for {name} package"
-  - add reference to this package readme into `package.json` into `homepage` field
+  - add reference (URL with git repository) to this package readme into `package.json -> homepage` field
 
