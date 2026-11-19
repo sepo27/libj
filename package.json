@@ -1,4 +1,7 @@
 {
   "name": "libj",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "lerna": "^10.1.1"
+  }
 }
